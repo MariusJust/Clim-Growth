@@ -3,7 +3,7 @@ from tqdm import tqdm
 from multiprocessing import TimeoutError
 from .builders import build_arg_list_cv, build_arg_list_ic
 import ast
-from datetime import datetime
+
 
 class Multiprocess:
     
@@ -32,7 +32,7 @@ class Multiprocess:
     
         print(f"Starting parallel processing with {self.cfg.n_process} processes...")
         results= self.parallel_execution() 
-        print("Parallel processing completed.")
+
         return results
     
 
@@ -59,14 +59,12 @@ class Multiprocess:
                     cv_error, node = result
                     self.storage[node] = [cv_error]
                 else:
-                    print(f"finished node {i}")
                     if self.Model_selection == 'Holdout':
                         holdout_error, node = result
                         self.storage[node] = [holdout_error]
                     else:
                         bic, aic, node = result
                         self.storage[node] = [bic,aic]
-            print("All nodes have been processed or timed out.")
             pool.terminate()
             pool.join()
                   
@@ -74,7 +72,7 @@ class Multiprocess:
 
 
     def worker(self, node, data=None):
-        if self.cfg.formulation == 'regional':
+        if self.cfg.formulation == 'regional' or self.cfg.formulation == 'income':
             from models.regional_model.information_criteria.run_experiment_ic import MainLoop as MainLoop
             model_loop = MainLoop(self, node)
             if self.Model_selection == 'Holdout':

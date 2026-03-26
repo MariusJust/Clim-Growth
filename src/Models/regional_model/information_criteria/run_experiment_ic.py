@@ -5,7 +5,7 @@ import random
 from utils.miscelaneous.warnings import turn_off_warnings
 from models.regional_model.model_functions.helper_functions import load_data
 from models import MultivariateModelRegional as Model
-from datetime import datetime
+
 
 turn_off_warnings()
 
@@ -20,7 +20,8 @@ class MainLoop:
         self.BIC_list = np.zeros(self.cfg.no_inits)
         self.AIC_list = np.zeros(self.cfg.no_inits)
         self.holdout_MSE = np.zeros(self.cfg.no_inits)
-        self.data_source = self.cfg.data_source
+       
+       
         #build a factory for the model, so we don't have to re-initialize the model each time
         self.factory = Model(
             node=None, 
@@ -37,7 +38,7 @@ class MainLoop:
             from simulations.simulation_functions import Pivot
             self.growth, self.precip, self.temp = Pivot(self.data)
         else:   
-            self.growth, self.precip, self.temp = load_data('IC', data_source=self.data_source)
+            self.growth, self.precip, self.temp = load_data('IC', self.cfg.formulation, data_source=self.cfg.data_source)
    
    
     def run_experiment(self):  

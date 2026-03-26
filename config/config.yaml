@@ -6,20 +6,20 @@ instance:
   patience: 3
   verbose: 2
   dropout: 0
-  n_process: 1
-  model_selection: 'IC' #  'Holdout', 'IC' or'CV'
-  formulation : 'global'          # Model formulation, "global" or "regional"
+  n_process: 2
+  model_selection: 'IC' #  'Holdout', 'IC'
+  formulation : 'income'          # Model formulation, "global", "regional" or "income"
   timeout_per_node: 100000
   input_vars:
     - temp
     - precip
   activation: 'swish' #
   dynamic_model: False
-  holdout: 0  
+  holdout: 10  
   data_source: 'wb'   # "ee" or "wb"
   nodes_list:
     - (2,)
-    # - (4,)
+    - (4,)
     # - (8,)
     # - (16,)
     # - (32,)
@@ -32,7 +32,6 @@ instance:
     # - (8,4,)
     # - (8,8,)
     # - (16,2,)
-    # - (16,4,)
     # - (16,8,)
     # - (16,16,)
     # - (32,2,)

@@ -10,7 +10,7 @@ import plotly.io as pio
 
 
 
-def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None):
+def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_dim=True):
    
     """
     Create the input for predictions by standardizing temperature and precipitation.
@@ -46,6 +46,14 @@ def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None):
         pred_input = np.stack([flat_T_std, flat_P_std, time_input], axis=-1)  # shape (900, 3)
         return pred_input.reshape((1, 1, -1, 3)), T, P
     else:
+        
+        #if not 2d then we only have 1 dimension, ie only temperature is passed as input, so we create a grid of temperature values and standardize them
+        if not two_dim:
+        
+            T = temp_vals
+            T_std=(T - mean_T) / std_T
+            flat_T_std = T_std.ravel()  
+            return flat_T_std.reshape((1, 1, -1, 1)), T
         
         T, P = np.meshgrid(temp_vals, precip_vals)  
         P_std=(P-mean_P)/std_P  

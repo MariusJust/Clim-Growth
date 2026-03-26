@@ -40,7 +40,7 @@ def compute_x_train_fullSample(self, x_train):
 def compute_y_train_fullSample(self):
         for region in self.regions:
                 y_df = self.y_train[region]
-                y_np = y_df.values
+
                 self.y_train_transf[region] = np.array(y_df.copy())
                 self.y_train_df[region]=y_df.copy()
                 

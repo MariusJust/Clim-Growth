@@ -1,10 +1,12 @@
+from pyexpat import model
+
 import numpy as np
 import pandas as pd
 # from panelsplit.cross_validation import PanelSplit
 
 
 
-def Prepare(data, data_source=None):
+def Prepare(data, formulation, data_source=None):
        #the growth data should contain the following columns: year, county, and GrowthWDI
     
     time_periods = len(data['Year'].unique())
@@ -17,6 +19,8 @@ def Prepare(data, data_source=None):
 
             #temperature data
             temp=data[['CountryCode', 'RegionCode', 'Year', 'TempPopWeight']]
+            
+            
             
     elif data_source.lower()=='ee':
             growth=data[['iso3', 'fid', 'RegionCode', 'Year', 'growth (gdp per capita)']].rename(columns={'iso3':'CountryCode', 'growth (gdp per capita)':'GrowthWDI'})
@@ -34,19 +38,35 @@ def Prepare(data, data_source=None):
     growth_dict={}
     precip_dict={}
     temp_dict={}
-    
-    dict_and_vars = [(growth_dict, growth),
-        (precip_dict, precip),
-        (temp_dict, temp)]
+   
 
     
     # dictionary that holds the region code and the reference country in each region
     
     if data_source.lower()=='wb':
-        regions = {'Asia': [142, "CHN"], 'Europe': [150, 'DEU'], 'Africa': [2, 'ZAF'], 'Americas': [19, 'USA'], 'Oceania': [9, 'AUS']}
+        if formulation=='regional':
+            regions = {'Asia': [142, "CHN"], 'Europe': [150, 'DEU'], 'Africa': [2, 'ZAF'], 'Americas': [19, 'USA'], 'Oceania': [9, 'AUS']}
+        else: #income formulation
+          gdp_capita = data[['CountryCode', 'Year', 'GDPCap']].rename(columns={'GDP per capita':'GDPperCapita'})  
+          average_gdp_capita_by_year = gdp_capita.groupby('Year')['GDPCap'].mean()
+          gdp_capita = gdp_capita.merge(average_gdp_capita_by_year, on='Year', suffixes=('', '_average'))
+          gdp_capita['IncomeGroup'] = pd.qcut(gdp_capita['GDPCap'], q=2, labels=['Low', 'High'])
+          
+        #add income group to the growth, precip and temp dataframes as the second last column (before the value column)
+        
+          growth = growth.merge(gdp_capita[['CountryCode', 'Year', 'IncomeGroup']], on=['CountryCode', 'Year']).iloc[:, [0,1,2,4,3]]
+          precip = precip.merge(gdp_capita[['CountryCode', 'Year', 'IncomeGroup']], on=['CountryCode', 'Year']).iloc[:, [0,1,2,4,3]]
+          temp = temp.merge(gdp_capita[['CountryCode', 'Year', 'IncomeGroup']], on=['CountryCode', 'Year']).iloc[:, [0,1,2,4,3]]
+          
+          regions = {'Low': ['Low', 'IND'], 'High': ['High', 'USA']}
     else:
         # the reference regions are Asia-Beijing=408, Europe-Stockholm=2364, Africa-Northern Cape Town=2854,USA-New York City=2709, Oceania-Victoria(Melbourne)=AUS
         regions = {'Asia': [142, 408], 'Europe': [150, 2364], 'Africa': [2, 2854], 'Americas': [19, 2709], 'Oceania': [9, 196]}
+    
+     
+    dict_and_vars = [(growth_dict, growth),
+        (precip_dict, precip),
+        (temp_dict, temp)]
     
     #Now I will loop through the regions and create a dataframe for each region
     for region, value in regions.items():
@@ -54,8 +74,10 @@ def Prepare(data, data_source=None):
         regionCode, referenceCountry = value
         for dict, var in dict_and_vars:
             #get the region specific data
-            region_data = var[var['RegionCode'] == regionCode]
-            
+            if formulation=='regional':
+                region_data = var[var['RegionCode'] == regionCode]
+            else:
+                region_data = var[var['IncomeGroup'] == regionCode]
             
             # Pivot the data so that the years are the index and the countries are the columns
             if data_source == 'ee':
@@ -84,12 +106,12 @@ def Prepare(data, data_source=None):
     
 
     
-def load_data(model_selection, n_splits=None, growth=None, data_source=None):
+def load_data(model_selection, formulation, n_splits=None, growth=None, data_source=None):
     
     if model_selection == 'IC':
         if data_source.lower()=='wb':
             data = pd.read_excel('data/MainData.xlsx')
-            growth, precip, temp = Prepare(data, data_source=data_source)
+            growth, precip, temp = Prepare(data, formulation, data_source=data_source)
             return growth, precip, temp
         elif data_source.lower()=='ee':
             data = pd.read_csv("data/ee_data.csv", sep=";")
