@@ -32,7 +32,7 @@ def create_hidden_layer(self, node):
     """ Create a hidden layer with the specified input and layer number. """
     kernel_initializer = he_normal()
     bias_initializer = Zeros()
-    hidden_layer = Dense(node, activation='swish', use_bias=True,
+    hidden_layer = Dense(node, activation=self.activation, use_bias=True,
                             kernel_initializer=kernel_initializer, bias_initializer=bias_initializer)
     
     

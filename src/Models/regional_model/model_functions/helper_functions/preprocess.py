@@ -24,11 +24,7 @@ def compute_x_train_fullSample(self, x_train):
                 x_np_var = x_df_var.values
                 self.x_train_transf[key][region] = np.array(x_df_var.copy())
                 
-                # Compute statistics for each region
-                region_stats = compute_stats(x_np_var)
-                for key1, val in region_stats.items():
-                        getattr(self, key1.capitalize())[key][region] = val
-                        
+         
                 #compute the number of observations, only for the first variables as the input variables are the same
                 if key == 0:
                     self.individuals[region] = x_df_var.columns.values
@@ -44,15 +40,11 @@ def compute_x_train_fullSample(self, x_train):
 def compute_y_train_fullSample(self):
         for region in self.regions:
                 y_df = self.y_train[region]
-                y_np = y_df.values
+
                 self.y_train_transf[region] = np.array(y_df.copy())
                 self.y_train_df[region]=y_df.copy()
                 
-                # Compute statistics for each region
-                region_stats = compute_stats(y_np)
-                for key1, val in region_stats.items():
-                    getattr(self, key1.capitalize())[region] = val
-        
+                
         
 def compute_mask_fullSample(self):
 
@@ -89,19 +81,3 @@ def compute_mask_train_val(self, x_train):
         self.time_periods_na[region] = np.sum(~self.time_periods_not_na[region])
         self.noObs["train"][region] = self.N[region]*self.T - np.isnan(self.x_train_val_transf[0][region]).sum()
     
-################################  Stats  ########################################################
-
-def compute_stats(arr):
-        """
-        Compute basic statistics on the array, ignoring NaNs.
-        Returns a dict with keys: min, max, quant025, quant05, quant95, quant975.
-        """
-        return {
-            'min': np.nanmin(arr),
-            'max': np.nanmax(arr),
-            'quant025': np.nanquantile(arr, 0.025),
-            'quant05': np.nanquantile(arr, 0.05),
-            'quant95': np.nanquantile(arr, 0.95),
-            'quant975': np.nanquantile(arr, 0.975),
-        }
-

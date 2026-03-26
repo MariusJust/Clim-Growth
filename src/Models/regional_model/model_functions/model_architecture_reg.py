@@ -1,8 +1,7 @@
 from tensorflow.keras.layers import Input, Add, concatenate
 from tensorflow.keras import Model
 import tensorflow as tf
-import numpy as np
-from models.regional_model.model_functions.helper_functions import Dummies, create_fixed_effects, Vectorize, Count_params, Matrixize, create_hidden_layers, create_output_layer, Visual_model, prediction_model, create_country_trends, individual_loss
+from models.regional_model.model_functions.helper_functions import Dummies, create_fixed_effects, Vectorize, Count_params, Matrixize, create_hidden_layers, create_output_layer, Visual_model, individual_loss
 
 
 class Regions:

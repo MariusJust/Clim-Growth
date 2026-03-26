@@ -14,11 +14,9 @@ formulation: regional
 timeout_per_node: 1000
 n_countries: 196
 time_periods: 63
-country_trends: false
 dynamic_model: false
 holdout: 0
-within_transform: false
-add_fe: true
+data_source: wb
 nodes_list:
 - (2,)
 - (4,)

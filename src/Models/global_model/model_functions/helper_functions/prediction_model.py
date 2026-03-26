@@ -3,11 +3,12 @@ from .create_layers import create_Dropout
 from tensorflow.keras.layers import Input, Add, Reshape
 
 def pred_model(self):
-
+    n_vars = len(self.input_vars)
+    
     if self.dynamic_model:
-        input_x_pred  = Input(shape=(1, None, 3), name='X_in')
+        input_x_pred  = Input(shape=(1, None, self.n_vars+1), name='X_in')
     else:
-        input_x_pred  = Input(shape=(1, None, 2), name='X_in')
+        input_x_pred  = Input(shape=(1, None, self.n_vars), name='X_in')
     
 
 

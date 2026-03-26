@@ -5,7 +5,8 @@ import random
 from utils.miscelaneous.warnings import turn_off_warnings
 from models.global_model.model_functions.helper_functions import load_data
 from models import MultivariateModelGlobal as Model
-from datetime import datetime
+import time
+
 
 turn_off_warnings()
 
@@ -14,11 +15,13 @@ class MainLoop:
    
         self.cfg=parent.cfg
         self.data=parent.data
+        self.run_dir = parent.run_dir
         self.node= node
         self.models_tmp = np.zeros(self.cfg.no_inits, dtype=object)
         self.BIC_list = np.zeros(self.cfg.no_inits)
         self.AIC_list = np.zeros(self.cfg.no_inits)
         self.holdout_MSE = np.zeros(self.cfg.no_inits)
+      
         
         #build a factory for the model, so we don't have to re-initialize the model each time
         self.factory = Model(
@@ -39,7 +42,7 @@ class MainLoop:
             from simulations.simulation_functions import Pivot
             self.growth, self.precip, self.temp = Pivot(self.data)
         else:   
-            self.growth, self.precip, self.temp, self.n_countries, self.time_periods = load_data('IC', self.data_source)
+            self.growth, self.precip, self.temp = load_data('IC', self.cfg.data_source)
    
    
     def run_experiment(self):   
@@ -68,6 +71,7 @@ class MainLoop:
         
         #loop over initializations
         for j in range(self.cfg.no_inits):
+            time_start = time.time()
         
             current_seed = self.cfg.seed_value + j  # update seed
             tf.random.set_seed(current_seed)
@@ -88,6 +92,16 @@ class MainLoop:
                 #saves the information criteria
                 self.BIC_list[j] = model_instance.BIC
                 self.AIC_list[j] = model_instance.AIC
+            
+            time_end = time.time()  
+              
+            
+            elapsed = int(time_end - time_start)
+
+            hours, remainder = divmod(elapsed, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            print(f"Finished node {self.node} with initialization {j+1}/{self.cfg.no_inits} in {hours} hours, {minutes} minutes, and {seconds} seconds")      
                     
         # Select the best initialization based on BIC (or AIC)
         
@@ -99,8 +113,9 @@ class MainLoop:
         #only save the model parameters if the data is the real data, and not simulated data
         if self.data is None:
             
+            print(f"saving model parameters to: {self.run_dir}/parameters/{self.node}.weights.h5")
             # Create directory if it doesn't exist
-            path=f"runs/estimation/{datetime.today().strftime('%Y-%m-%d')}/{self.node}.weights.h5"
+            path=f"{self.run_dir}/parameters/{self.node}.weights.h5"
             dir_path = os.path.dirname(path)
             os.makedirs(dir_path, exist_ok=True)
 

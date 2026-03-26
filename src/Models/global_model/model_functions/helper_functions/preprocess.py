@@ -1,12 +1,6 @@
 import numpy as np
-import pandas as pd
 
-
-
-def Preprocess(self):
-    import numpy as np
-    import pandas as pd
-     
+def Preprocess(self):     
     compute_x_train_fullSample(self, self.x_train)      
     compute_y_train_fullSample(self, self.y_train)
     compute_mask_fullSample(self, self.x_train)
@@ -25,19 +19,11 @@ def compute_x_train_fullSample(self, x_train):
         for key, var in enumerate(x_train):
             self.x_train_transf[key]['global'] =np.array(x_train[key]['global'].copy())
             
-            global_stats = compute_stats(self.x_train_transf[key]['global'])
-            for key, val in global_stats.items():
-                getattr(self, key.capitalize())[key]['global'] = val
-
 
 def compute_y_train_fullSample(self, y_train):
     self.y_train_df['global'] = y_train['global'].copy()
     self.y_train_transf['global'] = np.array(y_train['global'].copy())
     
-    global_stats = compute_stats(self.y_train_transf['global'])
-    for key, val in global_stats.items():
-        getattr(self, key.capitalize())['global'] = val
-        
         
 def compute_mask_fullSample(self, x_train):
 
@@ -86,19 +72,4 @@ def compute_mask_train_val(self, x_train):
 
 
 
-
-################################   Stats   ########################################################
-def compute_stats(arr):
-        """
-        Compute basic statistics on the array, ignoring NaNs.
-        Returns a dict with keys: min, max, quant025, quant05, quant95, quant975.
-        """
-        return {
-            'min': np.nanmin(arr),
-            'max': np.nanmax(arr),
-            'quant025': np.nanquantile(arr, 0.025),
-            'quant05': np.nanquantile(arr, 0.05),
-            'quant95': np.nanquantile(arr, 0.95),
-            'quant975': np.nanquantile(arr, 0.975),
-        }
 

@@ -58,25 +58,4 @@ class Dummies(Layer):
 
         return [Delta_1, Delta_2]
 
-    def country_time_trends(self, Delta_1, Delta_2):
-         ####### country specific time trends  #####
-        dtype = tf.float32
-        
-        ref_col = 1.0 - tf.reduce_sum(Delta_1, axis=-1, keepdims=True)       # (1, noObs, 1)
-        Delta_full = tf.concat([ref_col, Delta_1], axis=-1)                  # (1, noObs, N)
-        sum_d2 = tf.reduce_sum(Delta_2, axis=-1, keepdims=True)              # (1,noObs,1)
-        time_onehots = tf.concat([1.0 - sum_d2, Delta_2], axis=-1)           # (1,noObs,T)
-
-        
-        time_positions = tf.cast(tf.range(self.T), dtype=dtype)                   # (T,)
-        time_positions = tf.reshape(time_positions, (1, 1, self.T))               # (1,1,T)
-        time_idx = tf.reduce_sum(time_onehots * time_positions, axis=-1, keepdims=True)  # (1,noObs,1)
-        time_idx_sq = tf.math.square(time_idx)                               # (1,noObs,1)
-
-        # 3) make country-specific linear and quadratic terms for ALL countries
-        linear_all = Delta_full * time_idx      # (1, noObs, N)
-        quad_all   = Delta_full * time_idx_sq   # (1, noObs, N)
-
-        return linear_all, quad_all
-    
   

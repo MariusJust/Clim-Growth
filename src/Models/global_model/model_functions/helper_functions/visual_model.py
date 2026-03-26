@@ -4,9 +4,9 @@ from tensorflow.keras.layers import Input
 
 def Visual_model(self):
     if self.dynamic_model:
-        input_x_pred  = Input(shape=(1, None, 3), name='X_in')
+        input_x_pred  = Input(shape=(1, None, self.n_vars+1), name='X_in')
     else:
-         input_x_pred  = Input(shape=(1, None, 2), name='X_in')
+         input_x_pred  = Input(shape=(1, None, self.n_vars), name='X_in')
     
     hidden_1_pred = self.hidden_1(input_x_pred)
   

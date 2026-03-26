@@ -1,25 +1,25 @@
 instance:
-  no_inits: 1
+  no_inits: 2
   seed_value: 0
   lr: 0.001
   min_delta: 1e-2
   patience: 3
   verbose: 2
   dropout: 0
-  n_process: 1
-  model_selection: 'IC' #  'Holdout', 'IC' or'CV'
-  n_splits: 5
-  cv_approach: 'trend' # 'full' or 'trend' or 'simple'
-  formulation : 'regional'          # Model formulation, "global" or "regional"
+  n_process: 2
+  model_selection: 'IC' #  'Holdout', 'IC'
+  formulation : 'income'          # Model formulation, "global", "regional" or "income"
   timeout_per_node: 100000
-  # n_countries: 196
-  # time_periods: 63
+  input_vars:
+    - temp
+    - precip
+  activation: 'swish' #
   dynamic_model: False
-  holdout: 5
-  data_source: 'ee'   #ee or worldbank
+  holdout: 10  
+  data_source: 'wb'   # "ee" or "wb"
   nodes_list:
     - (2,)
-    # - (4,)
+    - (4,)
     # - (8,)
     # - (16,)
     # - (32,)
@@ -32,7 +32,6 @@ instance:
     # - (8,4,)
     # - (8,8,)
     # - (16,2,)
-    # - (16,4,)
     # - (16,8,)
     # - (16,16,)
     # - (32,2,)

@@ -42,10 +42,7 @@ def individual_loss(mask, p_matrix=None, n_holdout=0, name=None):
                                 
                 y_pred_dyn = y_pred[:, :time_len, :]
                 
-                # tf.print(">>> individual_loss debug: y_pred_dyn.shape:", tf.shape(y_pred_dyn))
-                # tf.print(">>> individual_loss debug: mask_dyn.shape:", tf.shape(mask_dyn))
-                # tf.print("t_pred:", tf.shape(y_pred)[1], "t_mask:", tf.shape(mask)[1], "time_len:", time_len)
-
+            
                 y_pred_transf = tf.reshape(y_pred_dyn[~mask_dyn], (1, -1, 1))
                 
                 P_dyn = p_matrix[:n_obs, :n_obs]
@@ -57,11 +54,14 @@ def individual_loss(mask, p_matrix=None, n_holdout=0, name=None):
         else:
             time_len = tf.shape(y_true)[1]                    # e.g. 58 during training
             # slice mask to match y_true time-length
+            
             mask_dyn = mask[:, :time_len, :]                  
-            y_true_dyn = y_true[:, :time_len, :]      
+               
             y_pred_dyn = y_pred[:, :time_len, :]
-
             y_pred_transf = tf.reshape(y_pred_dyn[~mask_dyn], (1, -1, 1))
+            y_true=tf.reshape(y_true[~mask_dyn], (1, -1, 1))
+            
+      
             loss=tf.reduce_mean(tf.math.squared_difference(y_true, y_pred_transf), axis=1)
             return loss
         

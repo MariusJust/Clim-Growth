@@ -5,7 +5,7 @@ import random
 from utils.miscelaneous.warnings import turn_off_warnings
 from models.regional_model.model_functions.helper_functions import load_data
 from models import MultivariateModelRegional as Model
-from datetime import datetime
+
 
 turn_off_warnings()
 
@@ -15,11 +15,13 @@ class MainLoop:
         self.cfg=parent.cfg
         self.data=parent.data
         self.node= node
+        self.run_dir=parent.run_dir
         self.models_tmp = np.zeros(self.cfg.no_inits, dtype=object)
         self.BIC_list = np.zeros(self.cfg.no_inits)
         self.AIC_list = np.zeros(self.cfg.no_inits)
         self.holdout_MSE = np.zeros(self.cfg.no_inits)
-        
+       
+       
         #build a factory for the model, so we don't have to re-initialize the model each time
         self.factory = Model(
             node=None, 
@@ -36,7 +38,7 @@ class MainLoop:
             from simulations.simulation_functions import Pivot
             self.growth, self.precip, self.temp = Pivot(self.data)
         else:   
-            self.growth, self.precip, self.temp = load_data('IC')
+            self.growth, self.precip, self.temp = load_data('IC', self.cfg.formulation, data_source=self.cfg.data_source)
    
    
     def run_experiment(self):  
@@ -64,7 +66,7 @@ class MainLoop:
                 self.models_tmp[j] = model_instance
 
                 #saves the information criteria
-                self.BIC_list[j] = model_instance.BIC
+                self.BIC_list[j] = model_instance.BIC   
                 self.AIC_list[j] = model_instance.AIC
                 
             print(f"Initialization {j+1}/{self.cfg.no_inits} for node {self.node} done")    
@@ -78,7 +80,7 @@ class MainLoop:
 
         
         # Create directory if it doesn't exist
-        path=f"runs/estimation/{datetime.today().strftime('%Y-%m-%d')}/{self.node}.weights.h5"
+        path=f"{self.run_dir}/parameters/{self.node}.weights.h5"
         dir_path = os.path.dirname(path)
         os.makedirs(dir_path, exist_ok=True)
 
@@ -105,7 +107,7 @@ class MainLoop:
             self.factory.y_train_val = growth_train_val
             self.factory.x_val = {0: temp_val, 1: precip_val}
             self.factory.y_val = growth_val
-            self.factory.add_fe = False
+          
             
         else:
             self.factory.x_train = {0: self.temp, 1: self.precip}

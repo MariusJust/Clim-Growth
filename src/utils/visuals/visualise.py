@@ -1,10 +1,7 @@
-
-
 import numpy as np
 import tensorflow as tf
 import pandas as pd
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D  
 import plotly.graph_objects as go
 import plotly.io as pio
 
@@ -13,7 +10,7 @@ import plotly.io as pio
 
 
 
-def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None):
+def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_dim=True):
    
     """
     Create the input for predictions by standardizing temperature and precipitation.
@@ -49,6 +46,14 @@ def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None):
         pred_input = np.stack([flat_T_std, flat_P_std, time_input], axis=-1)  # shape (900, 3)
         return pred_input.reshape((1, 1, -1, 3)), T, P
     else:
+        
+        #if not 2d then we only have 1 dimension, ie only temperature is passed as input, so we create a grid of temperature values and standardize them
+        if not two_dim:
+        
+            T = temp_vals
+            T_std=(T - mean_T) / std_T
+            flat_T_std = T_std.ravel()  
+            return flat_T_std.reshape((1, 1, -1, 1)), T
         
         T, P = np.meshgrid(temp_vals, precip_vals)  
         P_std=(P-mean_P)/std_P  
@@ -247,7 +252,7 @@ def model_instance_pred(model, date_of_run, node, T, pred_input):
     
     return Growth
 
-def model_confidence_plot(node, chosen_surface, ensemble_std, T, P, save_as_html):
+def model_confidence_plot(surface, std, T, P):
       
     """
     Function to create a 3D surface plot of the chosen model's predictions colored by ensemble standard deviation.
@@ -255,98 +260,178 @@ def model_confidence_plot(node, chosen_surface, ensemble_std, T, P, save_as_html
     fig = go.Figure()
     fig.add_trace(
         go.Surface(
-            z=chosen_surface, 
-            x=T, 
-            y=P, 
-            surfacecolor=ensemble_std,
+            z=surface,
+            x=T,
+            y=P/1000,
+            surfacecolor=std,
             colorscale='Viridis',
             opacity=0.8,
-            name=f'Chosen Model {node}',
-            colorbar=dict(title='Ensemble Std')
+            colorbar=dict(
+            x=0.95,   
+            len=0.5, 
+            title=dict(
+                text='Ensemble standard deviation',
+                side='top'
+            )
+    )
         )
     )
 
-    fig.update_layout(
-        title=f"Model Confidence Plot: {node} vs. Ensemble Agreement",
-        scene=dict(
-            xaxis_title="Temperature (°C)",
-            yaxis_title="Precipitation (mm)",
-            zaxis_title="Growth",
-            camera=dict(eye=dict(x=1.5, y=1.5, z=1.5))
-        ),
-        showlegend=False
-    )
 
-# Show the plot and write to an HTML file for interactive exploration.
-    fig.show()
-    if save_as_html:
-        # Save the figure as an HTML file
-        pio.write_html(fig, file=f'images/model_confidence_plot_{node}.html', auto_open=False)
-        
 
-def plotly_theme_bw(fig, text_size=14):
     fig.update_layout(
-        font=dict(
-            size=text_size,
-            color='black'
-        ),
-        scene=dict(
-            xaxis=dict(
-                title_font=dict(size=text_size, color='black'),
-                tickfont=dict(size=text_size, color='black'),
-                showgrid=True,
-                zeroline=False,
-                showline=True,
-                linecolor='black',
-                linewidth=0.5,
-                ticks='outside',
-                tickwidth=1,
-                tickcolor='black',
-                ticklen=2,
-            ),
-            yaxis=dict(
-                title_font=dict(size=text_size, color='black'),
-                tickfont=dict(size=text_size, color='black'),
-              
-                showgrid=True,
-       
-                zeroline=False,
-                showline=True,
-                linecolor='black',
-                linewidth=0.5,
-                ticks='outside',
-                tickwidth=1,
-                tickcolor='black',
-                ticklen=5,
-            ),
-            zaxis=dict(
-                title_font=dict(size=text_size, color='black'),
-                tickfont=dict(size=text_size, color='black'),
-              
-                showgrid=True,
-       
-                zeroline=False,
-                showline=True,
-                linecolor='black',
-                linewidth=0.5,
-                ticks='outside',
-                tickwidth=1,
-                tickcolor='black',
-                ticklen=5,
-            ),
         
-        ),
-        margin=dict(l=10, r=10, t=20, b=0.4),
-   
-        legend=dict(
-            font=dict(size=text_size),
-            orientation='h',
-            yanchor='bottom',
-            y=-0.,
-            xanchor='center',
-            x=0.5
-        ),
-      
-    )
+            autosize=True,
+
+            margin=dict(
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+            ),
+
+                scene=dict(
+                    xaxis_title='Temperature (°C)',
+                    yaxis_title='Precipitation (m)',
+                    zaxis=dict(title=dict(text="Δ ln(GDP)"),range=[-0.3, 0.3]),
+                    camera=dict(eye=dict(x=1.738, y=-1.780, z=0.589))
+
+                ),
+
+                legend=dict(
+                    bgcolor='rgba(255,255,255,0.7)',
+                    bordercolor='black',
+                    borderwidth=1
+                ),
+                font=dict(
+                size=10
+            ),
+                showlegend=False
+            ),
 
     return fig
+
+
+# ============================================================
+# Helper: add one 3D bar (cuboid) as a Mesh3d trace
+# ============================================================
+def add_histogram(fig, data, legend):
+    def add_bar3d(fig, x0, x1, y0, y1, z0, z1, color, opacity=1, showscale=False,
+                coloraxis=None):
+        """
+        Add a rectangular cuboid [x0,x1] x [y0,y1] x [z0,z1] as a Mesh3d trace.
+        """
+
+        # 8 vertices of the cuboid
+        x = [x0, x1, x1, x0, x0, x1, x1, x0]
+        y = [y0, y0, y1, y1, y0, y0, y1, y1]
+        z = [z0, z0, z0, z0, z1, z1, z1, z1]
+
+        # 12 triangles composing the 6 faces
+        i = [0, 0, 0, 1, 4, 4, 3, 3, 0, 0, 1, 1]
+        j = [1, 2, 4, 2, 5, 6, 2, 6, 3, 4, 2, 5]
+        k = [2, 3, 5, 5, 6, 7, 6, 7, 4, 7, 6, 6]
+
+        fig.add_trace(
+            go.Mesh3d(
+                x=x,
+                y=y,
+                z=z,
+                i=i,
+                j=j,
+                k=k,
+                intensity=np.full(8, color),
+                colorscale="YlOrRd",
+                cmin=0,
+                cmax=1,
+                opacity=opacity,
+                showscale=showscale,
+                coloraxis=coloraxis,
+                flatshading=True,
+                hoverinfo="skip"
+            )
+        )
+
+
+
+    # ============================================================
+    # Observed data
+    # ============================================================
+    temp_obs = np.array(data["TempPopWeight"]).flatten()
+    precip_obs = np.array(data["PrecipPopWeight"]).flatten() / 1000
+
+    mask = np.isfinite(temp_obs) & np.isfinite(precip_obs)
+    temp_obs = temp_obs[mask]
+    precip_obs = precip_obs[mask]
+
+    # ============================================================
+    # Define histogram bins
+    # Force temperature axis to include 0
+    # ============================================================
+    temp_min = 0
+    temp_max = int(np.ceil(temp_obs.max()))
+
+    precip_min = int(np.floor(precip_obs.min()))
+    precip_max = int(np.ceil(precip_obs.max()))
+
+    temp_edges = np.arange(temp_min, temp_max + 1, 1)         # 1°C bins
+    precip_edges = np.arange(precip_min, precip_max + 1, 1/3)   # 1 m bins
+
+    counts, _, _ = np.histogram2d(
+        temp_obs,
+        precip_obs,
+        bins=[temp_edges, precip_edges]
+    )
+
+    # counts shape: (n_temp_bins, n_precip_bins)
+    # We keep it like this and loop explicitly.
+
+    # ============================================================
+    # 3D histogram settings
+    # ============================================================
+    z_floor = -0.30                 # bottom of the plot
+    bar_max_height = 0.12           # how tall the tallest histogram bar can become
+    max_count = counts.max()
+
+    if max_count > 0:
+        counts_scaled = counts / max_count
+    else:
+        counts_scaled = counts.copy()
+
+    # ============================================================
+    # Add 3D bars
+    # ============================================================
+    for ix in range(len(temp_edges) - 1):
+        for iy in range(len(precip_edges) - 1):
+            c = counts[ix, iy]
+            if c <= 0:
+                continue
+
+            x0 = temp_edges[ix]
+            x1 = temp_edges[ix + 1]
+
+            y0 = precip_edges[iy]
+            y1 = precip_edges[iy + 1]
+
+            z0 = z_floor
+            z1 = z_floor + counts_scaled[ix, iy] * bar_max_height
+
+            # normalize color to [0,1] for YlOrRd
+            color_value = counts_scaled[ix, iy]
+
+            add_bar3d(
+                fig,
+                x0=x0, x1=x1,
+                y0=y0, y1=y1,
+                z0=z0, z1=z1,
+                color=color_value,
+                opacity=0.95,
+                showscale=legend
+            )
+    return fig
+
+
+
+
+
+

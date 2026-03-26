@@ -103,7 +103,6 @@ class MultivariateModel:
             
             del p_tensor
         else:
-        # y_target= tf.reshape(self.targets[~self.masks], (1, -1, 1))
             self.model.compile(optimizer=Adam(lr), loss=self.loss_list, loss_weights=[1 / self.no_regions] * self.no_regions)
 
 
@@ -115,8 +114,6 @@ class MultivariateModel:
             x_train = [self.input_data_temp, self.input_data_precip]
             self.model.fit(x_train, self.targets, callbacks=callbacks, batch_size=1, epochs=int(1e6), verbose=verbose, shuffle=False)
 
-        #metrics
-        self.in_sample_loss = self.model.history.history['loss']
     
         self.best_weights = self.model.get_weights()
         self.epochs = self.model.history.epoch

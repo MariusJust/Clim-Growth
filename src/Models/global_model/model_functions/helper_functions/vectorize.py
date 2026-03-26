@@ -36,7 +36,7 @@ class Vectorize(Layer):
         return var_clean
     
     
-    def compute_output_shape(self, input_shape):
+    def compute_output_shape(self):
         return (1, self.dim1, 1)
     
     

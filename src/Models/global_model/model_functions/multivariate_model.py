@@ -3,7 +3,7 @@ import tensorflow as tf
 import pandas as pd 
 import os 
 
-from .helper_functions import initialize_parameters, Preprocess, individual_loss,  WithinHelper
+from .helper_functions import initialize_parameters, Preprocess, individual_loss, WithinHelper
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping
 from .model_architecture import SetupGlobalModel
@@ -54,17 +54,18 @@ class MultivariateModel:
     def get_model(self):
         tf.keras.backend.clear_session()
     
-        # Build model fresh
-        self._model_definition()
-        return self
+        # # Build model fresh
+        # self._model_definition()
+        # return self
         
-        # key = tuple(self.node)
-        # if key not in self._cache:
-        #     self._model_definition()
-        #     self._cache[key] = self
-        # return self._cache[key]
+        key = tuple(self.node)
+        if key not in self._cache:
+            self._model_definition()
+            self._cache[key] = self
+        return self._cache[key]
       
     def fit(self, lr, min_delta, patience, verbose):
+        
         """
         Fitting the model.
 
@@ -76,21 +77,37 @@ class MultivariateModel:
         """
       
       
-            
-    
+        
         if self.holdout>0:
             #compute p matrix on whole data
-            P_helper_full=WithinHelper(self.input_data_temp)
-            P_matrix_full=P_helper_full.calculate_P_matrix()
-            p_tensor=tf.convert_to_tensor(P_matrix_full, dtype=tf.float32)
+            if self.data_source=='wb':
+                P_helper_full=WithinHelper(self.input_data[self.input_vars[0]])
+                P_matrix_full=P_helper_full.calculate_P_matrix()
+                p_tensor=tf.convert_to_tensor(P_matrix_full, dtype=tf.float32)
 
-            y_true_target_train=tf.matmul(p_tensor, tf.cast(tf.reshape(self.targets[~self.Mask], (1, -1, 1)), dtype=tf.float32))[:, :self.noObs['train'], :]
+                y_train=tf.matmul(p_tensor, tf.cast(tf.reshape(self.targets[~self.Mask], (1, -1, 1)), dtype=tf.float32))[:, :self.noObs['train'], :]
+                
+                y_val=tf.matmul(p_tensor, tf.cast(tf.reshape(self.targets[~self.Mask], (1, -1, 1)), dtype=tf.float32))[:, self.noObs['train']:, :]
+
+                n_obs_holdout= self.noObs['global'] - self.noObs['train']
             
-            y_true_target_val=tf.matmul(p_tensor, tf.cast(tf.reshape(self.targets[~self.Mask], (1, -1, 1)), dtype=tf.float32))[:, self.noObs['train']:, :]
+                self.model.compile(optimizer=Adam(lr), loss=individual_loss(mask=self.Mask, p_matrix=p_tensor, n_holdout=n_obs_holdout, balanced=False))
+            
+            elif self.data_source=='ee':
+                y_obs = tf.cast(tf.reshape(self.targets[~self.Mask], (1, -1, 1)), tf.float32)
 
-            n_obs_holdout= self.noObs['global'] - self.noObs['train']
-        
-            self.model.compile(optimizer=Adam(lr), loss=individual_loss(mask=self.Mask, p_matrix=p_tensor, n_holdout=n_obs_holdout))
+                T = tf.shape(self.targets)[1].numpy()  # if your stored targets are (batch, T, N) you already know T,N
+                N = tf.shape(self.targets)[2].numpy()
+
+                # For balanced: self.Mask is all False, so y_obs length = T*N
+                y_within = WithinHelper.within_twfe_balanced(y_obs, T, N)
+
+                y_train = y_within[:, :self.noObs["train"], :]
+                y_val   = y_within[:, self.noObs["train"]:, :]
+                
+                n_obs_holdout= self.noObs['global'] - self.noObs['train']
+            
+                self.model.compile(optimizer=Adam(lr), loss=individual_loss(mask=self.Mask, p_matrix=None, n_holdout=n_obs_holdout, balanced=True))
             
 
             callbacks = [EarlyStopping(monitor='val_loss', mode='min', min_delta=min_delta, patience=patience,
@@ -99,18 +116,18 @@ class MultivariateModel:
             
             
             #validation data preprocessing
-            x_train_val = [self.input_data_temp_train_val, self.input_data_precip_train_val]
-            x_val = [self.input_data_temp_val, self.input_data_precip_val]
+            x_train = [self.input_data_train[var] for var in self.input_vars]
+            x_val = [self.input_data_val[var] for var in self.input_vars]
             
 
-            self.model.fit(x_train_val, y_true_target_train, callbacks=callbacks, batch_size=1, epochs=int(1e6), verbose=verbose, shuffle=False, validation_data=(x_val, y_true_target_val))
+            self.model.fit(x_train, y_train, callbacks=callbacks, batch_size=1, epochs=int(1e6), verbose=verbose, shuffle=False, validation_data=(x_val, y_val))
             self.holdout_loss = np.min(self.model.history.history['val_loss'])
             
             del p_tensor
         else:
            
-            y_true_target_train= tf.reshape(self.targets[~self.Mask], (1, -1, 1))
-            self.model.compile(optimizer=Adam(lr), loss=individual_loss(mask=self.Mask, p_matrix=None, n_holdout=0))
+            y_train= tf.reshape(self.targets[~self.Mask], (1, -1, 1))
+            self.model.compile(optimizer=Adam(lr), loss=individual_loss(mask=self.Mask, p_matrix=None, n_holdout=0, balanced=False))
 
 
             callbacks = [EarlyStopping(monitor='loss', mode='min', min_delta=min_delta, patience=patience,
@@ -118,11 +135,12 @@ class MultivariateModel:
                 
                      ]
 
-            x_train = [self.input_data_temp, self.input_data_precip]
-            self.model.fit(x_train, y_true_target_train, callbacks=callbacks, batch_size=1, epochs=int(1e6), verbose=verbose, shuffle=False)
+            x_train = [self.input_data[var] for var in self.input_vars]
+            
+         
+            
+            self.model.fit(x_train, y_train, callbacks=callbacks, batch_size=1, epochs=int(1e6), verbose=verbose, shuffle=False)
  
-        #metrics
-        self.in_sample_loss = self.model.history.history['loss']
     
         self.best_weights = self.model.get_weights()
         self.epochs = self.model.history.epoch
@@ -170,7 +188,7 @@ class MultivariateModel:
         
 
         # Generate in-sample predictions using the model
-        in_sample_preds = self.model([self.input_data_temp, self.input_data_precip])
+        in_sample_preds = self.model([self.input_data[var] for var in self.input_vars])
 
         # Initialize aggregation variable
         MSE = 0

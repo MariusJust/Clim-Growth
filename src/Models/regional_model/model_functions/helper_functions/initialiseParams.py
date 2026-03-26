@@ -15,13 +15,8 @@ def initialize_parameters(self):
         
         self.alpha = defaultdict(dict)
         self.beta = defaultdict(dict)
-        self.Min = defaultdict(dict)
-        self.Max = defaultdict(dict)
-        self.Quant025 = defaultdict(dict)
-        self.Quant05 = defaultdict(dict)
-        self.Quant95 = defaultdict(dict)
-        self.Quant975 = defaultdict(dict)
-  
+        
+        
         self.y_train_df = defaultdict(dict)
         self.y_train_transf = defaultdict(dict)
         
@@ -39,9 +34,8 @@ def initialize_parameters(self):
 
         self.mask = defaultdict(dict)
 
-        self.in_sample_loss = None
+
         self.holdout_loss = None
-        self.epochs = None
         self.params = None
         self.BIC = None
         self.AIC = None

@@ -1,5 +1,4 @@
-import tensorflow as tf
-from tensorflow.keras.layers import Input, Dense, Add, Concatenate, Lambda
+from tensorflow.keras.layers import  Dense
 from tensorflow.keras.initializers import Zeros
 
 def create_fixed_effects(self, Delta1, Delta2):
