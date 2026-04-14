@@ -36,14 +36,17 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
         temperature = data['TempPopWeight']
         precipitation = data['PrecipPopWeight'] / 1000
 
-        unique_countries = np.unique(countries)
-        unique_years = np.unique(years)
+        # Use the same ordering as the model input pivots so FE vectors align by key.
+        # (pivot() column/index ordering can differ from np.unique order across environments.)
+        country_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').columns
+        year_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').index
 
-        base_country = "AFG"
+        unique_countries = country_order.to_numpy()
+        unique_years = year_order.to_numpy()
+
+        # Keep the reference category consistent with the omitted dummy in model training.
+        base_country = unique_countries[0]
         base_year = unique_years[0]
-
-        if base_country not in unique_countries:
-            raise ValueError(f"{base_country} not found in simulated countries")
 
         true_country_FE = {
             c: np.random.normal(0, 0.025)
@@ -72,6 +75,8 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
         np.save(os.path.join(run_dir, "country_effect_relative.npy"), true_country_FE_rel)
         np.save(os.path.join(run_dir, "time_trend_absolute.npy"), true_time_FE)
         np.save(os.path.join(run_dir, "time_trend_relative.npy"), true_time_FE_rel)
+        np.save(os.path.join(run_dir, "country_fe_reference.npy"), np.array([base_country], dtype=object))
+        np.save(os.path.join(run_dir, "time_fe_reference.npy"), np.array([base_year], dtype=object))
 
         growth = calculate_growth(
             specification,
