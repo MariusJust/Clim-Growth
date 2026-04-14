@@ -11,7 +11,7 @@ mc:
   specifications:
     # - linear
     - Burke
-    - Leirvik
+    # - Leirvik
     # - Trig
 
   models:
@@ -23,7 +23,7 @@ mc:
     - 2
 
 instance:
-  model_selection: 'CV'
+
 
 hydra:
   hydra_logging:

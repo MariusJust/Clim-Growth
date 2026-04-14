@@ -146,11 +146,33 @@ class MultivariateModel:
         self.epochs = self.model.history.epoch
         
 
-        #fixed effects
-        # self.alpha = pd.DataFrame(self.country_FE_layer.weights[0].numpy().T)
-        # self.alpha.columns = self.individuals['global'][1:196]
-        # self.beta = pd.DataFrame(self.time_FE_layer.weights[0].numpy())
-        # self.beta.set_index(self.time_periods[self.time_periods_not_na['global']][1:196], inplace=True)
+        #country fixed effects
+        country_names = list(self.individuals['global'])
+        base_country = country_names[0]              # omitted category, likely AFG
+        estimated_country_vals = self.country_FE_layer.weights[0].numpy().flatten()
+
+        
+        self.alpha = pd.DataFrame(
+        {"country": country_names[1:], "estimate": estimated_country_vals}
+        ).set_index("country")
+        
+        self.alpha_dict= {country: value for country, value in zip(country_names[1:], estimated_country_vals)
+                          }
+        
+        #time fixed effects
+        time_names = self.time_periods[self.time_periods_not_na['global']]
+        base_time = time_names[0]
+        estimated_time_vals = self.time_FE_layer.weights[0].numpy().flatten()
+        
+        self.beta = pd.DataFrame(
+        {"time": time_names[1:], "estimate": estimated_time_vals}
+        ).set_index("time")
+        
+
+        self.beta_dict = {
+            t: v for t, v in zip(time_names[1:], estimated_time_vals)
+        }
+       
         
     def load_params(self, filepath):
         """

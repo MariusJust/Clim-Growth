@@ -1,8 +1,6 @@
 from utils.miscelaneous.warnings import turn_off_warnings
 turn_off_warnings()
-
 import hydra
-
 import os
 import ast
 import multiprocessing as mp
@@ -11,7 +9,13 @@ from omegaconf import OmegaConf, DictConfig
 from simulations.simulation_functions import  simulate, illustrate_synthetic_data, Pivot
 from utils.parallel import MultiprocessingMC, Multiprocess
 from utils.miscelaneous import save_yaml, save_numpy
-def mc_loop(cfg, spec, model):
+import tensorflow as tf
+from pathlib import Path
+from hydra.core.hydra_config import HydraConfig
+
+import time
+
+def mc_loop(cfg, spec, model, run_dir):
     
 ###########################################################################################################################################################
 #we employ the following simulation procedure: 
@@ -30,29 +34,18 @@ def mc_loop(cfg, spec, model):
         print(f"\n=== Running initial training loop ===")
         nodes = [ast.literal_eval(s) for s in cfg.instance.nodes_list]
     
-    
-        # train_kwargs = {
-        # # "cfg": cfg.instance,
-        # "data": simulate(
-        #     seed= 0,
-        #     n_countries=196,
-        #     n_years=63,
-        #     specification='Leirvik',
-        #     add_noise=True,
-        #     sample_data=False,
-        #     dynamic=True)
-        # }
-        
+      
         train_kwargs = {
         "cfg": cfg.instance,
         "data": simulate(
             seed= cfg.instance.seed_value,
-            n_countries=cfg.instance.n_countries,
-            n_years=cfg.instance.time_periods,
             specification=spec,
             add_noise=True,
             sample_data=cfg.mc.sample_data,
-            dynamic=cfg.instance.dynamic_model)
+            dynamic=cfg.instance.dynamic_model,
+            run_dir=run_dir
+            ),
+        "run_dir": run_dir
         }
         
         
@@ -84,16 +77,18 @@ def mc_loop(cfg, spec, model):
             specification=spec,
             model=model,
             node_index=best_node_idx,
-            nodes_list=nodes
+            nodes_list=nodes,
+            run_dir=run_dir
         )
-        all_surfaces, country_FE = worker_mc.run()
+        all_surfaces, country_FE, time_FE = worker_mc.run()
 
     else: #benchmark case
         print(f"\n=== Running {cfg.mc.reps} Monte Carlo itterations for model {model} ===")
         worker_mc = MultiprocessingMC(
             cfg=cfg,
             specification=spec,
-            model=model
+            model=model,
+            run_dir=run_dir
         )
         
         all_surfaces, _ = worker_mc.run()
@@ -116,12 +111,15 @@ def mc_loop(cfg, spec, model):
         type="Static"
 
 
-    path = f"results/MonteCarlo/{type}/{spec}/{model}/{cfg.instance.model_selection}/{datetime.today().strftime('%Y-%m-%d')}/surfaces_{best_node}.np"
+    path = f"{run_dir}/surfaces_{best_node}.np"
     save_numpy(path, all_surfaces)
     
     if model=="NN":
-        path=f"results/MonteCarlo/{type}/{spec}/{model}/{cfg.instance.model_selection}/{datetime.today().strftime('%Y-%m-%d')}/_country_FE.np"
+        path=f"{run_dir}/country_FE.np"
         save_numpy(path, country_FE)
+        
+        path=f"{run_dir}/time_FE.np"
+        save_numpy(path, time_FE)
 
 
 
@@ -134,16 +132,15 @@ if __name__ == "__main__":
     @hydra.main(config_path="../../config", config_name="config_mc", version_base="1.2")
     def run_mc(cfg: DictConfig):
         
-        import tensorflow as tf
-        # unpack configs
-        specs      = cfg.mc.specifications
-        models     = cfg.mc.models
+        time_start = time.time()
+        run_dir = Path(HydraConfig.get().runtime.output_dir)
+    
+       
         
-        for model in models:
+        for model in cfg.mc.models:
 
-            for spec in specs:
-                if not os.path.exists(f"results/MonteCarlo"):
-                    raise FileNotFoundError("The directory for saving model weights does not exist.")
+            for spec in cfg.mc.specifications:
+
             
                 print(f"\n======== Running Monte Carlo for {spec} data using model: {model} ============")
                 
@@ -151,13 +148,20 @@ if __name__ == "__main__":
                 tf.keras.backend.clear_session()
             
                 # Hand off to loop
-                mc_loop(cfg, spec, model)
+                mc_loop(cfg, spec, model, run_dir)
             
             print("\nAll specifications processed.")
-            
-        path= f"results/config/MonteCarlo/{datetime.today().strftime('%Y-%m-%d')}/config.yaml"
-        save_yaml(path, OmegaConf.to_yaml(cfg, sort_keys=False))
-        print("\nMonte Carlo simulations completed for all models.")
+        
+        time_end = time.time()
+    
+        #write out how long time the job took, hh:mm:ss
+        
+        elapsed = int(time_end - time_start)
+
+        hours, remainder = divmod(elapsed, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        
+        print(f"\nMonte Carlo simulations completed for all models in {hours:02d}:{minutes:02d}:{seconds:02d}")
     run_mc()
     
 

@@ -1,13 +1,12 @@
 import os
-
 import numpy as np
-import tensorflow as tf
 import plotly.graph_objects as go
 from utils.miscelaneous import Find_data_file
+import pandas as pd
 
 
-def simulate(seed, n_countries, n_years, specification, add_noise, sample_data, dynamic):
-    import pandas as pd
+def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
+  
     """
     Simulate a synthetic panel dataset.
 
@@ -17,37 +16,78 @@ def simulate(seed, n_countries, n_years, specification, add_noise, sample_data, 
       - precipitation and temperature values as inputs
       - change in logGDP as the target variable
     """
+    
     # 1. Reproducibility
     np.random.seed(seed)
+    
+      #if sample data is true, we use the real data from our analysis, ie we take the true values of precipitation and temperature from the dataset and use that to simulate the growth. 
+    data_path = Find_data_file('MainData.xlsx')
+    data=pd.read_excel(data_path)
+    
+    years=data['Year'].values
 
-    # 2. Build time & country indices
-    years      = pd.date_range(start='1961', periods=n_years, freq='YE')
-    countries  = [f'Country_{i}' for i in range(n_countries)]
+    countries  = data['CountryCode'].values
 
+   
     output = []
     
     if sample_data: 
-        #if sample data is true, we use the real data from our analysis, ie we take the true values of precipitation and temperature from the dataset and use that to simulate the growth. 
-        data_path = Find_data_file('MainData.xlsx')
-        
-        data=pd.read_excel(data_path)
-        temperature=data['TempPopWeight']
-        precipitation=data['PrecipPopWeight']/1000
-        year=data['Year']
 
-        country_effect = np.random.normal(0, 0.025, size=len(temperature))
-        
-        time_idx =   -0.00013665 *(year - 1961)
-        time_idx_sq=0.00001*time_idx**2
-       
-    
-        
-        growth = calculate_growth(specification, temperature, precipitation, country_effect, time_idx, time_idx_sq, add_noise, dynamic=dynamic, year=year)
+        temperature = data['TempPopWeight']
+        precipitation = data['PrecipPopWeight'] / 1000
+
+        unique_countries = np.unique(countries)
+        unique_years = np.unique(years)
+
+        base_country = "AFG"
+        base_year = unique_years[0]
+
+        if base_country not in unique_countries:
+            raise ValueError(f"{base_country} not found in simulated countries")
+
+        true_country_FE = {
+            c: np.random.normal(0, 0.025)
+            for c in unique_countries
+        }
+
+        true_time_FE = {
+            t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
+            for t in unique_years
+        }
+
+        country_effect = np.array([true_country_FE[c] for c in countries])
+        time_trend = np.array([true_time_FE[t] for t in years])
+
+        true_country_FE_rel = {
+            c: true_country_FE[c] - true_country_FE[base_country]
+            for c in unique_countries if c != base_country
+        }
+
+        true_time_FE_rel = {
+            t: true_time_FE[t] - true_time_FE[base_year]
+            for t in unique_years if t != base_year
+        }
+
+        np.save(os.path.join(run_dir, "country_effect_absolute.npy"), true_country_FE)
+        np.save(os.path.join(run_dir, "country_effect_relative.npy"), true_country_FE_rel)
+        np.save(os.path.join(run_dir, "time_trend_absolute.npy"), true_time_FE)
+        np.save(os.path.join(run_dir, "time_trend_relative.npy"), true_time_FE_rel)
+
+        growth = calculate_growth(
+            specification,
+            temperature,
+            precipitation,
+            country_effect,
+            time_trend,
+            add_noise,
+            dynamic=dynamic,
+            year=years
+        )
 
         
         final_dataset = pd.DataFrame({
             'CountryCode': data['CountryCode'],
-            'Year': year,
+            'Year': years,
             'delta_logGDP': growth,
             'precipitation': precipitation,
             'temperature': temperature
@@ -58,7 +98,7 @@ def simulate(seed, n_countries, n_years, specification, add_noise, sample_data, 
             precipitation = np.random.uniform(0.012, 5.435, size=(n_countries * n_years))
             years = np.tile(np.array([year.year for year in years]),n_countries)
             country_effect = np.random.normal(0, 0.025, size=len(temperature))
-            growth = calculate_growth(specification, temperature, precipitation, country_effect, time_idx=None, time_idx_sq=None, add_noise=add_noise, dynamic=dynamic, year=years)
+            growth = calculate_growth(specification, temperature, precipitation, country_effect, time_trend, add_noise, dynamic=dynamic, year=years)
             final_dataset = pd.DataFrame({
                 'CountryCode': np.repeat(countries, n_years),
                 'Year': years,
@@ -94,7 +134,7 @@ def simulate(seed, n_countries, n_years, specification, add_noise, sample_data, 
     
     return final_dataset
 
-def calculate_growth(specification, temp, precip, country_effect, time_idx, time_idx_sq, add_noise, dynamic, year):
+def calculate_growth(specification, temp, precip, country_effect, time_trend, add_noise, dynamic, year):
      
             if dynamic: 
                 time_periods=year.max()-year.min()+1
@@ -135,7 +175,7 @@ def calculate_growth(specification, temp, precip, country_effect, time_idx, time
                         0.0008 * temp
                     + 0.007 * precip
                     + country_effect
-                    + time_idx
+                    + time_trend
                     )           
 
                 elif specification == 'Burke':
@@ -145,8 +185,7 @@ def calculate_growth(specification, temp, precip, country_effect, time_idx, time
                     -0.0005 * temp**2
                     -0.047* precip**2
                     + country_effect
-                    + time_idx
-                    + time_idx_sq
+                    + time_trend
                     )
                     
                 
@@ -161,8 +200,7 @@ def calculate_growth(specification, temp, precip, country_effect, time_idx, time
                     +0.007*temp*precip**2
                     -0.00013*temp**2*precip**2
                     + country_effect
-                    + time_idx
-                    + time_idx_sq
+                    + time_trend
                     
                     )
             
@@ -177,8 +215,7 @@ def calculate_growth(specification, temp, precip, country_effect, time_idx, time
                     + 0.01      * np.cos(2 * np.pi * temp / 15.0)            # gentle seasonal-like temp cycle
                     - 0.005     * temp * np.sin(2 * np.pi * precip / 5.0)   # interaction: wave amplitude depends on temp
                     + country_effect
-                    + time_idx
-                    + time_idx_sq
+                    + time_trend
                     )
                     
 

@@ -5,6 +5,11 @@
     "context": ".."
   },
   "remoteUser": "root",
+  "runArgs": [
+    "--memory=12g",
+    "--memory-swap=16g",
+    "--shm-size=4g"
+  ],
   "containerEnv": {
     "PYTHONPATH": "/workspaces/Paper_1/src"
   },

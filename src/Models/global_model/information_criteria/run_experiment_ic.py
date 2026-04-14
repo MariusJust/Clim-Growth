@@ -11,7 +11,7 @@ import time
 turn_off_warnings()
 
 class MainLoop:
-    def __init__(self, parent, node):
+    def __init__(self, parent, node, data=None):
    
         self.cfg=parent.cfg
         self.data=parent.data
@@ -114,16 +114,21 @@ class MainLoop:
         if self.data is None:
             
             print(f"saving model parameters to: {self.run_dir}/parameters/{self.node}.weights.h5")
+            
             # Create directory if it doesn't exist
-            path=f"{self.run_dir}/parameters/{self.node}.weights.h5"
+            path=f"{self.run_dir}/parameters/{self.node}"
             dir_path = os.path.dirname(path)
+            
             os.makedirs(dir_path, exist_ok=True)
+            
 
             self.models_tmp[best_idx_holdout].save_params(path)
+            
             return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
         else: #Monte carlo simulation
             best_surface=self.models_tmp[best_idx_BIC].model_visual
-            country_FE = self.models_tmp[best_idx_BIC].alpha
-            return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node, best_surface, country_FE 
+            country_FE = self.models_tmp[best_idx_BIC].alpha_dict
+            time_FE = self.models_tmp[best_idx_BIC].beta_dict
+            return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node, best_surface, country_FE, time_FE 
 
 

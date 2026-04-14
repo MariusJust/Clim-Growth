@@ -1,8 +1,5 @@
 import numpy as np
 import pandas as pd
-from panelsplit.cross_validation import PanelSplit
-
-
 
 def Prepare(data, data_source='WB'):
        #the growth data should contain the following columns: year, county, and GrowthWDI
@@ -73,22 +70,22 @@ def load_data(model_selection, data_source, n_splits=None, growth=None):
             growth, precip, temp = Prepare(data, data_source=data_source)
             return growth, precip, temp
         
-    elif model_selection == 'CV':
-        if growth is None:
-            data = pd.read_excel('data/MainData.xlsx')
-            growth, precip, temp = Prepare(data, data_source=data_source)
-            panel_split = PanelSplit(periods=growth['global'].index, n_splits=n_splits, gap=0, test_size=1)
+    # elif model_selection == 'CV':
+    #     if growth is None:
+    #         data = pd.read_excel('data/MainData.xlsx')
+    #         growth, precip, temp = Prepare(data, data_source=data_source)
+    #         panel_split = PanelSplit(periods=growth['global'].index, n_splits=n_splits, gap=0, test_size=1)
 
-            return growth, precip, temp, panel_split
-        else: #mc case
+    #         return growth, precip, temp, panel_split
+    #     else: #mc case
             
-            # Create a PanelSplit object for cross-validation
-            growth_global = growth['global'].reset_index()
-            growth_global['Year'] = pd.to_datetime(growth_global['Year'], format='%Y')
+    #         # Create a PanelSplit object for cross-validation
+    #         growth_global = growth['global'].reset_index()
+    #         growth_global['Year'] = pd.to_datetime(growth_global['Year'], format='%Y')
 
-            panel_split = PanelSplit(periods=growth_global['Year'], n_splits=n_splits, gap=0, test_size=1)
+    #         panel_split = PanelSplit(periods=growth_global['Year'], n_splits=n_splits, gap=0, test_size=1)
             
-            return panel_split
+    #         return panel_split
        
     else:
         raise ValueError("Invalid model_selection argument. Use 'IC' or 'CV'.")

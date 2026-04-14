@@ -89,11 +89,14 @@ class Multiprocess:
                 return cv_error, node
             else:  
                 from models.global_model.information_criteria.run_experiment_ic import MainLoop as MainLoop
-                model_loop = MainLoop(self, node)
+       
                 if data is not None:
+                    model_loop = MainLoop(self, node, data=data)
                     # Monte Carlo experiment
-                    Holdout_error, BIC, AIC, node, _, _ = model_loop.run_experiment(data=data)
+                    Holdout_error, BIC, AIC, node, _, Country_FE, Time_FE = model_loop.run_experiment()
+                    return BIC, AIC, node
                 else:
+                    model_loop = MainLoop(self, node)
                     if self.Model_selection == 'Holdout':
                         Holdout_error,_,_, node= model_loop.run_experiment()
                         return Holdout_error, node

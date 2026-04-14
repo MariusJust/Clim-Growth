@@ -31,10 +31,7 @@ def build_arg_list_ic(self):
         self.cfg.patience, 
         self.cfg.verbose, 
         self.cfg.dropout,
-        # self.cfg.n_countries, 
-        # self.cfg.time_periods,
         self.cfg.dynamic_model,
-        # self.cfg.holdout,
         self.cfg.data_source,  
         self.data
         ) for i in range(len(self.nodes_list))]
@@ -54,21 +51,20 @@ def build_arg_list_mc(self):
                 "patience": self.cfg.instance.patience,
                 "verbose": self.cfg.instance.verbose,
                 "dropout": self.cfg.instance.dropout,
-                "n_splits": self.cfg.instance.n_splits,
-                "cv_approach": self.cfg.instance.cv_approach,
-                "n_countries": self.cfg.instance.n_countries,
-                "time_periods": self.cfg.instance.time_periods,
                 "model_selection":self.cfg.instance.model_selection,
                 "dynamic_model":self.cfg.instance.dynamic_model,
+                "holdout":self.cfg.instance.holdout,
+                "input_vars":self.cfg.instance.input_vars,
+                "activation":self.cfg.instance.activation,
                 "data": simulate(
                     seed=self.cfg.instance.seed_value + rep + 1,
-                    n_countries=self.cfg.instance.n_countries,
-                    n_years=63,
                     specification=self.specification,
                     add_noise=True,
                     sample_data=self.cfg.mc.sample_data,
-                    dynamic=self.cfg.instance.dynamic_model
-                )
+                    dynamic=self.cfg.instance.dynamic_model,
+                    run_dir=self.run_dir
+                ),
+                "run_dir": self.run_dir
             }
             for rep in range(self.cfg.mc.reps)
         ]
@@ -83,8 +79,10 @@ def build_arg_list_mc(self):
                 specification=self.specification,
                 add_noise=True,
                 sample_data=self.cfg.instance.sample_data,
-                dynamic=self.cfg.instance.dynamic_model
-            )
+                dynamic=self.cfg.instance.dynamic_model,
+                run_dir=self.run_dir
+            ),
+            "run_dir": self.run_dir
         }
         for rep in range(self.cfg.mc.reps)
     ]
