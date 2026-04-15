@@ -5,7 +5,7 @@ from utils.miscelaneous import Find_data_file
 import pandas as pd
 
 
-def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
+def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir, save_effects=True, rep_id=None):
   
     """
     Simulate a synthetic panel dataset.
@@ -71,12 +71,14 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
             for t in unique_years if t != base_year
         }
 
-        np.save(os.path.join(run_dir, "country_effect_absolute.npy"), true_country_FE)
-        np.save(os.path.join(run_dir, "country_effect_relative.npy"), true_country_FE_rel)
-        np.save(os.path.join(run_dir, "time_trend_absolute.npy"), true_time_FE)
-        np.save(os.path.join(run_dir, "time_trend_relative.npy"), true_time_FE_rel)
-        np.save(os.path.join(run_dir, "country_fe_reference.npy"), np.array([base_country], dtype=object))
-        np.save(os.path.join(run_dir, "time_fe_reference.npy"), np.array([base_year], dtype=object))
+        if save_effects:
+            suffix = f"_rep{rep_id}" if rep_id is not None else ""
+            np.save(os.path.join(run_dir, f"country_effect_absolute{suffix}.npy"), true_country_FE)
+            np.save(os.path.join(run_dir, f"country_effect_relative{suffix}.npy"), true_country_FE_rel)
+            np.save(os.path.join(run_dir, f"time_trend_absolute{suffix}.npy"), true_time_FE)
+            np.save(os.path.join(run_dir, f"time_trend_relative{suffix}.npy"), true_time_FE_rel)
+            np.save(os.path.join(run_dir, f"country_fe_reference{suffix}.npy"), np.array([base_country], dtype=object))
+            np.save(os.path.join(run_dir, f"time_fe_reference{suffix}.npy"), np.array([base_year], dtype=object))
 
         growth = calculate_growth(
             specification,
