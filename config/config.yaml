@@ -18,6 +18,7 @@ instance:
   holdout: 0  
   data_source: 'wb'   # "ee" or "wb"
   ram: 300
+  data_end: 2010
   nodes_list:
     - (2,)
     # - (4,)
