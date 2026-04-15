@@ -10,6 +10,7 @@ from simulations.simulation_functions import  simulate, illustrate_synthetic_dat
 from utils.parallel import MultiprocessingMC, Multiprocess
 from utils.miscelaneous import save_yaml, save_numpy
 import tensorflow as tf
+import pandas as pd
 from pathlib import Path
 from hydra.core.hydra_config import HydraConfig
 
@@ -117,9 +118,16 @@ def mc_loop(cfg, spec, model, run_dir):
     if model=="NN":
         path=f"{run_dir}/country_FE.np"
         save_numpy(path, country_FE)
-        
+
         path=f"{run_dir}/time_FE.np"
         save_numpy(path, time_FE)
+
+        # Save key-aligned tables to make FE comparisons robust in notebooks.
+        country_fe_df = pd.DataFrame(country_FE)
+        country_fe_df.to_csv(f"{run_dir}/country_FE_table.csv", index=False)
+
+        time_fe_df = pd.DataFrame(time_FE)
+        time_fe_df.to_csv(f"{run_dir}/time_FE_table.csv", index=False)
 
 
 

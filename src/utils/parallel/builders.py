@@ -62,7 +62,9 @@ def build_arg_list_mc(self):
                     add_noise=True,
                     sample_data=self.cfg.mc.sample_data,
                     dynamic=self.cfg.instance.dynamic_model,
-                    run_dir=self.run_dir
+                    run_dir=self.run_dir,
+                    save_effects=self.cfg.mc.sample_data,
+                    rep_id=rep
                 ),
                 "run_dir": self.run_dir
             }
@@ -74,13 +76,13 @@ def build_arg_list_mc(self):
             "model": self.model,
             "data": simulate(
                 seed=self.cfg.instance.seed_value + rep + 1,
-                n_countries=self.cfg.instance.n_countries,
-                n_years=63,
                 specification=self.specification,
                 add_noise=True,
-                sample_data=self.cfg.instance.sample_data,
+                sample_data=self.cfg.mc.sample_data,
                 dynamic=self.cfg.instance.dynamic_model,
-                run_dir=self.run_dir
+                run_dir=self.run_dir,
+                save_effects=self.cfg.mc.sample_data,
+                rep_id=rep
             ),
             "run_dir": self.run_dir
         }
