@@ -58,6 +58,7 @@ def mc_loop(cfg, spec, model, run_dir):
         # year=2023
         # illustrate_synthetic_data(np.array(temp["global"].loc[[year]]).flatten(), np.array(precip["global"].loc[[year]]).flatten(), np.array(growth["global"].loc[[year]]).flatten())
 
+
      
     ## step 2 - Only done for the neural network
         worker = Multiprocess(**train_kwargs)
@@ -174,3 +175,4 @@ if __name__ == "__main__":
     
 
         
+
