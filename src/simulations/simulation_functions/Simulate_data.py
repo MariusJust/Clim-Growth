@@ -5,7 +5,7 @@ from utils.miscelaneous import Find_data_file
 import pandas as pd
 
 
-def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
+def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir, save_effects=True, rep_id=None, fixed_effects=None):
   
     """
     Simulate a synthetic panel dataset.
@@ -36,24 +36,31 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
         temperature = data['TempPopWeight']
         precipitation = data['PrecipPopWeight'] / 1000
 
-        unique_countries = np.unique(countries)
-        unique_years = np.unique(years)
+        # Use the same ordering as the model input pivots so FE vectors align by key.
+        # (pivot() column/index ordering can differ from np.unique order across environments.)
+        country_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').columns
+        year_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').index
 
-        base_country = "AFG"
+        unique_countries = country_order.to_numpy()
+        unique_years = year_order.to_numpy()
+
+        # Keep the reference category consistent with the omitted dummy in model training.
+        base_country = unique_countries[0]
         base_year = unique_years[0]
 
-        if base_country not in unique_countries:
-            raise ValueError(f"{base_country} not found in simulated countries")
+        if fixed_effects is not None:
+            true_country_FE = fixed_effects["country"]
+            true_time_FE = fixed_effects["time"]
+        else:
+            true_country_FE = {
+                c: np.random.normal(0, 0.025)
+                for c in unique_countries
+            }
 
-        true_country_FE = {
-            c: np.random.normal(0, 0.025)
-            for c in unique_countries
-        }
-
-        true_time_FE = {
-            t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
-            for t in unique_years
-        }
+            true_time_FE = {
+                t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
+                for t in unique_years
+            }
 
         country_effect = np.array([true_country_FE[c] for c in countries])
         time_trend = np.array([true_time_FE[t] for t in years])
@@ -68,10 +75,14 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir):
             for t in unique_years if t != base_year
         }
 
-        np.save(os.path.join(run_dir, "country_effect_absolute.npy"), true_country_FE)
-        np.save(os.path.join(run_dir, "country_effect_relative.npy"), true_country_FE_rel)
-        np.save(os.path.join(run_dir, "time_trend_absolute.npy"), true_time_FE)
-        np.save(os.path.join(run_dir, "time_trend_relative.npy"), true_time_FE_rel)
+        if save_effects:
+            suffix = f"_rep{rep_id}" if rep_id is not None else ""
+            np.save(os.path.join(run_dir, f"country_effect_absolute{suffix}.npy"), true_country_FE)
+            np.save(os.path.join(run_dir, f"country_effect_relative{suffix}.npy"), true_country_FE_rel)
+            np.save(os.path.join(run_dir, f"time_trend_absolute{suffix}.npy"), true_time_FE)
+            np.save(os.path.join(run_dir, f"time_trend_relative{suffix}.npy"), true_time_FE_rel)
+            np.save(os.path.join(run_dir, f"country_fe_reference{suffix}.npy"), np.array([base_country], dtype=object))
+            np.save(os.path.join(run_dir, f"time_fe_reference{suffix}.npy"), np.array([base_year], dtype=object))
 
         growth = calculate_growth(
             specification,

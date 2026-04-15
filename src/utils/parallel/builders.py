@@ -1,3 +1,6 @@
+import os
+import numpy as np
+
 
  
 def build_arg_list_cv(self):
@@ -39,6 +42,16 @@ def build_arg_list_ic(self):
   
 def build_arg_list_mc(self):
     from simulations.simulation_functions import simulate
+
+    fixed_effects = None
+    if self.cfg.mc.sample_data:
+        country_path = os.path.join(self.run_dir, "country_effect_absolute.npy")
+        time_path = os.path.join(self.run_dir, "time_trend_absolute.npy")
+        if os.path.exists(country_path) and os.path.exists(time_path):
+            fixed_effects = {
+                "country": np.load(country_path, allow_pickle=True).item(),
+                "time": np.load(time_path, allow_pickle=True).item(),
+            }
     if self.model == "NN":
         self.rep_args = [
             {
@@ -62,7 +75,10 @@ def build_arg_list_mc(self):
                     add_noise=True,
                     sample_data=self.cfg.mc.sample_data,
                     dynamic=self.cfg.instance.dynamic_model,
-                    run_dir=self.run_dir
+                    run_dir=self.run_dir,
+                    save_effects=self.cfg.mc.sample_data,
+                    rep_id=rep,
+                    fixed_effects=fixed_effects
                 ),
                 "run_dir": self.run_dir
             }
@@ -74,13 +90,14 @@ def build_arg_list_mc(self):
             "model": self.model,
             "data": simulate(
                 seed=self.cfg.instance.seed_value + rep + 1,
-                n_countries=self.cfg.instance.n_countries,
-                n_years=63,
                 specification=self.specification,
                 add_noise=True,
-                sample_data=self.cfg.instance.sample_data,
+                sample_data=self.cfg.mc.sample_data,
                 dynamic=self.cfg.instance.dynamic_model,
-                run_dir=self.run_dir
+                run_dir=self.run_dir,
+                save_effects=self.cfg.mc.sample_data,
+                rep_id=rep,
+                fixed_effects=fixed_effects
             ),
             "run_dir": self.run_dir
         }
