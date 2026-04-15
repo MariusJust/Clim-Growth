@@ -5,7 +5,7 @@ from utils.miscelaneous import Find_data_file
 import pandas as pd
 
 
-def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir, save_effects=True, rep_id=None):
+def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir, save_effects=True, rep_id=None, fixed_effects=None):
   
     """
     Simulate a synthetic panel dataset.
@@ -48,15 +48,19 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir, save
         base_country = unique_countries[0]
         base_year = unique_years[0]
 
-        true_country_FE = {
-            c: np.random.normal(0, 0.025)
-            for c in unique_countries
-        }
+        if fixed_effects is not None:
+            true_country_FE = fixed_effects["country"]
+            true_time_FE = fixed_effects["time"]
+        else:
+            true_country_FE = {
+                c: np.random.normal(0, 0.025)
+                for c in unique_countries
+            }
 
-        true_time_FE = {
-            t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
-            for t in unique_years
-        }
+            true_time_FE = {
+                t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
+                for t in unique_years
+            }
 
         country_effect = np.array([true_country_FE[c] for c in countries])
         time_trend = np.array([true_time_FE[t] for t in years])
