@@ -1,7 +1,7 @@
 from multiprocessing import Pool
 from tqdm import tqdm
 from multiprocessing import TimeoutError
-from .builders import build_arg_list_cv, build_arg_list_ic
+from .builders import build_arg_list_ic
 import ast
 
 

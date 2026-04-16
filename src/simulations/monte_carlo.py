@@ -44,22 +44,13 @@ def mc_loop(cfg, spec, model, run_dir):
             add_noise=True,
             sample_data=cfg.mc.sample_data,
             dynamic=cfg.instance.dynamic_model,
-            run_dir=run_dir
+            run_dir=run_dir,
+            save_effects=True,
             ),
         "run_dir": run_dir
         }
         
-        
-        # # #illustrate the data
-        # import numpy as np
-        # growth, precip, temp = Pivot(train_kwargs["data"])
-
-        
-        # year=2023
-        # illustrate_synthetic_data(np.array(temp["global"].loc[[year]]).flatten(), np.array(precip["global"].loc[[year]]).flatten(), np.array(growth["global"].loc[[year]]).flatten())
-
-
-     
+      
     ## step 2 - Only done for the neural network
         worker = Multiprocess(**train_kwargs)
         results = worker.run()
@@ -98,37 +89,18 @@ def mc_loop(cfg, spec, model, run_dir):
 
 
 ## step 4    
-    # growth, precip, temp = Pivot(train_kwargs["data"])
-    # x_train = {0:temp, 1:precip}
-    
-    # factory = Model(node=best_node, x_train=x_train, y_train=growth, dropout=cfg.instance.dropout, formulation=cfg.instance.formulation, penalty=cfg.instance.penalty)
-    
-    # ensemble_model = factory.get_model()
-    # ensemble_model.model.set_weights(avg_weights)
-    
-    # Save the model weights
-    if cfg.instance.dynamic_model: 
-        type="Dynamic"
-    else:
-        type="Static"
-
-
+  
     path = f"{run_dir}/surfaces_{best_node}.np"
     save_numpy(path, all_surfaces)
     
     if model=="NN":
-        path=f"{run_dir}/country_FE.np"
-        save_numpy(path, country_FE)
-
-        path=f"{run_dir}/time_FE.np"
-        save_numpy(path, time_FE)
-
+       
         # Save key-aligned tables to make FE comparisons robust in notebooks.
         country_fe_df = pd.DataFrame(country_FE)
-        country_fe_df.to_csv(f"{run_dir}/country_FE_table.csv", index=False)
+        country_fe_df.to_csv(f"{run_dir}/country_FE_table_{spec}.csv", index=False)
 
         time_fe_df = pd.DataFrame(time_FE)
-        time_fe_df.to_csv(f"{run_dir}/time_FE_table.csv", index=False)
+        time_fe_df.to_csv(f"{run_dir}/time_FE_table_{spec}.csv", index=False)
 
 
 

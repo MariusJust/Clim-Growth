@@ -2,7 +2,7 @@ from tensorflow.keras.layers import Input, Add, concatenate
 from tensorflow.keras import Model
 import tensorflow as tf
 import numpy as np
-from models.global_model.model_functions.helper_functions import Dummies, create_fixed_effects, Vectorize, Count_params, Matrixize, create_hidden_layers, create_output_layer, Visual_model, prediction_model
+from models.global_model.model_functions.helper_functions import Dummies, CountryTimeTrends, create_fixed_effects, create_country_trends, Vectorize, Count_params, Matrixize, create_hidden_layers, create_output_layer, Visual_model, prediction_model
 
 def SetupGlobalModel(self):
     
@@ -74,16 +74,30 @@ def SetupGlobalModel(self):
                         (1, self.input_data[self.input_vars[0]].shape[1], self.N['global']) )
     
 
+    self.time_periods = np.arange(1, self.T + 1, 1)
 
-    self.time_periods = np.arange(1, self.T+1, 1)
+    use_country_trends = bool(getattr(self, "country_trends", False))
 
-    #when we are apllying within transformation, we do not include country trends, instead we use the P matrix
-    if self.holdout==0:
-      dummies_layer = Dummies(self.N['global'], self.T, self.time_periods_na['global'])
-      Delta1, Delta2 = dummies_layer(self.input[self.input_vars[0]])
+    if self.holdout == 0:
+        dummies_layer = Dummies(
+            self.N['global'],
+            self.T,
+            self.time_periods_na['global'],
+            country_trends=use_country_trends
+        )
+        Delta1, Delta2 = dummies_layer(self.input[self.input_vars[0]])
 
-      # Creating fixed effects
-      country_FE, time_FE, self.country_FE_layer, self.time_FE_layer = create_fixed_effects(self, Delta1, Delta2)
+        country_FE, time_FE, self.country_FE_layer, self.time_FE_layer = create_fixed_effects(self, Delta1, Delta2)
+
+        if use_country_trends:
+            trend_layer = CountryTimeTrends(name="country_time_trends")
+            linear_trend_input, quadratic_trend_input = trend_layer([Delta1, Delta2])
+
+            linear_trend, quadratic_trend, self.linear_trend_layer, self.quadratic_trend_layer = create_country_trends(
+                self,
+                linear_trend_input,
+                quadratic_trend_input
+            )
       
       # Vectorize the inputs
     for var in self.input_vars: 
@@ -106,10 +120,15 @@ def SetupGlobalModel(self):
     #when we use the within transformation, we do not add fixed effects
     if self.holdout==0:
         if self.dynamic_model: 
-          output = Add()([country_FE, output_tmp])
+            components = [country_FE, output_tmp]
+            if use_country_trends:
+              components.extend([linear_trend, quadratic_trend])
+            output = Add()(components)
         else:
-         
-          output = Add()([time_FE, country_FE, output_tmp])
+          components = [time_FE, country_FE, output_tmp]
+          if use_country_trends:
+            components.extend([linear_trend, quadratic_trend])
+          output = Add()(components)
     else:
       output = output_tmp
       

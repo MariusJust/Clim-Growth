@@ -10,7 +10,7 @@ import plotly.io as pio
 
 
 
-def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_dim=True):
+def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_dim=True, precip_capped=False, only_dims=False):
    
     """
     Create the input for predictions by standardizing temperature and precipitation.
@@ -30,12 +30,19 @@ def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_d
     if mc: #we use meters in mc 
         precip_vals=np.linspace(0.012,5.435,90)
     else:
-        precip_vals= np.linspace(12.03731002, 5435.30011, 90)
-   
+        if precip_capped:
+            #capping precipitation at 3000 mm
+            precip_vals= np.linspace(12.03731002, 3000, 90)
+        else:
+            precip_vals= np.linspace(12.03731002, 5435.30011, 90)
+
 
     if time_periods is not None:
         
         T, P, time = np.meshgrid(temp_vals, precip_vals, np.arange(0,time_periods+1))  
+        
+        if only_dims:
+            return T, P, time
         P_std=(P-mean_P)/std_P  
         T_std=(T - mean_T) / std_T
     
@@ -56,6 +63,9 @@ def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_d
             return flat_T_std.reshape((1, 1, -1, 1)), T
         
         T, P = np.meshgrid(temp_vals, precip_vals)  
+        
+        if only_dims:
+            return T, P
         P_std=(P-mean_P)/std_P  
         T_std=(T - mean_T) / std_T
     
@@ -315,7 +325,7 @@ def model_confidence_plot(surface, std, T, P):
 # ============================================================
 # Helper: add one 3D bar (cuboid) as a Mesh3d trace
 # ============================================================
-def add_histogram(fig, data, legend):
+def add_histogram(fig, data, legend, precip_capped=False):
     def add_bar3d(fig, x0, x1, y0, y1, z0, z1, color, opacity=1, showscale=False,
                 coloraxis=None):
         """
@@ -372,7 +382,11 @@ def add_histogram(fig, data, legend):
     temp_max = int(np.ceil(temp_obs.max()))
 
     precip_min = int(np.floor(precip_obs.min()))
-    precip_max = int(np.ceil(precip_obs.max()))
+    if precip_capped:
+        #capping precipitation at 3000 mm
+        precip_max = 3
+    else:
+        precip_max = int(np.ceil(precip_obs.max()))
 
     temp_edges = np.arange(temp_min, temp_max + 1, 1)         # 1°C bins
     precip_edges = np.arange(precip_min, precip_max + 1, 1/3)   # 1 m bins

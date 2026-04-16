@@ -5,7 +5,7 @@ defaults:
 
 # Monte Carlo–specific block
 mc:
-  reps:         1
+  reps:         2
   base_seed:    0
   sample_data: True     # whether to sample from real-world data or simulate entirely synthetic data
   specifications:

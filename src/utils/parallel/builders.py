@@ -37,7 +37,7 @@ def build_arg_list_ic(self):
         self.cfg.dynamic_model,
         self.cfg.data_source,
         #we have the data end year in the config file, so we can use that to filter out the data after that year.   
-        self.data[self.data['Year']<=self.cfg.data_end]
+        self.data
         ) for i in range(len(self.nodes_list))]
             
   

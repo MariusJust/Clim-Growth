@@ -58,15 +58,19 @@ def Prepare(data, data_source='WB'):
     
     return growth_dict, precip_dict, temp_dict
 
-def load_data(model_selection, data_source, n_splits=None, growth=None):
+def load_data(model_selection, data_source, n_splits=None, growth=None, end_year=None):
     
     if model_selection == 'IC':
         if data_source.lower()=='wb':
             data = pd.read_excel('data/MainData.xlsx')
+            if end_year is not None:
+                data = data[data['Year'] <= end_year]
             growth, precip, temp = Prepare(data, data_source=data_source)
             return growth, precip, temp
         elif data_source.lower()=='ee':
             data = pd.read_csv("data/ee_data.csv", sep=";")
+            if end_year is not None:
+                data = data[data['Year'] <= end_year]
             growth, precip, temp = Prepare(data, data_source=data_source)
             return growth, precip, temp
         

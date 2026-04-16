@@ -42,7 +42,7 @@ class MainLoop:
             from simulations.simulation_functions import Pivot
             self.growth, self.precip, self.temp = Pivot(self.data)
         else:   
-            self.growth, self.precip, self.temp = load_data('IC', self.cfg.data_source)
+            self.growth, self.precip, self.temp = load_data('IC', self.cfg.data_source, end_year=self.cfg.data_end)
    
    
     def run_experiment(self):   
@@ -116,15 +116,24 @@ class MainLoop:
             print(f"saving model parameters to: {self.run_dir}/parameters/{self.node}.weights.h5")
             
             # Create directory if it doesn't exist
-            path=f"{self.run_dir}/parameters/{self.node}"
+            path=f"{self.run_dir}/parameters/{self.node}.weights.h5"
             dir_path = os.path.dirname(path)
             
             os.makedirs(dir_path, exist_ok=True)
             
+            
 
             self.models_tmp[best_idx_holdout].save_params(path)
             
-            return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
+            #also save the time, country fixed effects and the country trends 
+            if self.cfg.holdout == 0:
+                self.models_tmp[best_idx_holdout].beta.to_csv(f"{self.run_dir}/parameters/{self.node}.Time_FE.csv")
+                self.models_tmp[best_idx_holdout].alpha.to_csv(f"{self.run_dir}/parameters/{self.node}.Country_FE.csv")
+                if bool(getattr(self.cfg, "country_trends", False)):
+                    self.models_tmp[best_idx_holdout].linear_trend.to_csv(f"{self.run_dir}/parameters/{self.node}.linear_trend.csv")
+                    self.models_tmp[best_idx_holdout].quadratic_trend.to_csv(f"{self.run_dir}/parameters/{self.node}.quadratic_trend.csv")
+
+43            return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
         else: #Monte carlo simulation
             best_surface=self.models_tmp[best_idx_BIC].model_visual
             country_FE = self.models_tmp[best_idx_BIC].alpha_dict

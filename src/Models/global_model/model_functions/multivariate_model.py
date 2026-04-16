@@ -148,7 +148,7 @@ class MultivariateModel:
 
         #country fixed effects
         country_names = list(self.individuals['global'])
-        base_country = country_names[0]              # omitted category, likely AFG
+
         estimated_country_vals = self.country_FE_layer.weights[0].numpy().flatten()
 
         
@@ -161,18 +161,34 @@ class MultivariateModel:
         
         #time fixed effects
         time_names = self.time_periods[self.time_periods_not_na['global']]
-        base_time = time_names[0]
+      
         estimated_time_vals = self.time_FE_layer.weights[0].numpy().flatten()
         
         self.beta = pd.DataFrame(
         {"time": time_names[1:], "estimate": estimated_time_vals}
         ).set_index("time")
         
+        
 
         self.beta_dict = {
             t: v for t, v in zip(time_names[1:], estimated_time_vals)
         }
-       
+        
+        
+        
+        
+        
+        if self.holdout == 0 and bool(getattr(self, "country_trends", False)):
+            linear_vals = self.linear_trend_layer.weights[0].numpy().flatten()
+            quad_vals = self.quadratic_trend_layer.weights[0].numpy().flatten()
+            all_countries = list(self.individuals['global'])
+
+            self.linear_trend = pd.DataFrame({"country": all_countries, "estimate": linear_vals}).set_index("country")
+            self.quadratic_trend = pd.DataFrame({"country": all_countries, "estimate": quad_vals}).set_index("country")
+            
+            self.linear_trend_dict = {c: v for c, v in zip(all_countries, linear_vals)}
+            self.quadratic_trend_dict = {c: v for c, v in zip(all_countries, quad_vals)}
+            
         
     def load_params(self, filepath):
         """
