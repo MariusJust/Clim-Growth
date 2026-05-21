@@ -17,10 +17,11 @@ debug.py
 drivers/
 runs/
 notebooks/scratch/
-
+.claude/
 data/*
 !data/MainData.xlsx
 
 results/*
+
 !results/paper/
 !results/paper/**

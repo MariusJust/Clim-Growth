@@ -6,12 +6,11 @@ import ast
 
 
 class Multiprocess:
-    
+
     """
-    This class is designed to run either cross-validation (CV) or information criteria (IC) based model selection in parallel.
+    This class runs information criteria (IC) based model selection in parallel.
     It initializes with configuration parameters (from the config folder) and data, builds the argument list for each node, and executes the training in parallel.
-    The results are stored in a dictionary where keys are node indices and values are lists containing either cross-validation errors, BIC/AIC values or holdout errors.
-    args are created in the 
+    The results are stored in a dictionary where keys are node indices and values are lists containing either BIC/AIC values or holdout errors.
     """
     def __init__(self, cfg, run_dir, data=None):
         self.Model_selection = cfg.model_selection
@@ -21,23 +20,21 @@ class Multiprocess:
         self.run_dir = run_dir
 
     def run(self):
-      
-        if self.Model_selection == 'CV':
-            build_arg_list_cv(self)
-        elif self.Model_selection == 'IC' or self.Model_selection == 'Holdout':
+
+        if self.Model_selection == 'IC' or self.Model_selection == 'Holdout':
             build_arg_list_ic(self)
         else:
-            raise ValueError("Model_selection must be either 'CV', 'IC' or 'Holdout'")
-        
-    
+            raise ValueError("Model_selection must be either 'IC' or 'Holdout'")
+
+
         print(f"Starting parallel processing with {self.cfg.n_process} processes...")
-        results= self.parallel_execution() 
+        results= self.parallel_execution()
 
         return results
-    
+
 
     def parallel_execution(self):
-    
+
             self.storage = {}
 
             pool = Pool(self.cfg.n_process)
@@ -46,34 +43,31 @@ class Multiprocess:
                 for i in range(len(self.nodes_list))
             ]
             pool.close()
-            
+
             for i, async_result in enumerate(tqdm(async_results, desc="Processing nodes", unit="node")):
                 try:
-                    result = async_result.get(timeout=self.cfg.timeout_per_node) 
+                    result = async_result.get(timeout=self.cfg.timeout_per_node)
                 except TimeoutError:
                     print(f"Timeout occurred for node {i}")
                     self.storage[i]=None
-                    continue 
-                
-                if self.Model_selection=='CV':
-                    cv_error, node = result
-                    self.storage[node] = [cv_error]
+                    continue
+
+                if self.Model_selection == 'Holdout':
+                    holdout_error, node = result
+                    self.storage[node] = [holdout_error]
                 else:
-                    if self.Model_selection == 'Holdout':
-                        holdout_error, node = result
-                        self.storage[node] = [holdout_error]
-                    else:
-                        bic, aic, node = result
-                        self.storage[node] = [bic,aic]
+                    bic, aic, node = result
+                    self.storage[node] = [bic,aic]
+
             pool.terminate()
             pool.join()
-                  
-            return self.storage 
+
+            return self.storage
 
 
     def worker(self, node, data=None):
         if self.cfg.formulation == 'regional' or self.cfg.formulation == 'income':
-            from models.regional_model.information_criteria.run_experiment_ic import MainLoop as MainLoop
+            from models.regional_model.run_experiment_ic import MainLoop as MainLoop
             model_loop = MainLoop(self, node)
             if self.Model_selection == 'Holdout':
                 Holdout_error, BIC, AIC, node = model_loop.run_experiment()
@@ -82,26 +76,18 @@ class Multiprocess:
                 Holdout_error, BIC, AIC, node= model_loop.run_experiment()
                 return BIC, AIC, node
         else:
-            if self.Model_selection == 'CV':
-                from models.global_model.cross_validation.run_experiment_cv import MainLoop as MainLoop
-                model_loop = MainLoop(self, node)
-                cv_error, node, *unused = model_loop.run_experiment()
-                return cv_error, node
-            else:  
-                from models.global_model.information_criteria.run_experiment_ic import MainLoop as MainLoop
-       
-                if data is not None:
-                    model_loop = MainLoop(self, node, data=data)
-                    # Monte Carlo experiment
-                    Holdout_error, BIC, AIC, node, _, Country_FE, Time_FE = model_loop.run_experiment()
-                    return BIC, AIC, node
-                else:
-                    model_loop = MainLoop(self, node)
-                    if self.Model_selection == 'Holdout':
-                        Holdout_error,_,_, node= model_loop.run_experiment()
-                        return Holdout_error, node
-                    else:
-                        _, BIC, AIC, node = model_loop.run_experiment()
-                        return BIC, AIC, node
+            from models.global_model.run_experiment_ic import MainLoop as MainLoop
 
-    
+            if data is not None:
+                model_loop = MainLoop(self, node, data=data)
+                # Monte Carlo experiment
+                Holdout_error, BIC, AIC, node, *_ = model_loop.run_experiment()
+                return BIC, AIC, node
+            else:
+                model_loop = MainLoop(self, node)
+                if self.Model_selection == 'Holdout':
+                    Holdout_error,_,_, node= model_loop.run_experiment()
+                    return Holdout_error, node
+                else:
+                    _, BIC, AIC, node = model_loop.run_experiment()
+                    return BIC, AIC, node

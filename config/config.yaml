@@ -6,7 +6,7 @@ instance:
   patience: 3
   verbose: 2
   dropout: 0
-  n_process: 2
+  n_process: 1
   model_selection: 'IC' #  'Holdout', 'IC'
   formulation : 'global'          # Model formulation, "global", "regional" or "income"
   timeout_per_node: 100000
@@ -15,9 +15,11 @@ instance:
     - precip
   activation: 'swish' #
   country_trends: True
+  quadratic_trends: False   # only used when country_trends is True; set False for linear-only trends
+  group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
   dynamic_model: False
-  holdout: 0  
-  data_source: 'wb'   # "ee" or "wb"
+  holdout: 0
+  data_source: 'ee'   # "ee" or "wb"
   ram: 300
   data_end: 2010
   nodes_list:

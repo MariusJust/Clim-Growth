@@ -1,2 +1,2 @@
-from .global_model.model_functions.multivariate_model import MultivariateModel as MultivariateModelGlobal
-from .regional_model.model_functions.multivariate_model import MultivariateModel as MultivariateModelRegional
+from .global_model.multivariate_model import MultivariateModel as MultivariateModelGlobal
+from .regional_model.multivariate_model import MultivariateModel as MultivariateModelRegional

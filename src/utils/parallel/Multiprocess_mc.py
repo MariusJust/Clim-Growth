@@ -40,6 +40,8 @@ class MultiprocessingMC:
         self.all_surfaces = []
         self.all_country_FE = []
         self.all_time_FE = []
+        self.all_linear_trends = []
+        self.all_quadratic_trends = []
         
         def error_cb(exc):
             import traceback, sys
@@ -48,7 +50,7 @@ class MultiprocessingMC:
 
         def callback_one(result):
             try:
-                best_surface, country_FE, time_FE, runtime = result
+                best_surface, country_FE, time_FE, linear_trend, quadratic_trend, runtime = result
                 # ensure values exist
                 try:
                     with self.lock:
@@ -56,6 +58,8 @@ class MultiprocessingMC:
                         self.all_surfaces.append(best_surface)
                         self.all_country_FE.append(country_FE)
                         self.all_time_FE.append(time_FE)
+                        self.all_linear_trends.append(linear_trend)
+                        self.all_quadratic_trends.append(quadratic_trend)
                 except AttributeError:
                     # fallback if lock is not a context manager
                     self.lock.acquire()
@@ -64,6 +68,8 @@ class MultiprocessingMC:
                         self.all_surfaces.append(best_surface)
                         self.all_country_FE.append(country_FE)
                         self.all_time_FE.append(time_FE)
+                        self.all_linear_trends.append(linear_trend)
+                        self.all_quadratic_trends.append(quadratic_trend)
                     finally:
                         self.lock.release()
 
@@ -89,7 +95,7 @@ class MultiprocessingMC:
         pool.close()
         pool.join()
 
-        return self.all_surfaces, self.all_country_FE, self.all_time_FE
+        return self.all_surfaces, self.all_country_FE, self.all_time_FE, self.all_linear_trends, self.all_quadratic_trends
 
 
 def mc_worker(**payload):
@@ -149,11 +155,12 @@ def mc_worker(**payload):
         )
 
     if model == "NN":
-        from models.global_model.information_criteria.run_experiment_ic import MainLoop
+        from models.global_model.run_experiment_ic import MainLoop
         allowed_cfg = (
             "no_inits", "seed_value", "lr", "min_delta", "patience",
             "verbose", "dropout", "n_splits", "cv_approach",  "dynamic_model",
-            "model_selection", "formulation", "data_source", "holdout", "input_vars", "activation"
+            "model_selection", "formulation", "data_source", "holdout", "input_vars",
+            "activation", "country_trends"
         )
 
         cfg_dict = {k: payload[k] for k in allowed_cfg if k in payload}
@@ -163,20 +170,20 @@ def mc_worker(**payload):
        
         main_loop = MainLoop(parent, node, data=data)
 
-        *unused, best_surface, country_FE, time_FE = main_loop.run_experiment()
+        *unused, best_surface, country_FE, time_FE, linear_trend, quadratic_trend = main_loop.run_experiment()
 
         runtime = time.time() - t0
         preds = best_surface.predict({"X_in": pred_input}, verbose=0).reshape(-1,)
-        return preds, country_FE, time_FE, runtime
+        return preds, country_FE, time_FE, linear_trend, quadratic_trend, runtime
 
      
 
     elif model == "Quadratic":
         from simulations.simulation_functions import quadratic_model
         predictions = quadratic_model(data, P, T)
-        return predictions, None, None, time.time() - t0
+        return predictions, None, None, None, None, time.time() - t0
 
     else:
         from simulations.simulation_functions import interaction_model
         predictions = interaction_model(data, P, T)
-        return predictions, None, None, time.time() - t0
+        return predictions, None, None, None, None, time.time() - t0

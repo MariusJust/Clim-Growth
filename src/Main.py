@@ -21,8 +21,7 @@ def main(cfg: DictConfig):
     worker = Multiprocess(inst, run_dir)
     results = worker.run()
     
-    
-    
+
     
     print("Saving results to:", run_dir / "results.npy")
     

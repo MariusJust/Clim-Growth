@@ -16,6 +16,33 @@ from hydra.core.hydra_config import HydraConfig
 
 import time
 
+def save_estimated_parameter_outputs(run_dir, spec, model, country_FE, time_FE, linear_trends=None, quadratic_trends=None):
+    output_specs = [
+        ("estimated_country_fe", "country_FE", "country", country_FE),
+        ("estimated_time_trends", "time_FE", "time", time_FE),
+    ]
+
+    if linear_trends is not None and quadratic_trends is not None:
+        output_specs.extend([
+            ("estimated_country_trends", "linear_trend", "country", linear_trends),
+            ("estimated_country_trends", "quadratic_trend", "country", quadratic_trends),
+        ])
+
+    for folder_name, file_stem, key_name, records in output_specs:
+        folder = Path(run_dir) / spec / model / folder_name
+        folder.mkdir(parents=True, exist_ok=True)
+
+        table = pd.DataFrame(records)
+        table.to_csv(folder / f"{file_stem}_table.csv", index=False)
+
+        for rep, record in enumerate(records):
+            rep_df = (
+                pd.Series(record, name="estimate")
+                .rename_axis(key_name)
+                .reset_index()
+            )
+            rep_df.to_csv(folder / f"{file_stem}_rep{rep}.csv", index=False)
+
 def mc_loop(cfg, spec, model, run_dir):
     
 ###########################################################################################################################################################
@@ -46,6 +73,7 @@ def mc_loop(cfg, spec, model, run_dir):
             dynamic=cfg.instance.dynamic_model,
             run_dir=run_dir,
             save_effects=True,
+            country_trends=cfg.instance.country_trends,
             ),
         "run_dir": run_dir
         }
@@ -73,7 +101,7 @@ def mc_loop(cfg, spec, model, run_dir):
             nodes_list=nodes,
             run_dir=run_dir
         )
-        all_surfaces, country_FE, time_FE = worker_mc.run()
+        all_surfaces, country_FE, time_FE, linear_trends, quadratic_trends = worker_mc.run()
 
     else: #benchmark case
         print(f"\n=== Running {cfg.mc.reps} Monte Carlo itterations for model {model} ===")
@@ -84,24 +112,35 @@ def mc_loop(cfg, spec, model, run_dir):
             run_dir=run_dir
         )
         
-        all_surfaces, _ = worker_mc.run()
+        all_surfaces, _, _, _, _ = worker_mc.run()
 
 
 
-## step 4    
-  
-    path = f"{run_dir}/surfaces_{best_node}.np"
-    save_numpy(path, all_surfaces)
-    
-    if model=="NN":
-       
-        # Save key-aligned tables to make FE comparisons robust in notebooks.
-        country_fe_df = pd.DataFrame(country_FE)
-        country_fe_df.to_csv(f"{run_dir}/country_FE_table_{spec}.csv", index=False)
+## step 4
 
-        time_fe_df = pd.DataFrame(time_FE)
-        time_fe_df.to_csv(f"{run_dir}/time_FE_table_{spec}.csv", index=False)
+    target_dir = Path(run_dir) / spec / model
+    target_dir.mkdir(parents=True, exist_ok=True)
 
+    save_numpy(str(target_dir / "surfaces"), all_surfaces)
+
+    if model == "NN":
+        (target_dir / "best_node.txt").write_text(str(best_node))
+
+        linear_records = None
+        quadratic_records = None
+        if bool(getattr(cfg.instance, "country_trends", False)):
+            linear_records = linear_trends
+            quadratic_records = quadratic_trends
+
+        save_estimated_parameter_outputs(
+            run_dir,
+            spec,
+            model,
+            country_FE,
+            time_FE,
+            linear_records,
+            quadratic_records
+        )
 
 
 ######################################################################### Initializer ######################################################################################
@@ -147,4 +186,3 @@ if __name__ == "__main__":
     
 
         
-
