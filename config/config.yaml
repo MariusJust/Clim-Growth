@@ -19,9 +19,9 @@ instance:
   group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
   dynamic_model: False
   holdout: 0
-  data_source: 'ee'   # "ee" or "wb"
+  data_source: 'wb'   # "ee" or "wb"
   ram: 300
-  data_end: 2010
+  data_end: 2024
   nodes_list:
     - (2,)
     # - (4,)
