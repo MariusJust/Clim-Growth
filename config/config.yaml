@@ -1,10 +1,10 @@
 instance:
   optim:
-    no_inits: 1
-    seed_value: 1
+    no_inits: 10
+    seed_value: 0
     lr: 0.001
-    min_delta: 1e-3
-    patience: 2
+    min_delta: 1.0e-07
+    patience: 200
     optimizer: 'adam'        # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
     opt_momentum: 0.9        # sgd_momentum / nesterov / rmsprop
     opt_weight_decay: 0.004  # adamw
@@ -95,11 +95,11 @@ instance:
     ram: 500
 
   bootstrap:
-    n_boot: 500
+    n_boot: 1000             # Burke (2015) uses 1000 country-cluster draws
     n_process: null          # null means reuse instance.n_process (server.n_process)
-    n_inits: 5               # random initializations per bootstrap/node fit
+    n_inits: 2               # random initializations per bootstrap/node fit
     top_k: 1                 # top AIC-ranked architectures from run_dir
-    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends         # finished estimation run with results.npy
+    run_dir: runs/estimation/2026-08-27_11-01-35_global_IC_country_trends         # corrected-data run; supplies optimiser settings + BIC-best node
     nodes: null              # optional explicit list, e.g. ["(2,)", "(4,)"]
     node: (2,)               # optional single architecture, e.g. "(2,)"
     report_every: 25
