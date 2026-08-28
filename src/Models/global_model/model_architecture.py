@@ -53,7 +53,19 @@ def SetupGlobalModel(self):
     )
     self.trend_groups = None
 
-    if self.holdout == 0:
+    use_within = bool(getattr(self, "within_projection", False))
+    if use_within:
+        if self.holdout != 0:
+            raise NotImplementedError("within_projection (v1): global holdout=0 only.")
+        # dynamic_model IS supported: time enters the network as an input and the
+        # additive time fixed effect is dropped, so the within projection annihilates
+        # country fixed effects and country trends only (include_time=False below).
+        if str(getattr(self, "data_source", "wb")).lower() == "ee" or group_by_country:
+            raise NotImplementedError("within_projection (v1): wb only (no ee / group_trends_by_country).")
+        self.country_FE_layer = self.time_FE_layer = None
+        self.linear_trend_layer = self.quadratic_trend_layer = None
+
+    if self.holdout == 0 and not use_within:
         dummies_layer = Dummies(
             self.N['global'],
             self.T,
@@ -87,8 +99,11 @@ def SetupGlobalModel(self):
         self.input_vector[var]= Vectorize(self.N['global'], var)(self.input[var])
 
     if self.dynamic_model:
-      time_input=Vectorize(self.N['global'], 'time', time_periods=self.time_periods)(self.input_vector[self.input_vars[0]])
-      input_first= concatenate([[self.input_vector[var] for var in self.input_vars], time_input], axis=2)
+      # 'time' Vectorize masks a full (1, T, N) time matrix with is_nan of its
+      # input, so it must receive the RAW (1, T, N) climate input (with NaNs),
+      # not the already-vectorized (1, n_obs, 1) tensor.
+      time_input=Vectorize(self.N['global'], 'time', time_periods=self.time_periods)(self.input[self.input_vars[0]])
+      input_first= concatenate([self.input_vector[var] for var in self.input_vars] + [time_input], axis=2)
     else:
       input_first= concatenate([self.input_vector[var] for var in self.input_vars], axis=2)
 
@@ -99,7 +114,9 @@ def SetupGlobalModel(self):
     # Creating temporary output layer, without fixed effects
     output_tmp = create_output_layer(self, input_last)
 
-    if self.holdout==0:
+    if use_within:
+        output = output_tmp
+    elif self.holdout==0:
         if self.dynamic_model:
             components = [country_FE, output_tmp]
             if use_country_trends:

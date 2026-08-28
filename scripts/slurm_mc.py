@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import subprocess
 from pathlib import Path
@@ -16,11 +17,15 @@ from hydra import compose, initialize_config_dir
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_DIR = ROOT / "config"
 RUNS_DIR = ROOT / "runs"
+sys.path.insert(0, str(ROOT / "src"))
+from utils.config import flatten_instance
 
 job_id = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 with initialize_config_dir(version_base=None, config_dir=str(CONFIG_DIR)):
     cfg = compose(config_name="config_mc")
+    OmegaConf.set_struct(cfg, False)
+    cfg.instance = flatten_instance(cfg.instance)
 
 job_id += f"_MC_{cfg.mc.reps}reps"
 

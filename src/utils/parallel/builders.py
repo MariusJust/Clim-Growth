@@ -76,7 +76,7 @@ def build_arg_list_mc(self):
                 "dynamic_model":self.cfg.instance.dynamic_model,
                 "country_trends":self.cfg.instance.country_trends,
                 "data_source":self.cfg.instance.data_source,
-                "holdout":self.cfg.instance.holdout,
+                "holdout": getattr(self.cfg.instance, 'holdout', 0),
                 "input_vars":self.cfg.instance.input_vars,
                 "activation":self.cfg.instance.activation,
                 "data": simulate(

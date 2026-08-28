@@ -1,80 +1,117 @@
 instance:
-  no_inits: 1
-  seed_value: 0
-  lr: 0.001
-  min_delta: 1e-1
-  patience: 3
-  verbose: 2
-  dropout: 0
-  n_process: 1
-  model_selection: 'IC' #  'Holdout', 'IC'
-  formulation : 'global'          # Model formulation, "global", "regional" or "income"
-  timeout_per_node: 100000
-  input_vars:
-    - temp
-    - precip
-  activation: 'swish' #
-  country_trends: True
-  quadratic_trends: False   # only used when country_trends is True; set False for linear-only trends
-  group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
-  dynamic_model: False
-  holdout: 0
-  data_source: 'wb'   # "ee" or "wb"
-  ram: 300
-  data_end: 2024
-  nodes_list:
-    - (2,)
-    # - (4,)
-    # - (8,)
-    # - (16,)
-    # - (32,)
-    # - (48,)
-    # - (64,)
-    # - (2,2,)
-    # - (4,2,)
-    # - (4,4,)
-    # - (8,2,)
-    # - (8,4,)
-    # - (8,8,)
-    # - (16,2,)
-    # - (16,8,)
-    # - (16,16,)
-    # - (32,2,)
-    # - (32,4,)
-    # - (32,8,)
-    # - (32,16,)
-    # - (32,32,)
-    # - (2,2,2,)
-    # - (4,2,2,)
-    # - (4,4,2,)
-    # - (4,4,4,)
-    # - (8,2,2,)
-    # - (8,4,4,)
-    # - (8,8,2,)
-    # - (8,8,4,)
-    # - (8,8,8,)
-    # - (16,2,2,)
-    # - (16,4,2,)
-    # - (16,4,4,)
-    # - (16,8,2,)
-    # - (16,8,4,)
-    # - (16,8,8,)
-    # - (16,16,2,)
-    # - (16,16,4,)
-    # - (16,16,8,)
-    # - (16,16,16,)
-    # - (32,2,2,)
-    # - (32,4,2,)
-    # - (32,4,4,)
-    # - (32,8,2,)
-    # - (32,8,4,)
-    # - (32,8,8,)
-    # - (32,16,2,)
-    # - (32,16,4,)
-    # - (32,16,8,)
-    # - (32,16,16,)
-    # - (32,32,2,)
-    # - (32,32,4,)
-    # - (32,32,8,)
-    # - (32,32,16,)
-    # - (32,32,32,)
+  optim:
+    no_inits: 1
+    seed_value: 1
+    lr: 0.001
+    min_delta: 1e-3
+    patience: 2
+    optimizer: 'adam'        # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
+    opt_momentum: 0.9        # sgd_momentum / nesterov / rmsprop
+    opt_weight_decay: 0.004  # adamw
+    verbose: 0
+    dropout: 0
+    timeout_per_node: 100000
+    reduce_lr_on_plateau: true   # attach a Keras ReduceLROnPlateau callback to training
+    lr_reduce_factor: 0.3         # multiply lr by this when monitored loss plateaus
+    lr_reduce_patience: 100        # epochs with no improvement before each reduction
+    lr_min: 1.0e-7                # floor for the learning rate
+    use_diagnostics: true
+
+  model:
+    model_selection: 'IC' #  'Holdout', 'IC'
+    formulation: 'global'          # Model formulation, "global", "regional" or "income"
+    within_projection: true
+    target_mode: 'growth'   # 'growth' (model GrowthWDI) or 'levels' (model log GDP per capita)
+    input_vars:
+      - temp
+      - precip
+    activation: 'swish' #
+    country_trends: True
+    quadratic_trends: True   # only used when country_trends is True; set False for linear-only trends
+    group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
+    income_time_varying: true   # income formulation only: true = each country-year assigned to a quintile by its relative GDP rank that year (time-varying); false = fixed by long-run mean income
+    dynamic_model: false
+    data_source: 'wb'   # "ee" or "wb"
+    data_end: 2024
+    nodes_list:
+      - (2,)
+      # - (4,)
+      # - (8,)
+      # - (16,)
+      # - (32,)
+      # - (48,)
+      # - (64,)
+      # - (2,2,)
+      # - (4,2,)
+      # - (4,4,)
+      # - (8,2,)
+      # - (8,4,)
+      # - (8,8,)
+      # - (16,2,)
+      # - (16,8,)
+      # - (16,16,)
+      # - (32,2,)
+      # - (32,4,)
+      # - (32,8,)
+      # - (32,16,)
+      # - (32,32,)
+      # - (2,2,2,)
+      # - (4,2,2,)
+      # - (4,4,2,)
+      # - (4,4,4,)
+      # - (8,2,2,)
+      # - (8,4,4,)
+      # - (8,8,2,)
+      # - (8,8,4,)
+      # - (8,8,8,)
+      # - (16,2,2,)
+      # - (16,4,2,)
+      # - (16,4,4,)
+      # - (16,8,2,)
+      # - (16,8,4,)
+      # - (16,8,8,)
+      # - (16,16,2,)
+      # - (16,16,4,)
+      # - (16,16,8,)
+      # - (16,16,16,)
+      # - (32,2,2,)
+      # - (32,4,2,)
+      # - (32,4,4,)
+      # - (32,8,2,)
+      # - (32,8,4,)
+      # - (32,8,8,)
+      # - (32,16,2,)
+      # - (32,16,4,)
+      # - (32,16,8,)
+      # - (32,16,16,)
+      # - (32,32,2,)
+      # - (32,32,4,)
+      # - (32,32,8,)
+      # - (32,32,16,)
+      # - (32,32,32,)
+
+  server:
+    n_process: 1
+    ram: 500
+
+  bootstrap:
+    n_boot: 500
+    n_process: null          # null means reuse instance.n_process (server.n_process)
+    n_inits: 5               # random initializations per bootstrap/node fit
+    top_k: 1                 # top AIC-ranked architectures from run_dir
+    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends         # finished estimation run with results.npy
+    nodes: null              # optional explicit list, e.g. ["(2,)", "(4,)"]
+    node: (2,)               # optional single architecture, e.g. "(2,)"
+    report_every: 25
+    scheme: cluster          # cluster (country pairs/cluster) | residual_block (residual moving-block over time)
+    block_len: 4             # moving-block length in years, used only when scheme=residual_block
+
+  nic:                       # Network Information Criterion (Murata et al. 1994)
+    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends   # absolute, repo-relative, or a bare run name
+    nodes: null              # optional explicit list; else all saved archs
+    node: null               # optional single architecture
+    top_k: 10                # restrict the NIC-Akaike-weight summary to top-k
+    ridge_grid: [1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2]  # relative ridge sweep for (J'J)^-1; first is headline
+    jac_batch: 512           # observations per Jacobian batch (memory control)
+    jac_subsample: 2000         # >0 to subsample observations for the moment matrices
+    param_scope: network    # 'network' (climate sub-net only; default, fast, sufficient for NIC weights) or 'all'

@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def individual_loss(mask, p_matrix=None, n_holdout=0, name=None):
+def individual_loss(mask, p_matrix=None, n_holdout=0, name=None, within=None):
     """
     Loss function (in two layers so that it can be interpreted by tensorflow).
 
@@ -20,6 +20,14 @@ def individual_loss(mask, p_matrix=None, n_holdout=0, name=None):
         RETURNS
             * loss function evaluated in y_true and y_pred.
         """
+
+        if within is not None:
+            keep = tf.logical_not(tf.reshape(mask, [-1]))
+            f = tf.boolean_mask(tf.reshape(y_pred, [-1]), keep)
+            Bf = tf.linalg.matvec(within["B"], f)
+            Pf = f - tf.linalg.matvec(within["W"], Bf)
+            resid = within["Py"] - Pf
+            return tf.reduce_mean(tf.square(resid))
 
         if p_matrix is not None:
             time_len=tf.shape(y_pred)[1]

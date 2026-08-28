@@ -2,7 +2,10 @@ import os
 import numpy as np
 import tensorflow as tf
 import random
+from pathlib import Path
+import pandas as pd
 from utils.miscelaneous.warnings import turn_off_warnings
+from models.helper_functions.global_model.diagnostics import save_init_diagnostics, save_summary_diagnostics
 from models.helper_functions.global_model import load_data
 from models.helper_functions.shared import fid_country_map
 from models import MultivariateModelGlobal as Model
@@ -21,7 +24,6 @@ class MainLoop:
         self.models_tmp = np.zeros(self.cfg.no_inits, dtype=object)
         self.BIC_list = np.zeros(self.cfg.no_inits)
         self.AIC_list = np.zeros(self.cfg.no_inits)
-        self.holdout_MSE = np.zeros(self.cfg.no_inits)
       
         
         #build a factory for the model, so we don't have to re-initialize the model each time
@@ -45,35 +47,38 @@ class MainLoop:
             # Monte Carlo data is country-level; per-fid country grouping does not apply.
             self.country_map = None
         else:
-            self.growth, self.precip, self.temp = load_data('IC', self.cfg.data_source, end_year=self.cfg.data_end)
+            self.growth, self.precip, self.temp = load_data('IC', self.cfg.data_source, end_year=self.cfg.data_end, target_mode=getattr(self.cfg, 'target_mode', 'growth'))
             self.country_map = fid_country_map() if str(self.cfg.data_source).lower() == 'ee' else None
 
         self.factory.country_map = self.country_map
+
+    def _build_model_instance(self):
+        model_factory = Model(
+            node=self.node,
+            cfg=self.cfg,
+            x_train=self.factory.x_train,
+            y_train=self.factory.y_train,
+            x_train_val=self.factory.x_train_val,
+            y_train_val=self.factory.y_train_val,
+            x_val=self.factory.x_val,
+            y_val=self.factory.y_val,
+        )
+        model_factory.country_map = self.country_map
+        return model_factory.get_model()
    
    
     def run_experiment(self):   
-        #pass model inputs to the factory, if we have holdout periods, we need to remove them from the input data
-        if self.cfg.holdout > 0:
-            self.factory.x_train = {0: self.temp, 1: self.precip}
-            self.factory.y_train = self.growth
-            
-            temp_train_val = {key: df.iloc[:-self.cfg.holdout, :] for key, df in self.temp.items()}
-            temp_val = {key: df.iloc[-self.cfg.holdout:, :] for key, df in self.temp.items()}
-            precip_train_val = {key: df.iloc[:-self.cfg.holdout, :] for key, df in self.precip.items()}
-            precip_val = {key: df.iloc[-self.cfg.holdout:, :] for key, df in self.precip.items()}
-            growth_train_val = {key: df.iloc[:-self.cfg.holdout, :] for key, df in self.growth.items()}
-            growth_val = {key: df.iloc[-self.cfg.holdout:, :] for key, df in self.growth.items()}
-
-            self.factory.x_train_val = {0: temp_train_val, 1: precip_train_val}
-            self.factory.y_train_val = growth_train_val
-            self.factory.x_val = {0: temp_val, 1: precip_val}
-            self.factory.y_val = growth_val
-            
-        else:
-            self.factory.x_train = {0: self.temp, 1: self.precip}
-            self.factory.y_train = self.growth
+        self.factory.x_train = {0: self.temp, 1: self.precip}
+        self.factory.y_train = self.growth
             
         self.factory.node = self.node
+
+        use_diagnostics = self.data is None and bool(getattr(self.cfg, "use_diagnostics", False))
+        diagnostics_dir = Path(self.run_dir) / "diagnostics" / str(self.node)
+        if use_diagnostics:
+            diagnostics_dir.mkdir(parents=True, exist_ok=True)
+
+        init_rows = []
         
         #loop over initializations
         for j in range(self.cfg.no_inits):
@@ -85,19 +90,36 @@ class MainLoop:
             random.seed(current_seed)
 
             
-            model_instance=self.factory.get_model()
-            model_instance.fit(lr=self.cfg.lr, min_delta=self.cfg.min_delta, patience=self.cfg.patience, verbose=self.cfg.verbose)
-         
-            if self.cfg.holdout>0:
-                self.models_tmp[j] = model_instance
-                self.holdout_MSE[j] = model_instance.holdout_loss
+            if self.data is None:
+                model_instance = self._build_model_instance()
             else:
-                model_instance.in_sample_predictions()
-                self.models_tmp[j] = model_instance
+                model_instance = self.factory.get_model()
 
-                #saves the information criteria
-                self.BIC_list[j] = model_instance.BIC
-                self.AIC_list[j] = model_instance.AIC
+            model_instance.fit(lr=self.cfg.lr, min_delta=self.cfg.min_delta, patience=self.cfg.patience, verbose=self.cfg.verbose)
+            history_frame = pd.DataFrame(model_instance.model.history.history)
+         
+            model_instance.in_sample_predictions()
+         
+            self.models_tmp[j] = model_instance
+
+            #saves the information criteria
+            self.BIC_list[j] = model_instance.BIC
+            self.AIC_list[j] = model_instance.AIC
+
+            if use_diagnostics:
+                if history_frame is not None:
+                    init_rows.append(
+                        save_init_diagnostics(
+                            model_instance=model_instance,
+                            history_frame=history_frame,
+                            diagnostics_dir=diagnostics_dir,
+                            init_index=j,
+                            seed_value=current_seed,
+                            bic=self.BIC_list[j],
+                            aic=self.AIC_list[j],
+                            R2=model_instance.R2['global'] if model_instance.R2 is not None and 'global' in model_instance.R2 else None,
+                        )
+                    )
             
             time_end = time.time()  
               
@@ -113,7 +135,6 @@ class MainLoop:
         
         best_idx_BIC = int(np.argmin(self.BIC_list))
         best_idx_AIC = int(np.argmin(self.AIC_list))
-        best_idx_holdout = int(np.argmin(self.holdout_MSE))
         
     
         #only save the model parameters if the data is the real data, and not simulated data
@@ -127,21 +148,39 @@ class MainLoop:
 
             os.makedirs(dir_path, exist_ok=True)
 
-            best_idx_save = best_idx_holdout if self.cfg.holdout > 0 else best_idx_BIC
+            best_idx_save = best_idx_BIC
 
-            self.models_tmp[best_idx_save].save_params(path)
+            best_model_for_outputs = self.models_tmp[best_idx_save]
+            if use_diagnostics:
+                best_snapshot_path = diagnostics_dir / f"init_{best_idx_save}.weights.h5"
+                best_model = self._build_model_instance()
+                best_model.load_params(str(best_snapshot_path))
+                best_model.in_sample_predictions()
+                best_model.save_params(path)
+            else:
+                best_model = best_model_for_outputs
+                best_model.save_params(path)
 
             #also save the time, country fixed effects and the country trends
-            if self.cfg.holdout == 0:
-                self.models_tmp[best_idx_save].beta.to_csv(f"{self.run_dir}/parameters/{self.node}.Time_FE.csv")
-                self.models_tmp[best_idx_save].alpha.to_csv(f"{self.run_dir}/parameters/{self.node}.Country_FE.csv")
-                if bool(getattr(self.cfg, "country_trends", False)):
-                    use_quadratic = bool(getattr(self.cfg, "quadratic_trends", True))
-                    self.models_tmp[best_idx_save].linear_trend.to_csv(f"{self.run_dir}/parameters/{self.node}.linear_trend.csv")
-                    if use_quadratic:
-                        self.models_tmp[best_idx_save].quadratic_trend.to_csv(f"{self.run_dir}/parameters/{self.node}.quadratic_trend.csv")
+            # (the dynamic model has no additive time FE: beta is None, skip it)
+            if best_model.beta is not None:
+                best_model.beta.to_csv(f"{self.run_dir}/parameters/{self.node}.Time_FE.csv")
+            best_model.alpha.to_csv(f"{self.run_dir}/parameters/{self.node}.Country_FE.csv")
+            if bool(getattr(self.cfg, "country_trends", False)):
+                use_quadratic = bool(getattr(self.cfg, "quadratic_trends", True))
+                best_model.linear_trend.to_csv(f"{self.run_dir}/parameters/{self.node}.linear_trend.csv")
+                if use_quadratic:
+                    best_model.quadratic_trend.to_csv(f"{self.run_dir}/parameters/{self.node}.quadratic_trend.csv")
 
-            return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
+            if use_diagnostics:
+                save_summary_diagnostics(
+                    diagnostics_dir=diagnostics_dir,
+                    init_rows=init_rows,
+                    best_idx=best_idx_save,
+                    recorded_aic=self.AIC_list[best_idx_save],
+                    recomputed_aic=best_model.AIC,
+                )
+            return np.nan, self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
         else: #Monte carlo simulation
             best_surface=self.models_tmp[best_idx_BIC].model_visual
             country_FE = self.models_tmp[best_idx_BIC].alpha_dict
@@ -152,5 +191,5 @@ class MainLoop:
                 linear_trend = self.models_tmp[best_idx_BIC].linear_trend_dict
                 if bool(getattr(self.cfg, "quadratic_trends", True)):
                     quadratic_trend = self.models_tmp[best_idx_BIC].quadratic_trend_dict
-            return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node, best_surface, country_FE, time_FE, linear_trend, quadratic_trend
+            return np.nan, self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node, best_surface, country_FE, time_FE, linear_trend, quadratic_trend
 

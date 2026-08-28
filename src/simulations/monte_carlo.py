@@ -9,6 +9,7 @@ from omegaconf import OmegaConf, DictConfig
 from simulations.simulation_functions import  simulate, illustrate_synthetic_data, Pivot
 from utils.parallel import MultiprocessingMC, Multiprocess
 from utils.miscelaneous import save_yaml, save_numpy
+from utils.config import flatten_instance
 import tensorflow as tf
 import pandas as pd
 from pathlib import Path
@@ -92,6 +93,7 @@ def mc_loop(cfg, spec, model, run_dir):
         best_node_idx=nodes.index(best_node)
         
         print(f"\n=== Running {cfg.mc.reps} Monte Carlo itterations for model {model} with best node: {best_node} ===")
+        
     ## step 3
         worker_mc = MultiprocessingMC(
             cfg=cfg,
@@ -151,7 +153,9 @@ if __name__ == "__main__":
     
     @hydra.main(config_path="../../config", config_name="config_mc", version_base="1.2")
     def run_mc(cfg: DictConfig):
-        
+
+        OmegaConf.set_struct(cfg, False)
+        cfg.instance = flatten_instance(cfg.instance)
         time_start = time.time()
         run_dir = Path(HydraConfig.get().runtime.output_dir)
     

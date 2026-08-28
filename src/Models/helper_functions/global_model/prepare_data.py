@@ -4,8 +4,9 @@ import pandas as pd
 from utils.miscelaneous.find_data_file import Find_data_file
 
 
-def Prepare(data, data_source='wb'):
+def Prepare(data, data_source='wb', target_mode='growth'):
        #the growth data should contain the following columns: year, county, and GrowthWDI
+       #target_mode: 'growth' models GrowthWDI; 'levels' models log GDP per capita (log GDPCap, wb only)
     time_periods = len(data['Year'].unique())
 
     if data_source.lower()=='wb':
@@ -29,6 +30,19 @@ def Prepare(data, data_source='wb'):
 
     else:
         raise ValueError("data_source must be either 'WB' or 'ee'")
+
+    # Levels specification: replace the growth target with log GDP per capita.
+    # The pivots below use values=var.columns[-1], so the last column is the
+    # target; FE + country trends then deliver the Kalkuhl-Wenz levels setup.
+    if str(target_mode).lower() == 'levels':
+        if data_source.lower() != 'wb':
+            raise NotImplementedError(
+                "target_mode='levels' is implemented only for data_source='wb' "
+                "(uses log GDP per capita, GDPCap)."
+            )
+        growth = data[['CountryCode', 'RegionCode', 'Year', 'GDPCap']].copy()
+        growth['GDPCap'] = np.log(growth['GDPCap'])
+
     #Now I make dictionaries, to capture the region dependent variables
 
     growth_dict={}
@@ -61,20 +75,20 @@ def Prepare(data, data_source='wb'):
     
     return growth_dict, precip_dict, temp_dict
 
-def load_data(model_selection, data_source, n_splits=None, growth=None, end_year=None):
-    
+def load_data(model_selection, data_source, n_splits=None, growth=None, end_year=None, target_mode='growth'):
+
     if model_selection == 'IC':
         if data_source.lower()=='wb':
             data = pd.read_excel(Find_data_file('MainData.xlsx'))
             if end_year is not None:
                 data = data[data['Year'] <= end_year]
-            growth, precip, temp = Prepare(data, data_source=data_source)
+            growth, precip, temp = Prepare(data, data_source=data_source, target_mode=target_mode)
             return growth, precip, temp
         elif data_source.lower()=='ee':
             data = pd.read_csv(Find_data_file('ee_data.csv'), sep=";")
             if end_year is not None:
                 data = data[data['Year'] <= end_year]
-            growth, precip, temp = Prepare(data, data_source=data_source)
+            growth, precip, temp = Prepare(data, data_source=data_source, target_mode=target_mode)
             return growth, precip, temp
         
 

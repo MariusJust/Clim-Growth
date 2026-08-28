@@ -1,8 +1,10 @@
 from tensorflow.keras.layers import Input, Add, concatenate
 from tensorflow.keras import Model
 import tensorflow as tf
+import numpy as np
 from models.helper_functions.shared import Dummies, CountryTimeTrends, create_fixed_effects, create_country_trends, build_country_grouping, Vectorize, Count_params
 from models.helper_functions.regional_model import Matrixize, create_hidden_layers, create_output_layer, Visual_model, individual_loss
+from models.helper_functions.global_model.within_projection import WithinProjector
 
 
 class Regions:
@@ -50,6 +52,7 @@ class Regions:
         self.parent.targets = [b.target for b in self.region_builders]
         self.parent.loss_list = [b.loss_fn for b in self.region_builders]
         self.parent.masks = [b.Mask for b in self.region_builders]
+        self.parent.within_projs = [getattr(b, "within_proj", None) for b in self.region_builders]
         if self.holdout>0:
             self.parent.input_data_temp_train = [b.input_data_temp_train for b in self.region_builders]
             self.parent.input_data_precip_train = [b.input_data_precip_train for b in self.region_builders]
@@ -94,6 +97,15 @@ class BuildRegion:
       for key, value in vars(parent).items():
             setattr(self, key, value)
 
+      use_within = bool(getattr(self, "within_projection", False))
+      if use_within:
+          if int(getattr(self, "holdout", 0) or 0) != 0 or bool(getattr(self, "dynamic_model", False)):
+              raise NotImplementedError("within_projection (regional): static only (holdout=0, dynamic_model=False).")
+          if str(getattr(self, "data_source", "wb")).lower() == "ee" or group_by_country:
+              raise NotImplementedError("within_projection (regional): wb only (no ee / group_trends_by_country).")
+          self.country_FE_layer = self.time_FE_layer = None
+          self.linear_trend_layer = self.quadratic_trend_layer = None
+
       self.input_temp = Input(shape=(None, self.N[region]), name=f"temp_in_{region}")
       self.input_precip = Input(shape=(None, self.N[region]), name=f"precip_in_{region}")
 
@@ -123,9 +135,23 @@ class BuildRegion:
       tf.convert_to_tensor(self.mask[region]),
                           (1, self.input_data_temp.shape[1], self.N[region]) )
 
-      self.loss_fn = individual_loss(self.Mask)
+      if use_within:
+          mask_TN = np.asarray(self.mask[region]).reshape(self.T, self.N[region])
+          self.within_proj = WithinProjector(mask_TN, country_trends=use_country_trends,
+                                             quadratic_trends=use_quadratic)
+          y_mat_t = np.array(self.y_train_transf[region], dtype=np.float64)
+          y_obs_t = y_mat_t[self.within_proj.t_arr, self.within_proj.n_arr]
+          region_within = dict(
+              W=tf.constant(self.within_proj.W, dtype=tf.float32),
+              B=tf.constant(self.within_proj.B, dtype=tf.float32),
+              Py=tf.constant(self.within_proj.annihilate(y_obs_t), dtype=tf.float32),
+          )
+          self.loss_fn = individual_loss(self.Mask, within=region_within)
+      else:
+          self.within_proj = None
+          self.loss_fn = individual_loss(self.Mask)
 
-      if self.holdout==0:
+      if self.holdout==0 and not use_within:
         dummies_layer = Dummies(self.N[region], self.T, self.time_periods_na[region], country_trends=use_country_trends)
         Delta1, Delta2 = dummies_layer(self.input_temp)
 
@@ -166,7 +192,9 @@ class BuildRegion:
       # Creating temporary output layer, without fixed effects
       output_tmp = create_output_layer(self, input_last)
 
-      if self.holdout==0:
+      if use_within:
+        output = output_tmp
+      elif self.holdout==0:
         if self.dynamic_model:
           components = [country_FE, output_tmp]
           if use_country_trends:
