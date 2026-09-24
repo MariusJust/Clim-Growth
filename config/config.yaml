@@ -5,16 +5,17 @@ instance:
     seed_value: 0                 # initialisation j uses seed_value + j
     lr: 0.001
     min_delta: 1.0e-07            # early-stopping threshold on the training loss
-    patience: 200                 # epochs without improvement before stopping
+    patience: 600                 # epochs without improvement before stopping; must exceed 8 x lr_reduce_patience so lr can reach lr_min
     optimizer: 'adam'             # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
     verbose: 0
     dropout: 0
     timeout_per_node: 100000      # seconds before a stuck worker is abandoned
     reduce_lr_on_plateau: true
     lr_reduce_factor: 0.3
-    lr_reduce_patience: 100
+    lr_reduce_patience: 50        # 8 cuts of 0.3 reach lr_min in 400 stagnant epochs, inside patience
     lr_min: 1.0e-7
     use_diagnostics: true         # write per-initialisation weights to <run>/diagnostics/<node>/
+    parallel_over_inits: true     # one task per (node, init) instead of per node; needs use_diagnostics
 
   model:
     model_selection: 'IC'         # IC | Holdout
