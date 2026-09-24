@@ -1,147 +1,74 @@
 instance:
+
   optim:
-    no_inits: 10
-    seed_value: 0
+    no_inits: 10                  # initialisations per architecture, best BIC kept
+    seed_value: 0                 # initialisation j uses seed_value + j
     lr: 0.001
-    min_delta: 1.0e-07
-    patience: 200
-    optimizer: 'adam'        # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
-    opt_momentum: 0.9        # sgd_momentum / nesterov / rmsprop
-    opt_weight_decay: 0.004  # adamw
+    min_delta: 1.0e-07            # early-stopping threshold on the training loss
+    patience: 200                 # epochs without improvement before stopping
+    optimizer: 'adam'             # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
     verbose: 0
     dropout: 0
-    timeout_per_node: 100000
-    reduce_lr_on_plateau: true   # attach a Keras ReduceLROnPlateau callback to training
-    lr_reduce_factor: 0.3         # multiply lr by this when monitored loss plateaus
-    lr_reduce_patience: 100        # epochs with no improvement before each reduction
-    lr_min: 1.0e-7                # floor for the learning rate
-    use_diagnostics: true
+    timeout_per_node: 100000      # seconds before a stuck worker is abandoned
+    reduce_lr_on_plateau: true
+    lr_reduce_factor: 0.3
+    lr_reduce_patience: 100
+    lr_min: 1.0e-7
+    use_diagnostics: true         # write per-initialisation weights to <run>/diagnostics/<node>/
 
   model:
-    model_selection: 'IC' #  'Holdout', 'IC'
-    formulation: 'global'          # Model formulation, "global", "regional" or "income"
-    within_projection: true
-    target_mode: 'growth'   # 'growth' (model GrowthWDI) or 'levels' (model log GDP per capita)
-    input_vars:
-      - temp
-      - precip
-    activation: 'swish' #
-    # Output-layer kernel initialiser, GLOBAL model only (regional has always used
-    # he_normal). The output layer has use_bias=False, so 'zeros' gives
-    # dL/dh = 0 exactly: the hidden layers get NO gradient on step one. In the
-    # 2026-09-03 pre-flight that made the fit early-stop after 31 epochs with a
-    # climate response of 0.1 pp, versus 324 epochs and 25-57 pp under he_normal.
-    # NB the code default is 'zeros', so this key must be present to get he_normal.
-    output_initializer: he_normal
-
-    country_trends: True
-    quadratic_trends: True   # only used when country_trends is True; set False for linear-only trends
-    group_trends_by_country: True    # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
-
-    weight_by_country: True
-    income_time_varying: true   # income formulation only: true = each country-year assigned to a quintile by its relative GDP rank that year (time-varying); false = fixed by long-run mean income
-    dynamic_model: true   # <- static EE run first; set true for the dynamic EE run
-    # Retain the additive year FE alongside the network's t input (dynamic only).
-    # false reproduces every dynamic run before 2026-09-08, which dropped the year
-    # FE and so avoided 60*log(10324) = 554.5 BIC of penalty the static model pays.
-    # true is the like-for-like comparison D12 asks for: t then enters only through
-    # its interaction with (T, P), which is the time-varying response itself.
-    dynamic_include_time: false
-
-    time_scaling: standardize
-    data_source: 'wb'   # "ee" or "wb"
+    model_selection: 'IC'         # IC | Holdout
+    formulation: 'global'         # global | regional | income
+    target_mode: 'growth'         # growth (GrowthWDI) | levels (log GDP per capita)
+    data_source: 'wb'             # wb | ee (subnational)
     data_end: 2024
-    nodes_list:
-    # Full 54-architecture sweep, matching the 2026-09-04 levels run so the
-    # zeros-vs-he_normal comparison is like-for-like. NB the growth headline
-    # run used 55: it also carried (16,16,2), absent here.
-      - (2,)
-      - (4,)
-      - (8,)
-      - (16,)
-      - (32,)
-      - (48,)
-      - (64,)
-      - (2,2,)
-      - (4,2,)
-      - (4,4,)
-      - (8,2,)
-      - (8,4,)
-      - (8,8,)
-      - (16,2,)
-      - (16,8,)
-      - (16,16,)
-      - (32,2,)
-      - (32,4,)
-      - (32,8,)
-      - (32,16,)
-      - (32,32,)
-      - (2,2,2,)
-      - (4,2,2,)
-      - (4,4,2,)
-      - (4,4,4,)
-      - (8,2,2,)
-      - (8,4,4,)
-      - (8,8,2,)
-      - (8,8,4,)
-      - (8,8,8,)
-      - (16,2,2,)
-      - (16,4,2,)
-      - (16,4,4,)
-      - (16,8,2,)
-      - (16,8,4,)
-      - (16,8,8,)
-      - (16,16,4,)
-      - (16,16,8,)
-      - (16,16,16,)
-      - (32,2,2,)
-      - (32,4,2,)
-      - (32,4,4,)
-      - (32,8,2,)
-      - (32,8,4,)
-      - (32,8,8,)
-      - (32,16,2,)
-      - (32,16,4,)
-      - (32,16,8,)
-      - (32,16,16,)
-      - (32,32,2,)
-      - (32,32,4,)
-      - (32,32,8,)
-      - (32,32,16,)
-      - (32,32,32,)
+    input_vars: [temp, precip]
+    activation: 'swish'
+    within_projection: true
+    country_trends: True
+    quadratic_trends: True        # ignored unless country_trends
+    output_initializer: he_normal # zeros | he_normal, global model only; see D18
+    dynamic_model: true           # feed t to the network in place of year FE
+    dynamic_include_time: false   # dynamic only: also keep additive year FE; see D12, D17
+    time_scaling: standardize     # dynamic only: scaling of the t input
+    group_trends_by_country: True # ee only: one trend per country, not per admin-1 unit
+    weight_by_country: True       # ee only: w = 1/n_c;
+    income_time_varying: true     # income only: quintile by within-year GDP rank
+    nodes_list: ["(2,)", "(4,)", "(8,)", "(16,)", "(32,)", "(48,)", "(64,)",
+                 "(2,2,)", "(4,2,)", "(4,4,)", "(8,2,)", "(8,4,)", "(8,8,)",
+                 "(16,2,)", "(16,8,)", "(16,16,)",
+                 "(32,2,)", "(32,4,)", "(32,8,)", "(32,16,)", "(32,32,)",
+                 "(2,2,2,)", "(4,2,2,)", "(4,4,2,)", "(4,4,4,)",
+                 "(8,2,2,)", "(8,4,4,)", "(8,8,2,)", "(8,8,4,)", "(8,8,8,)",
+                 "(16,2,2,)", "(16,4,2,)", "(16,4,4,)", "(16,8,2,)", "(16,8,4,)",
+                 "(16,8,8,)", "(16,16,4,)", "(16,16,8,)", "(16,16,16,)",
+                 "(32,2,2,)", "(32,4,2,)", "(32,4,4,)", "(32,8,2,)", "(32,8,4,)",
+                 "(32,8,8,)", "(32,16,2,)", "(32,16,4,)", "(32,16,8,)", "(32,16,16,)",
+                 "(32,32,2,)", "(32,32,4,)", "(32,32,8,)", "(32,32,16,)", "(32,32,32,)"]
+
   server:
     n_process: 55
-    ram: 500
+    ram: 500                      # GB
 
   bootstrap:
-    n_boot: 1000             # Burke (2015) uses 1000 country-cluster draws
-    n_process: null          # null means reuse instance.n_process (server.n_process)
-    n_inits: 2               # random initializations per bootstrap/node fit
-    top_k: 1                 # top AIC-ranked architectures from run_dir
-    run_dir: runs/estimation/2026-08-27_11-01-35_global_IC_country_trends         # corrected-data run; supplies optimiser settings + BIC-best node
-    nodes: null              # optional explicit list, e.g. ["(2,)", "(4,)"]
-    node: (2,)               # optional single architecture, e.g. "(2,)"
+    n_boot: 1000                  # Burke (2015) uses 1000 country-cluster draws
+    n_inits: 2
+    n_process: null               # null reuses server.n_process
+    run_dir: runs/estimation/2026-08-27_11-01-35_global_IC_country_trends
+    node: (2,)                    # keep set: with node and nodes null, top_k ranks by AIC, not BIC
+    nodes: null                   # optional explicit list, overrides node
+    top_k: 1                      # only consulted when node and nodes are null
     report_every: 25
-    scheme: cluster          # cluster (country pairs/cluster) | residual_block (residual moving-block over time)
-    block_len: 4             # moving-block length in years, used only when scheme=residual_block
-    # Upper end of the (T, P) surface grid, in degrees C. Bootstrap only: nothing
-    # else reads this key, so estimation runs keep the legacy 90-point grid.
-    # 30 follows Burke's ComputeMainProjections.R, which pins the response at
-    # f(30) for newtemp > 30 "so we are not projecting out of sample". The
-    # estimation sample justifies that: only 3 of 10,324 country-years exceed
-    # 30 C (max 30.09), and no country's long-run mean does, so 30-35 C would be
-    # pure functional-form extrapolation off three boundary points.
-    # Raising this to 35 extends the grid to 105 points on the SAME 30/89
-    # spacing, so the legacy grid stays an exact prefix and old surfaces remain
-    # comparable cell by cell. Use only for an explicit uncapped sensitivity.
-    surface_t_max: 30
+    scheme: cluster               # cluster | residual_block
+    block_len: 4                  # residual_block only
+    surface_t_max: 30             # (T, P) grid cap in C; 30 matches Burke, see D10
 
-  nic:                       # Network Information Criterion (Murata et al. 1994)
-    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends   # absolute, repo-relative, or a bare run name
-    nodes: null              # optional explicit list; else all saved archs
-    node: null               # optional single architecture
-    top_k: 10                # restrict the NIC-Akaike-weight summary to top-k
-    ridge_grid: [1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2]  # relative ridge sweep for (J'J)^-1; first is headline
-    jac_batch: 512           # observations per Jacobian batch (memory control)
-    jac_subsample: 2000         # >0 to subsample observations for the moment matrices
-    param_scope: network    # 'network' (climate sub-net only; default, fast, sufficient for NIC weights) or 'all'
+  nic:                            # Network Information Criterion (Murata et al. 1994)
+    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends
+    node: null
+    nodes: null
+    top_k: 10
+    ridge_grid: [1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2]   # first entry is the headline
+    jac_batch: 512                # observations per Jacobian batch
+    jac_subsample: 2000           # 0 disables subsampling
+    param_scope: network          # network (climate sub-net only) | all

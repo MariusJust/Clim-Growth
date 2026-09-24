@@ -1,29 +1,13 @@
-
 defaults:
   - _self_
-  - config       # pulls in config/config.yaml
+  - config                        # inherits everything in config/config.yaml
 
-# Monte Carlo–specific block
 mc:
-  reps:         2
-  base_seed:    0
-  sample_data: False     # whether to sample from real-world data or simulate entirely synthetic data
-  specifications:
-    - linear
-    - Burke
-    # - Leirvik
-    # - Trig
-
-  models:
-    - NN
-    # - Quadratic
-    # - Interactive
-
-  breakpoints:
-    - 2
-
-instance:
-
+  reps: 2
+  sample_data: False              # False simulates synthetic data, True samples the real panel
+  specifications: [linear, Burke] # available: linear, Burke, Leirvik, Trig
+  models: [NN]                    # available: NN, Quadratic, Interactive
+  breakpoints: [2]
 
 hydra:
   hydra_logging:
@@ -31,4 +15,3 @@ hydra:
   job_logging:
     level: WARNING
   verbose: false
-
