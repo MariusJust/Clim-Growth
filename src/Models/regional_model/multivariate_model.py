@@ -4,7 +4,8 @@ import pandas as pd
 import os
 from models.helper_functions.regional_model import initialize_parameters, Preprocess, individual_loss, WithinHelper
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping
+from models.helper_functions.shared import build_optimizer
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from .model_architecture_reg import Regions
 
 class MultivariateModel:
@@ -25,7 +26,6 @@ class MultivariateModel:
         NB: regions are inferred from the    keys of x_train and y_train.
         """
 
-        self.node = node
         self.x_train = x_train
         self.y_train = y_train
         self.x_train_val = x_train_val
@@ -36,9 +36,14 @@ class MultivariateModel:
         self.region_builders=[]
         self.country_map = None
 
+        # Compatibility: ensure holdout exists and is zeroed (holdout path removed)
+        self.holdout = int(getattr(cfg, "holdout", 0) or 0)
+
         #unpack config
         for key, value in dict(cfg).items():
             setattr(self, key, value)
+
+        self.node = node
 
 
 
@@ -84,12 +89,21 @@ class MultivariateModel:
 
             n_obs_holdout= [self.noObs[region] - self.noObs["train"][region] for region in self.regions]
 
-            self.model.compile(optimizer=Adam(lr), loss=[individual_loss(mask=self.masks[i], p_matrix=p_tensor[i], n_holdout=n_obs_holdout[i], name=f"loss_{region}") for i, region in enumerate(self.regions)], loss_weights=[1 / self.no_regions] * self.no_regions)
+            self.model.compile(optimizer=build_optimizer(getattr(self, "optimizer", "adam"), lr, cfg=self), loss=[individual_loss(mask=self.masks[i], p_matrix=p_tensor[i], n_holdout=n_obs_holdout[i], name=f"loss_{region}") for i, region in enumerate(self.regions)], loss_weights=[1 / self.no_regions] * self.no_regions)
 
 
             callbacks = [EarlyStopping(monitor='val_loss', mode='min', min_delta=min_delta, patience=patience,
                                 restore_best_weights=True, verbose=verbose)
             ]
+            if bool(getattr(self, "reduce_lr_on_plateau", False)):
+                callbacks.append(ReduceLROnPlateau(
+                    monitor='val_loss', mode='min',
+                    factor=float(getattr(self, "lr_reduce_factor", 0.3)),
+                    patience=int(getattr(self, "lr_reduce_patience", 50)),
+                    min_delta=float(min_delta),
+                    min_lr=float(getattr(self, "lr_min", 1.0e-7)),
+                    verbose=verbose,
+                ))
 
 
             #validation data preprocessing
@@ -102,13 +116,22 @@ class MultivariateModel:
 
             del p_tensor
         else:
-            self.model.compile(optimizer=Adam(lr), loss=self.loss_list, loss_weights=[1 / self.no_regions] * self.no_regions)
+            self.model.compile(optimizer=build_optimizer(getattr(self, "optimizer", "adam"), lr, cfg=self), loss=self.loss_list, loss_weights=[1 / self.no_regions] * self.no_regions)
 
 
             callbacks = [EarlyStopping(monitor='loss', mode='min', min_delta=min_delta, patience=patience,
                                     restore_best_weights=True, verbose=verbose)
 
                         ]
+            if bool(getattr(self, "reduce_lr_on_plateau", False)):
+                callbacks.append(ReduceLROnPlateau(
+                    monitor='loss', mode='min',
+                    factor=float(getattr(self, "lr_reduce_factor", 0.3)),
+                    patience=int(getattr(self, "lr_reduce_patience", 50)),
+                    min_delta=float(min_delta),
+                    min_lr=float(getattr(self, "lr_min", 1.0e-7)),
+                    verbose=verbose,
+                ))
 
             x_train = [self.input_data_temp, self.input_data_precip]
             self.model.fit(x_train, self.targets, callbacks=callbacks, batch_size=1, epochs=int(1e6), verbose=verbose, shuffle=False)
@@ -119,7 +142,7 @@ class MultivariateModel:
 
 
         #saving fixed effects
-        if self.holdout==0:
+        if self.holdout==0 and not bool(getattr(self, "within_projection", False)):
             for i, region in enumerate(self.regions):
                 self.alpha[region] = pd.DataFrame(self.country_FE_layer[i].weights[0].numpy().T)
                 self.alpha[region].columns = self.individuals[region][1:]
@@ -155,15 +178,22 @@ class MultivariateModel:
             * filepath: string containing path/name of saved file.
         """
 
-        self.model.load_weights(filepath)
+        try:
+            self.model.load_weights(filepath)
+        except ValueError:
+            self.model.load_weights(filepath, skip_mismatch=True)
         self.params = self.model.get_weights()
 
-        for i, region in enumerate(self.regions):
-            self.alpha[self.regions[i]] = pd.DataFrame(self.country_FE_layer[i].weights[0].numpy().T)
-            self.alpha[self.regions[i]].columns = self.individuals[self.regions[i]][1:]
+        # In within mode the FE/trend layers are concentrated out (None), so
+        # there are no FE summaries to rebuild; model_visual[region] (the climate
+        # net) is still available for surfaces.
+        if not bool(getattr(self, "within_projection", False)):
+            for i, region in enumerate(self.regions):
+                self.alpha[self.regions[i]] = pd.DataFrame(self.country_FE_layer[i].weights[0].numpy().T)
+                self.alpha[self.regions[i]].columns = self.individuals[self.regions[i]][1:]
 
-            self.beta[self.regions[i]] = pd.DataFrame(self.time_FE_layer[i].weights[0].numpy())
-            self.beta[self.regions[i]].set_index(self.time_periods[self.time_periods_na[self.regions[i]] + 1:], inplace=True)
+                self.beta[self.regions[i]] = pd.DataFrame(self.time_FE_layer[i].weights[0].numpy())
+                self.beta[self.regions[i]].set_index(self.time_periods[self.time_periods_na[self.regions[i]] + 1:], inplace=True)
 
 
     def save_params(self, filepath):
@@ -183,33 +213,44 @@ class MultivariateModel:
 
         """
         in_sample_preds = self.model([self.input_data_temp, self.input_data_precip])
+        within = bool(getattr(self, "within_projection", False))
         noObs_tmp = 0
         MSE = 0
+        rank_sum = 0
 
         for region in self.regions:
+                idx = self.regions.index(region)
                 self.in_sample_pred[region] = self.y_train[region].copy()
-                self.in_sample_pred[region].iloc[:, :] = np.array(in_sample_preds[self.regions.index(region)][0, :, :])
-
-                if self.regions.index(region) == 0:
-                    in_sample_pred_global = self.in_sample_pred[region]
-                    in_sample_global = self.y_train_df[region]
-                else:
-                    in_sample_pred_global = pd.concat([in_sample_pred_global, self.in_sample_pred[region]], axis=1)
-                    in_sample_global = pd.concat([in_sample_global, self.y_train_df[region]], axis=1)
+                self.in_sample_pred[region].iloc[:, :] = np.array(in_sample_preds[idx][0, :, :])
 
                 noObs_tmp = noObs_tmp + self.noObs[region]
-                mean_growth = np.nanmean(np.reshape(np.array(in_sample_global), (-1)))
 
-                SST = np.nansum((in_sample_global- mean_growth) ** 2)
-                SSR = np.nansum((in_sample_pred_global - mean_growth) ** 2)
-                SSE = np.nansum((in_sample_global - in_sample_pred_global) ** 2)
+                if within:
+                    # Within mode: output is the climate net; recover FE/trends by
+                    # exact OLS per region and report the FULL R2/SSE.
+                    proj = self.within_projs[idx]
+                    y_mat = np.array(self.y_train_df[region], dtype=float)
+                    f_mat = np.array(self.in_sample_pred[region], dtype=float)
+                    y_obs = y_mat[proj.t_arr, proj.n_arr]
+                    f_obs = f_mat[proj.t_arr, proj.n_arr]
+                    gamma = proj.recover_gamma(y_obs - f_obs)
+                    full_obs = f_obs + proj.W @ gamma
+                    SSE = float(np.sum((y_obs - full_obs) ** 2))
+                    mean_tmp = float(np.nanmean(y_mat))
+                    SST = float(np.sum((y_obs - mean_tmp) ** 2))
+                    rank_sum += int(proj.rank)
+                else:
+                    mean_tmp = np.nanmean(np.array(self.y_train_df[region]))
+                    SSE = np.nansum(np.nansum((self.y_train_df[region] - self.in_sample_pred[region]) ** 2))
+                    SST = np.nansum(np.nansum((self.y_train_df[region] - mean_tmp) ** 2))
 
-                self.R2[region] = SSR / SST
+                self.R2[region] = 1 - SSE / SST if SST > 0 else np.nan
                 MSE = MSE + SSE / self.noObs[region]
 
-
-        self.BIC = np.log(MSE)*noObs_tmp + self.m * np.log(noObs_tmp)
-        self.AIC = np.log(MSE)*noObs_tmp + 2 * self.m
+        m_eff = int(self.m) + rank_sum if within else self.m
+        self.m_effective = m_eff
+        self.BIC = np.log(MSE)*noObs_tmp + m_eff * np.log(noObs_tmp)
+        self.AIC = np.log(MSE)*noObs_tmp + 2 * m_eff
 
         return in_sample_preds
 

@@ -2,6 +2,7 @@ from utils.miscelaneous import turn_off_warnings
 turn_off_warnings()
 
 from utils import save_numpy, Multiprocess
+from utils.config import flatten_instance
 import hydra
 from hydra.core.hydra_config import HydraConfig
 from pathlib import Path
@@ -14,7 +15,11 @@ import time
 # @hydra.main(version_base=None, config_name="config")
 def main(cfg: DictConfig):
 
-    inst = cfg.instance
+    inst = flatten_instance(cfg.instance)
+    if bool(getattr(inst, "within_projection", False)) and str(getattr(inst, "formulation", "global")).lower() not in ("global", "regional", "income"):
+        raise SystemExit("within_projection supports formulation in {global, regional, income}.")
+    if bool(getattr(inst, "dynamic_model", False)) and str(getattr(inst, "formulation", "global")).lower() != "global":
+        raise SystemExit("dynamic_model is only supported for formulation=global; set instance.model.dynamic_model=false for regional/income runs.")
     time_start = time.time()
     run_dir = Path(HydraConfig.get().runtime.output_dir)
     

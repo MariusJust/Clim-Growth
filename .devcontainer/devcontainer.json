@@ -1,18 +1,42 @@
 {
   "name": "Paper_1",
+
+  // NOTE: the file on disk is lowercase "dockerfile". This value must match it
+  // exactly -- Windows is case-insensitive so "Dockerfile" appeared to work
+  // locally, but it fails on Linux/macOS and in CI.
   "build": {
-    "dockerfile": "Dockerfile",
+    "dockerfile": "dockerfile",
     "context": ".."
   },
+
+  // The build context is the repo root (~12 GB). See .dockerignore, which
+  // reduces it to just requirements.txt. Without it every rebuild ships the
+  // raw CRU NetCDF files to the Docker daemon.
+
   "remoteUser": "root",
+
+  // Stated explicitly so it cannot drift from the dockerfile's WORKDIR and the
+  // PYTHONPATH below. The default would also be /workspaces/Paper_1, but only
+  // as long as the folder on disk is named exactly "Paper_1".
+  "workspaceFolder": "/workspaces/Paper_1",
+
   "runArgs": [
     "--memory=12g",
     "--memory-swap=16g",
     "--shm-size=4g"
   ],
+
   "containerEnv": {
     "PYTHONPATH": "/workspaces/Paper_1/src"
   },
+
+  // FIXED: "features" must be top level. It was previously nested inside
+  // customizations.vscode, where devcontainer silently ignores it -- so the
+  // claude-code feature was never actually installed.
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+
   "customizations": {
     "vscode": {
       "settings": {
@@ -23,10 +47,7 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-toolsai.jupyter"
-      ], 
-      "features": {
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
-  }
+      ]
     }
   }
 }

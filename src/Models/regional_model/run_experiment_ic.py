@@ -41,13 +41,16 @@ class MainLoop:
             # Monte Carlo data is country-level; per-fid country grouping does not apply.
             self.country_map = None
         else:
-            self.growth, self.precip, self.temp = load_data('IC', formulation=self.cfg.formulation, data_source=self.cfg.data_source, end_year=self.cfg.data_end)
+            self.growth, self.precip, self.temp = load_data('IC', formulation=self.cfg.formulation, data_source=self.cfg.data_source, end_year=self.cfg.data_end, target_mode=getattr(self.cfg, 'target_mode', 'growth'), income_time_varying=bool(getattr(self.cfg, 'income_time_varying', True)))
             self.country_map = fid_country_map() if str(self.cfg.data_source).lower() == 'ee' else None
 
         self.factory.country_map = self.country_map
 
 
     def run_experiment(self):
+
+        # local holdout variable (default 0 if not provided)
+        holdout = int(getattr(self.cfg, 'holdout', 0) or 0)
 
         self.setup_model_params()
 
@@ -63,24 +66,18 @@ class MainLoop:
             model_instance=self.factory.get_model()
             model_instance.fit(lr=self.cfg.lr, min_delta=self.cfg.min_delta, patience=self.cfg.patience, verbose=self.cfg.verbose)
 
+            model_instance.in_sample_predictions()
+            self.models_tmp[j] = model_instance
 
-            if self.cfg.holdout>0:
-                self.models_tmp[j] = model_instance
-                self.holdout_MSE[j] = model_instance.holdout_loss
-            else:
-                model_instance.in_sample_predictions()
-                self.models_tmp[j] = model_instance
-
-                #saves the information criteria
-                self.BIC_list[j] = model_instance.BIC
-                self.AIC_list[j] = model_instance.AIC
+            #saves the information criteria
+            self.BIC_list[j] = model_instance.BIC
+            self.AIC_list[j] = model_instance.AIC
 
             print(f"Initialization {j+1}/{self.cfg.no_inits} for node {self.node} done")
 
         # Select the best initialization based on BIC (or AIC)
         best_idx_BIC = int(np.argmin(self.BIC_list))
         best_idx_AIC = int(np.argmin(self.AIC_list))
-        best_idx_holdout = int(np.argmin(self.holdout_MSE))
 
         # Create directory if it doesn't exist
         path=f"{self.run_dir}/parameters/{self.node}.weights.h5"
@@ -89,7 +86,11 @@ class MainLoop:
 
         self.models_tmp[best_idx_BIC].save_params(path)
 
-        if self.cfg.holdout == 0:
+        
+        # FE/trend CSV export is skipped in within mode: the fixed effects and
+        # trends are concentrated out (no Dense layers / summaries). They can be
+        # recovered post hoc from the projector via gamma = B (y - f).
+        if not bool(getattr(self.cfg, "within_projection", False)):
             best = self.models_tmp[best_idx_BIC]
             for region in best.regions:
                 best.beta[region].to_csv(f"{self.run_dir}/parameters/{self.node}.{region}.Time_FE.csv")
@@ -102,29 +103,13 @@ class MainLoop:
                     if use_quadratic:
                         best.quadratic_trend[region].to_csv(f"{self.run_dir}/parameters/{self.node}.{region}.quadratic_trend.csv")
 
-        return self.holdout_MSE[best_idx_holdout], self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
+        return np.nan, self.BIC_list[best_idx_BIC], self.AIC_list[best_idx_AIC], self.node
 
 
 
     def setup_model_params(self):
-        if self.cfg.holdout > 0:
-            self.factory.x_train = {0: self.temp, 1: self.precip}
-            self.factory.y_train = self.growth
-
-            temp_train_val = {key: df.iloc[:-self.cfg.holdout, :] for key, df in self.temp.items()}
-            temp_val = {key: df.iloc[-self.cfg.holdout:, :] for key, df in self.temp.items()}
-            precip_train_val = {key: df.iloc[:-self.cfg.holdout, :] for key, df in self.precip.items()}
-            precip_val = {key: df.iloc[-self.cfg.holdout:, :] for key, df in self.precip.items()}
-            growth_train_val = {key: df.iloc[:-self.cfg.holdout, :] for key, df in self.growth.items()}
-            growth_val = {key: df.iloc[-self.cfg.holdout:, :] for key, df in self.growth.items()}
-
-            self.factory.x_train_val = {0: temp_train_val, 1: precip_train_val}
-            self.factory.y_train_val = growth_train_val
-            self.factory.x_val = {0: temp_val, 1: precip_val}
-            self.factory.y_val = growth_val
-
-        else:
-            self.factory.x_train = {0: self.temp, 1: self.precip}
-            self.factory.y_train = self.growth
+        # without holdout split use full training data
+        self.factory.x_train = {0: self.temp, 1: self.precip}
+        self.factory.y_train = self.growth
 
         self.factory.node = self.node

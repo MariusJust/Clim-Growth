@@ -41,8 +41,7 @@ def create_hidden_layer(self, node):
 
 def create_output_layer(self, input_tensor):
     """ Create the output layer with the specified input tensor. """
-    kernel_initializer = he_normal()
-    self.output_layer = Dense(1, activation='linear', use_bias=False, kernel_initializer=kernel_initializer)
+    self.output_layer = Dense(1, activation='linear', use_bias=False, kernel_initializer=Zeros())
     return self.output_layer(input_tensor)
 
 def create_Dropout(self, layer):

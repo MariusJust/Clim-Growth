@@ -28,144 +28,233 @@ def simulate(seed, specification, add_noise, sample_data, dynamic, run_dir, save
 
     countries  = data['CountryCode'].values
 
-   
-    output = []
-    
-    if sample_data: 
+    if sample_data:
 
         temperature = data['TempPopWeight']
         precipitation = data['PrecipPopWeight'] / 1000
-
-        # Use the same ordering as the model input pivots so FE vectors align by key.
-        # (pivot() column/index ordering can differ from np.unique order across environments.)
-        country_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').columns
-        year_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').index
-
-        unique_countries = country_order.to_numpy()
-        unique_years = year_order.to_numpy()
-
-        # Keep the reference category consistent with the omitted dummy in model training.
-        base_country = unique_countries[0]
-        base_year = unique_years[0]
-
-        if fixed_effects is not None:
-            true_country_FE = fixed_effects["country"]
-            true_time_FE = fixed_effects["time"]
-            true_linear_trend = fixed_effects.get("linear_trend")
-            true_quadratic_trend = fixed_effects.get("quadratic_trend")
-        else:
-            true_country_FE = {
-                c: np.random.normal(0, 0.025)
-                for c in unique_countries
-            }
-
-            true_time_FE = {
-                t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
-                for t in unique_years
-            }
-
-            true_linear_trend = {
-                c: np.random.normal(0, 0.001)
-                for c in unique_countries
-            }
-            true_quadratic_trend = {
-                c: np.random.normal(0, 0.00001)
-                for c in unique_countries
-            }
-
-        country_effect = np.array([true_country_FE[c] for c in countries])
-        time_trend = np.array([true_time_FE[t] for t in years])
-        if country_trends:
-            year_to_position = {year: idx for idx, year in enumerate(unique_years)}
-            trend_idx = np.array([year_to_position[year] for year in years])
-            country_time_trend = np.array([
-                true_linear_trend[c] * t + true_quadratic_trend[c] * t**2
-                for c, t in zip(countries, trend_idx)
-            ])
-        else:
-            country_time_trend = 0
-
-        true_country_FE_rel = {
-            c: true_country_FE[c] - true_country_FE[base_country]
-            for c in unique_countries if c != base_country
-        }
-
-        true_time_FE_rel = {
-            t: true_time_FE[t] - true_time_FE[base_year]
-            for t in unique_years if t != base_year
-        }
-
-        if save_effects:
-            true_param_dir = os.path.join(run_dir, "true_parameters")
-            os.makedirs(true_param_dir, exist_ok=True)
-            np.save(os.path.join(true_param_dir, "country_effect_absolute.npy"), true_country_FE)
-            np.save(os.path.join(true_param_dir, "country_effect_relative.npy"), true_country_FE_rel)
-            np.save(os.path.join(true_param_dir, "time_trend_absolute.npy"), true_time_FE)
-            np.save(os.path.join(true_param_dir, "time_trend_relative.npy"), true_time_FE_rel)
-            if country_trends:
-                np.save(os.path.join(true_param_dir, "linear_trend_true.npy"), true_linear_trend)
-                np.save(os.path.join(true_param_dir, "quadratic_trend_true.npy"), true_quadratic_trend)
-
-        growth = calculate_growth(
-            specification,
-            temperature,
-            precipitation,
-            country_effect,
-            time_trend + country_time_trend,
-            add_noise,
-            dynamic=dynamic,
-            year=years
-        )
-
-        
-        final_dataset = pd.DataFrame({
-            'CountryCode': data['CountryCode'],
-            'Year': years,
-            'delta_logGDP': growth,
-            'precipitation': precipitation,
-            'temperature': temperature
-        })
     else:
-        if dynamic: 
-            temperature = np.random.uniform(0,30, size=(n_countries * n_years))
-            precipitation = np.random.uniform(0.012, 5.435, size=(n_countries * n_years))
-            years = np.tile(np.array([year.year for year in years]),n_countries)
-            country_effect = np.random.normal(0, 0.025, size=len(temperature))
-            growth = calculate_growth(specification, temperature, precipitation, country_effect, time_trend, add_noise, dynamic=dynamic, year=years)
-            final_dataset = pd.DataFrame({
-                'CountryCode': np.repeat(countries, n_years),
-                'Year': years,
-                'delta_logGDP': growth,
-                'precipitation': precipitation,
-                'temperature': temperature
-            })
-        else:
-            for country in countries:
-                country_effect = np.random.normal(0, 0.025)
+        # Full-grid robustness check (sample_data=False): draw temperature and
+        # precipitation uniformly over the climate grid, keeping the same panel
+        # and the same fixed-effect / trend structure as the sample branch, so
+        # that the (T, P) space is covered uniformly and only the climate inputs
+        # differ from the sample-based design.
+        temperature = np.random.uniform(0, 30, size=len(data))
+        precipitation = np.random.uniform(0.012, 5.435, size=len(data))
 
-                for year in years:
-                    # 6. Draw inputs
-                    
-                    time_idx =   -0.00013665 *(year.year - 1961)
-                    time_idx_sq=0.00001*time_idx**2
+    # The block below (fixed effects, trends, simulated growth) is identical for
+    # the sample-based and full-grid designs; only the climate inputs above differ.
 
-                    # 7. Centered inputs
-                    temp = np.random.uniform(0,30)
-                    precip = np.random.uniform(0.012, 5.435)
+    # Use the same ordering as the model input pivots so FE vectors align by key.
+    # (pivot() column/index ordering can differ from np.unique order across environments.)
+    country_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').columns
+    year_order = data.pivot(index='Year', columns='CountryCode', values='TempPopWeight').index
 
+    unique_countries = country_order.to_numpy()
+    unique_years = year_order.to_numpy()
 
-                    #cast into dataframe
-                    output.append({
-                        'CountryCode': country,
-                        'Year': year,
-                        'delta_logGDP': calculate_growth(specification, temp, precip, country_effect, time_idx, time_idx_sq, add_noise, dynamic=dynamic, year=year),
-                        'precipitation': precip,
-                        'temperature': temp
-                    })
+    # Keep the reference category consistent with the omitted dummy in model training.
+    base_country = unique_countries[0]
+    base_year = unique_years[0]
 
-            final_dataset=pd.DataFrame(output)     
-    
+    if fixed_effects is not None:
+        true_country_FE = fixed_effects["country"]
+        true_time_FE = fixed_effects["time"]
+        true_linear_trend = fixed_effects.get("linear_trend")
+        true_quadratic_trend = fixed_effects.get("quadratic_trend")
+    else:
+        true_country_FE = {
+            c: np.random.normal(0, 0.025)
+            for c in unique_countries
+        }
+
+        true_time_FE = {
+            t: 0.1 * np.log(t - 1960) + np.random.normal(0, 0.01)
+            for t in unique_years
+        }
+
+        true_linear_trend = {
+            c: np.random.normal(0, 0.001)
+            for c in unique_countries
+        }
+        true_quadratic_trend = {
+            c: np.random.normal(0, 0.00001)
+            for c in unique_countries
+        }
+
+    country_effect = np.array([true_country_FE[c] for c in countries])
+    time_trend = np.array([true_time_FE[t] for t in years])
+    if country_trends:
+        year_to_position = {year: idx for idx, year in enumerate(unique_years)}
+        trend_idx = np.array([year_to_position[year] for year in years])
+        country_time_trend = np.array([
+            true_linear_trend[c] * t + true_quadratic_trend[c] * t**2
+            for c, t in zip(countries, trend_idx)
+        ])
+    else:
+        country_time_trend = 0
+
+    true_country_FE_rel = {
+        c: true_country_FE[c] - true_country_FE[base_country]
+        for c in unique_countries if c != base_country
+    }
+
+    true_time_FE_rel = {
+        t: true_time_FE[t] - true_time_FE[base_year]
+        for t in unique_years if t != base_year
+    }
+
+    if save_effects:
+        true_param_dir = os.path.join(run_dir, "true_parameters")
+        os.makedirs(true_param_dir, exist_ok=True)
+        np.save(os.path.join(true_param_dir, "country_effect_absolute.npy"), true_country_FE)
+        np.save(os.path.join(true_param_dir, "country_effect_relative.npy"), true_country_FE_rel)
+        np.save(os.path.join(true_param_dir, "time_trend_absolute.npy"), true_time_FE)
+        np.save(os.path.join(true_param_dir, "time_trend_relative.npy"), true_time_FE_rel)
+        if country_trends:
+            np.save(os.path.join(true_param_dir, "linear_trend_true.npy"), true_linear_trend)
+            np.save(os.path.join(true_param_dir, "quadratic_trend_true.npy"), true_quadratic_trend)
+
+    growth = calculate_growth(
+        specification,
+        temperature,
+        precipitation,
+        country_effect,
+        time_trend + country_time_trend,
+        add_noise,
+        dynamic=dynamic,
+        year=years
+    )
+
+    final_dataset = pd.DataFrame({
+        'CountryCode': data['CountryCode'],
+        'Year': years,
+        'delta_logGDP': growth,
+        'precipitation': precipitation,
+        'temperature': temperature
+    })
+
     return final_dataset
+
+
+def simulate_weak_exog(
+    seed,
+    specification="Burke",
+    n_years=64,
+    n_countries=170,
+    country_means=None,       # per-country mean temperature (deg C); drawn if None
+    lambda_T=0.5,             # AR(1) persistence of temperature
+    feedback_r2=0.0,          # target share of Var(T) explained by growth-shock feedback
+    sigma_eps=0.02,           # growth innovation sd (log points)
+    sigma_vT=1.0,             # temperature innovation sd (deg C)
+    precip_mean=1.0,          # precipitation mean (m)
+    precip_sd=0.4,            # precipitation stationary sd (m)
+    lambda_P=0.3,             # AR(1) persistence of precipitation (strictly exogenous)
+    country_trends=True,
+    fixed_effects=None,       # reuse one true FE/trend draw across replications
+    burn_in=100,
+):
+    """Simulate a *static-in-growth* panel in which TEMPERATURE is weakly
+    exogenous, to stress-test the Nickell (1981) / Chudik et al. (2018)
+    weak-exogeneity bias:
+
+        y_it = g(T_it, P_it) + mu_i + theta1_i * t + theta2_i * t^2 + eps_it
+        T_it = c_i + lambda_T * T_{i,t-1} + v_it + delta * eps_{i,t-1}      (feedback)
+        P_it = mP  + lambda_P * (P_{i,t-1} - mP) + w_it                     (strictly exogenous)
+
+    There is NO lagged dependent variable in the outcome equation: the only
+    dynamic link is the feedback delta from this year's growth innovation into
+    next year's temperature, which is exactly the "weakly exogenous regressor"
+    case of Chudik et al. (2018) -- the bias that arises "regardless of whether
+    lags of the dependent variable are included".
+
+    ``delta`` is backed out from an interpretable target feedback R^2 so the
+    sweep is reported on an economically meaningful scale:
+
+        delta = sqrt( feedback_r2 * Var(T_base) / sigma_eps^2 ),
+        Var(T_base) = sigma_vT^2 / (1 - lambda_T^2).
+
+    At ``feedback_r2 = 0`` temperature is strictly exogenous (delta = 0).
+
+    Returns
+    -------
+    data : pandas.DataFrame
+        Columns [CountryCode, Year, delta_logGDP, precipitation, temperature],
+        the same schema consumed by ``mc_worker`` and ``bench_models.fit_burke``.
+    truth : dict
+        True fixed effects/trends, the realized ``delta``/``feedback_r2``, the
+        DGP ``specification``, and ``surface(T, P)`` -- a callable giving the
+        true climate response g(T, P) for computing bias and the size/coverage
+        estimand.
+    """
+    rng = np.random.default_rng(seed)
+
+    if country_means is None:
+        country_means = rng.uniform(3.0, 28.0, size=n_countries)
+    else:
+        country_means = np.asarray(country_means, dtype=float)
+    N = len(country_means)
+
+    if fixed_effects is not None:
+        mu = np.asarray(fixed_effects["country"], float)
+        th1 = np.asarray(fixed_effects["linear_trend"], float)
+        th2 = np.asarray(fixed_effects["quadratic_trend"], float)
+    else:
+        mu = rng.normal(0.0, 0.025, size=N)
+        th1 = rng.normal(0.0, 0.001, size=N)
+        th2 = rng.normal(0.0, 1e-5, size=N)
+
+    var_T_base = sigma_vT ** 2 / (1.0 - lambda_T ** 2)
+    delta = float(np.sqrt(feedback_r2 * var_T_base / (sigma_eps ** 2))) if feedback_r2 > 0 else 0.0
+
+    c_i = country_means * (1.0 - lambda_T)          # so the stationary mean of T_it is country_means
+    T_prev = country_means + rng.normal(0.0, np.sqrt(var_T_base), size=N)
+    P_prev = np.full(N, precip_mean)
+    eps_prev = np.zeros(N)
+
+    codes_l, years_l, growth_l, precip_l, temp_l = [], [], [], [], []
+    T_tot = n_years + burn_in
+    for t in range(T_tot):
+        v = rng.normal(0.0, sigma_vT, size=N)
+        T = c_i + lambda_T * T_prev + v + delta * eps_prev
+        w = rng.normal(0.0, precip_sd * np.sqrt(1.0 - lambda_P ** 2), size=N)
+        P = np.maximum(precip_mean + lambda_P * (P_prev - precip_mean) + w, 0.0)
+        eps = rng.normal(0.0, sigma_eps, size=N)
+
+        if t >= burn_in:
+            yr = t - burn_in + 1
+            g = calculate_growth(specification, T, P, 0.0, 0.0,
+                                 add_noise=False, dynamic=False, year=None)
+            trend = (th1 * yr + th2 * yr ** 2) if country_trends else 0.0
+            y = g + mu + trend + eps
+            codes_l.append(np.arange(N))
+            years_l.append(np.full(N, yr))
+            growth_l.append(y)
+            precip_l.append(P)
+            temp_l.append(T)
+
+        T_prev, P_prev, eps_prev = T, P, eps
+
+    data = pd.DataFrame({
+        "CountryCode": np.concatenate(codes_l).astype(int),
+        "Year": np.concatenate(years_l).astype(int),
+        "delta_logGDP": np.concatenate(growth_l),
+        "precipitation": np.concatenate(precip_l),
+        "temperature": np.concatenate(temp_l),
+    })
+
+    truth = {
+        "country": mu,
+        "linear_trend": th1,
+        "quadratic_trend": th2,
+        "delta": delta,
+        "feedback_r2": float(feedback_r2),
+        "specification": specification,
+        "surface": lambda T, P: calculate_growth(
+            specification, T, P, 0.0, 0.0, add_noise=False, dynamic=False, year=None
+        ),
+    }
+    return data, truth
+
 
 def calculate_growth(specification, temp, precip, country_effect, time_trend, add_noise, dynamic, year):
      

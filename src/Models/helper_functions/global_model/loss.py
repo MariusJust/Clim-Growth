@@ -1,7 +1,7 @@
 import tensorflow as tf
 from .within import  WithinHelper
 
-def individual_loss(mask, p_matrix=None, n_holdout=0, balanced=False):
+def individual_loss(mask, p_matrix=None, n_holdout=0, balanced=False, within=None):
     """
     Loss function (in two layers so that it can be interpreted by tensorflow).
 
@@ -21,6 +21,13 @@ def individual_loss(mask, p_matrix=None, n_holdout=0, balanced=False):
         RETURNS
             * loss function evaluated in y_true and y_pred.
         """
+        if within is not None:
+            keep = tf.logical_not(tf.reshape(mask, [-1]))
+            f = tf.boolean_mask(tf.reshape(y_pred, [-1]), keep)
+            Bf = tf.linalg.matvec(within["B"], f)
+            Pf = f - tf.linalg.matvec(within["W"], Bf)
+            resid = within["Py"] - Pf
+            return tf.reduce_mean(tf.square(resid))
         time_len = tf.shape(y_pred)[1]
         n_obs = y_true.shape[1]
         if n_holdout > 0:

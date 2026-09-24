@@ -325,7 +325,7 @@ def model_confidence_plot(surface, std, T, P):
 # ============================================================
 # Helper: add one 3D bar (cuboid) as a Mesh3d trace
 # ============================================================
-def add_histogram(fig, data, legend, precip_capped=False):
+def add_histogram(fig, data, legend, precip_capped=False, region=None, income=None, region_map=None, z_floor=None, data_source="wb", income_time_varying=True):
     def add_bar3d(fig, x0, x1, y0, y1, z0, z1, color, opacity=1, showscale=False,
                 coloraxis=None):
         """
@@ -367,8 +367,92 @@ def add_histogram(fig, data, legend, precip_capped=False):
     # ============================================================
     # Observed data
     # ============================================================
-    temp_obs = np.array(data["TempPopWeight"]).flatten()
-    precip_obs = np.array(data["PrecipPopWeight"]).flatten() / 1000
+    data_filtered = data
+    if income is not None and region is not None:
+        raise ValueError("Specify either 'region' or 'income', not both.")
+
+    if income is not None:
+        if "GDPCap" not in data.columns:
+            raise ValueError("Income filtering requested but GDPCap is missing from data.")
+        if "CountryCode" not in data.columns or "Year" not in data.columns:
+            raise ValueError("Income filtering requires CountryCode and Year columns.")
+
+        n_income_groups = 5
+        labels = [f"Q{i}" for i in range(1, n_income_groups + 1)]
+        if income not in labels:
+            raise ValueError(f"Unknown income group {income!r} (use one of {labels}).")
+
+        if income_time_varying:
+            # Match Prepare(..., formulation=income, income_time_varying=True):
+            # assign each country-year by its GDP-per-capita rank within that year.
+            tmp = data[["CountryCode", "Year", "GDPCap"]].dropna(subset=["GDPCap"]).copy()
+            cnt = tmp.groupby("Year")["GDPCap"].transform("count")
+            tmp = tmp[cnt >= n_income_groups]
+            tmp["IncomeGroup"] = tmp.groupby("Year")["GDPCap"].transform(
+                lambda s: pd.qcut(s.rank(method="first"), n_income_groups, labels=labels)
+            )
+            income_group = tmp.set_index(["CountryCode", "Year"])["IncomeGroup"].reindex(
+                list(zip(data["CountryCode"], data["Year"]))
+            )
+            data_filtered = data[income_group.to_numpy() == income]
+        else:
+            # Match Prepare(..., income_time_varying=False): fixed country membership
+            # by long-run mean GDP per capita.
+            country_mean = data.groupby("CountryCode")["GDPCap"].mean()
+            qgroups = pd.qcut(country_mean, n_income_groups, labels=labels).to_dict()
+            income_group = data["CountryCode"].map(qgroups)
+            data_filtered = data[income_group == income]
+
+        if data_filtered.empty:
+            raise ValueError(f"No observations for income group {income!r} (use one of {labels}).")
+
+    elif region is not None:
+        if "RegionCode" not in data.columns:
+            raise ValueError("Region filtering requested but 'RegionCode' is missing from data.")
+
+        default_region_map = {
+            "Asia": 142,
+            "Europe": 150,
+            "Africa": 2,
+            "Americas": 19,
+            "Oceania": 9,
+        }
+        resolved_region_map = region_map if region_map is not None else default_region_map
+
+        if isinstance(region, str):
+            region_code = resolved_region_map.get(region, region)
+            if isinstance(region_code, (list, tuple, np.ndarray)):
+                if len(region_code) == 0:
+                    raise ValueError(f"Region '{region}' resolved to an empty region code list.")
+                region_code = region_code[0]
+        else:
+            region_code = region
+
+        if isinstance(region_code, (list, tuple, np.ndarray, set)):
+            data_filtered = data[data["RegionCode"].isin(list(region_code))]
+        else:
+            data_filtered = data[data["RegionCode"] == region_code]
+
+        if data_filtered.empty:
+            raise ValueError(f"No observations found for region '{region}'.")
+
+    if str(data_source).lower() == "ee":
+        temp_col = "temperature (celsius)"
+        precip_col = "precipitation (mm)"
+    elif str(data_source).lower() == "wb":
+        temp_col = "TempPopWeight"
+        precip_col = "PrecipPopWeight"
+    else:
+        raise ValueError("data_source must be either 'wb' or 'ee'.")
+
+    missing_cols = [col for col in (temp_col, precip_col) if col not in data_filtered.columns]
+    if missing_cols:
+        raise ValueError(
+            f"Histogram data is missing columns for data_source='{data_source}': {missing_cols}"
+        )
+
+    temp_obs = np.array(data_filtered[temp_col]).flatten()
+    precip_obs = np.array(data_filtered[precip_col]).flatten() / 1000
 
     mask = np.isfinite(temp_obs) & np.isfinite(precip_obs)
     temp_obs = temp_obs[mask]
@@ -403,7 +487,13 @@ def add_histogram(fig, data, legend, precip_capped=False):
     # ============================================================
     # 3D histogram settings
     # ============================================================
-    z_floor = -0.30                 # bottom of the plot
+    if z_floor is None:
+        # Align bars with the figure floor when z-axis range is already configured.
+        scene = getattr(fig.layout, "scene", None)
+        zaxis = getattr(scene, "zaxis", None) if scene is not None else None
+        zrange = getattr(zaxis, "range", None) if zaxis is not None else None
+        z_floor = zrange[0] if zrange is not None and len(zrange) > 0 else -0.4
+
     bar_max_height = 0.12           # how tall the tallest histogram bar can become
     max_count = counts.max()
 
@@ -443,7 +533,6 @@ def add_histogram(fig, data, legend, precip_capped=False):
                 showscale=legend
             )
     return fig
-
 
 
 
