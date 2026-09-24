@@ -60,8 +60,9 @@ def SetupGlobalModel(self):
         # dynamic_model IS supported: time enters the network as an input and the
         # additive time fixed effect is dropped, so the within projection annihilates
         # country fixed effects and country trends only (include_time=False below).
-        if str(getattr(self, "data_source", "wb")).lower() == "ee" or group_by_country:
-            raise NotImplementedError("within_projection (v1): wb only (no ee / group_trends_by_country).")
+        # 'ee' and country-grouped trends are handled inside WithinProjector
+        # (trend_groups + weights); no additive dummy/trend layers are built in
+        # within mode, so nothing further is needed here. See PROJECT.md D13-D15.
         self.country_FE_layer = self.time_FE_layer = None
         self.linear_trend_layer = self.quadratic_trend_layer = None
 
@@ -102,7 +103,8 @@ def SetupGlobalModel(self):
       # 'time' Vectorize masks a full (1, T, N) time matrix with is_nan of its
       # input, so it must receive the RAW (1, T, N) climate input (with NaNs),
       # not the already-vectorized (1, n_obs, 1) tensor.
-      time_input=Vectorize(self.N['global'], 'time', time_periods=self.time_periods)(self.input[self.input_vars[0]])
+      time_input=Vectorize(self.N['global'], 'time', time_periods=self.time_periods,
+                           time_scaling=getattr(self, 'time_scaling', 'standardize'))(self.input[self.input_vars[0]])
       input_first= concatenate([self.input_vector[var] for var in self.input_vars] + [time_input], axis=2)
     else:
       input_first= concatenate([self.input_vector[var] for var in self.input_vars], axis=2)

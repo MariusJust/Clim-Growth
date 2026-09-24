@@ -75,6 +75,23 @@ print(f"n_boot={boot.n_boot}  n_inits={boot.n_inits}  node={boot.node}")
 print(f"estimation run: {boot.run_dir}")
 print(f"job dir: {job_dir}")
 
-subprocess.run(
-    ["sbatch", str(job_script)] if shutil.which("sbatch") else ["bash", str(job_script)],
-    cwd=None if shutil.which("sbatch") else str(ROOT), check=True)
+# There is no bash fallback: this job must be dispatched to the scheduler, never
+# run on the login node.
+if shutil.which("sbatch") is None:
+    raise SystemExit("sbatch not found. Submit from a SLURM login node.")
+
+submit_cmd = ["sbatch", "--parsable"]
+
+# Optional dependency: --after <jobid> holds this job until <jobid> completes
+# successfully. Used to chain a bootstrap behind the estimation run whose
+# run_dir it consumes, so the pair can be queued in one sitting.
+if "--after" in sys.argv:
+    dep = sys.argv[sys.argv.index("--after") + 1].strip()
+    if dep:
+        submit_cmd.append(f"--dependency=afterok:{dep}")
+        print(f"holding until job {dep} completes successfully")
+
+submit_cmd.append(str(job_script))
+result = subprocess.run(submit_cmd, capture_output=True, text=True, check=True)
+job_number = result.stdout.strip()
+print(f"submitted job {job_number}")

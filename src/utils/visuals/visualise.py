@@ -9,24 +9,54 @@ import plotly.io as pio
 ##############################################  Create the prediction input  ########################################################
 
 
+# Legacy temperature grid: np.linspace(0, 30, 90), i.e. 90 points with spacing
+# 30/89 = 0.337078...  Every surface produced before 2026-09 lives on this grid.
+_T_LEGACY_MAX = 30.0
+_T_LEGACY_N = 90
+_T_STEP = _T_LEGACY_MAX / (_T_LEGACY_N - 1)
 
-def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_dim=True, precip_capped=False, only_dims=False):
-   
+
+def temperature_grid(t_max=_T_LEGACY_MAX):
+    """Temperature grid on the legacy spacing, extended to cover ``t_max``.
+
+    Returns ``np.linspace(0, 30, 90)`` unchanged when ``t_max <= 30``, so all
+    existing surfaces stay bit-identical.  For ``t_max > 30`` the legacy grid is
+    extended in steps of 30/89, which makes the legacy grid an exact prefix of
+    the returned one -- old and new surfaces remain comparable cell by cell.
+
+    ``t_max=35`` gives 105 points running to 35.056 C (the grid cannot land on
+    35.0 exactly without changing the spacing, and preserving the spacing is
+    worth more than a round endpoint).
+    """
+    base = np.linspace(0.0, _T_LEGACY_MAX, _T_LEGACY_N)
+    if t_max <= _T_LEGACY_MAX:
+        return base
+    k = int(np.ceil((t_max - _T_LEGACY_MAX) / _T_STEP - 1e-12))
+    return np.concatenate([base, _T_LEGACY_MAX + np.arange(1, k + 1) * _T_STEP])
+
+
+def create_pred_input(mc, mean_T, std_T, mean_P, std_P, time_periods=None, two_dim=True, precip_capped=False, only_dims=False, t_max=_T_LEGACY_MAX):
+
     """
     Create the input for predictions by standardizing temperature and precipitation.
-    
+
     Parameters:
-    - mc: bool either true or false 
+    - mc: bool either true or false
     - mean_T: mean of temperature
-    - std_T: standard deviation of temperature 
+    - std_T: standard deviation of temperature
     - mean_p: mean of precipitation
     - std_p: standard deviation of precipitation
+    - t_max: upper end of the temperature grid (default 30 C, the legacy grid).
+             Values above 30 extend the grid on the same spacing; see
+             ``temperature_grid``.  Only raise this deliberately: the estimation
+             sample tops out near 30 C, so anything beyond that is determined by
+             the network's functional form rather than by data.
     Returns:
     - pred_input: Standardized input for predictions.
     """
-    
-    temp_vals = np.linspace(0, 30, 90) 
-   
+
+    temp_vals = temperature_grid(t_max)
+
     if mc: #we use meters in mc 
         precip_vals=np.linspace(0.012,5.435,90)
     else:

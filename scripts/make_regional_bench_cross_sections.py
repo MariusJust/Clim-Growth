@@ -142,12 +142,25 @@ def main() -> None:
 
     tcol = "TempPopWeight" if "TempPopWeight" in data else "temperature (celsius)"
     pcol = "PrecipPopWeight" if "PrecipPopWeight" in data else "precipitation (mm)"
-    mean_T, std_T = float(np.nanmean(data[tcol])), float(np.nanstd(data[tcol]))
-    mean_P, std_P = float(np.nanmean(data[pcol])), float(np.nanstd(data[pcol]))
-    pred_input, T_grid, P_grid = create_pred_input(
-        mc=False, mean_T=mean_T, std_T=std_T, mean_P=mean_P, std_P=std_P,
-        precip_capped=True)
-    temp_axis = T_grid[0, :]       # degC (columns)
+
+    # PER-REGION standardisation. Prepare() z-scores temperature and precipitation
+    # inside its per-region loop, so region r's sub-network is trained in region
+    # r's own units and Visual_model applies no standardisation of its own.
+    # Feeding a single globally standardised grid to every head (what this script
+    # did before 2026-09-04) evaluates each region at the wrong point of its
+    # domain -- for Europe, 20 C is z=+2.68 in its own units but z=-0.04 globally.
+    # Verified: per-region moments reproduce the (2,) run's recorded BIC to 0.025
+    # out of -35,474.94; global moments are off by 105.6.
+    if str(Path(__file__).resolve().parent) not in sys.path:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from regional_surface import region_moments          # noqa: E402
+    reg_mom = region_moments(data)
+    pred_inputs = {}
+    for _r, (_mT, _sT, _mP, _sP) in reg_mom.items():
+        pred_inputs[_r], T_grid, P_grid = create_pred_input(
+            mc=False, mean_T=_mT, std_T=_sT, mean_P=_mP, std_P=_sP,
+            precip_capped=True)
+    temp_axis = T_grid[0, :]       # degC (columns) -- raw units, shared across regions
     prec_axis = P_grid[:, 0]       # mm   (rows)
 
     # ---- build regional model, load the chosen weights ---------------------
@@ -165,8 +178,9 @@ def main() -> None:
             raise SystemExit(f"region '{region}' not in model.model_visual; "
                              f"available: {list(model.model_visual)}")
 
-        # NN surface for this region on the shared grid.
-        flat = model.model_visual[region].predict([pred_input], verbose=0).reshape(-1)
+        # NN surface for this region, evaluated in THIS region's z-units.
+        flat = model.model_visual[region].predict([pred_inputs[region]],
+                                                  verbose=0).reshape(-1)
         Z = flat.reshape(T_grid.shape)
 
         # Region subsample -> median precip (mm) and mean temp (degC).

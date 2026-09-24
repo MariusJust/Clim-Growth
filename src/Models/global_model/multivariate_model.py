@@ -82,9 +82,14 @@ class MultivariateModel:
             proj = self._get_within_projector()
             y_mat_t = np.array(self.y_train_transf['global'], dtype=np.float64)
             y_obs_t = y_mat_t[proj.t_arr, proj.n_arr]
+            # Ws (n x p) + M (p x p) instead of the old B (p x n): on the ee panel
+            # B alone was 0.80 GB as a float32 graph constant on top of 1.49 GB in
+            # numpy. Applying M via transpose_a removes it entirely.
             within = dict(
                 W=tf.constant(proj.W, dtype=tf.float32),
-                B=tf.constant(proj.B, dtype=tf.float32),
+                M=tf.constant(proj.M, dtype=tf.float32),
+                s=tf.constant(proj.s, dtype=tf.float32),
+                w=tf.constant(proj.w, dtype=tf.float32),
                 Py=tf.constant(proj.annihilate(y_obs_t), dtype=tf.float32),
             )
             loss_fn = individual_loss(mask=self.Mask, within=within)
@@ -174,11 +179,45 @@ class MultivariateModel:
             mask_TN = np.asarray(self.mask['global']).reshape(self.T, self.N['global'])
             ct = bool(getattr(self, "country_trends", False))
             qt = ct and bool(getattr(self, "quadratic_trends", True))
-            # Dynamic model carries time as a network input and has no additive time
-            # fixed effect, so its within projection annihilates country FE + trends only.
-            include_time = not bool(getattr(self, "dynamic_model", False))
+            # Dynamic model carries time as a network input. By default it has no
+            # additive time fixed effect, so its within projection annihilates
+            # country FE + trends only.
+            #
+            # instance.model.dynamic_include_time=true retains the additive year FE
+            # alongside the network's t input. This is the like-for-like comparison
+            # PROJECT.md D12 asks for: the projection then annihilates anything the
+            # network contributes at the common time level, so t can only enter
+            # through its INTERACTION with (T, P) -- the time-varying climate
+            # response, separated from the common time path. It also puts the
+            # dynamic model on the same nuisance basis as the static one, which the
+            # default does not: dropping the year FE lowers the within rank by 60,
+            # worth 60*log(10324) = 554.5 BIC of penalty the dynamic model never
+            # pays (see notes/2026-09-04/2026-09-04-dynamic-he-normal-run.md).
+            #
+            # Default false, so runs before 2026-09-08 stay reproducible.
+            dyn = bool(getattr(self, "dynamic_model", False))
+            include_time = (not dyn) or bool(getattr(self, "dynamic_include_time", False))
+
+            # Subnational ('ee') panel: trends per country rather than per admin-1
+            # unit, and observations weighted w = 1/n_c so every country carries
+            # equal total weight. Unweighted, the estimate would be weighted by how
+            # finely each country happens to be subdivided (USA 179 units, Mali 1),
+            # which is administrative geography rather than evidence. Both are inert
+            # for 'wb', where country_map is None. See PROJECT.md D13-D15.
+            trend_groups = weights = None
+            country_map = getattr(self, "country_map", None)
+            if country_map is not None:
+                units = [int(u) for u in self.individuals['global']]
+                iso = np.array([country_map[u] for u in units])
+                if bool(getattr(self, "group_trends_by_country", False)):
+                    trend_groups = iso
+                if bool(getattr(self, "weight_by_country", True)):
+                    per_iso = dict(zip(*np.unique(iso, return_counts=True)))
+                    weights = np.array([1.0 / per_iso[c] for c in iso], dtype=float)
+
             self.within_proj = WithinProjector(mask_TN, country_trends=ct,
-                                               quadratic_trends=qt, include_time=include_time)
+                                               quadratic_trends=qt, include_time=include_time,
+                                               trend_groups=trend_groups, weights=weights)
         return self.within_proj
 
     def refresh_summaries(self):
@@ -282,15 +321,24 @@ class MultivariateModel:
             gamma = proj.recover_gamma(y_obs - f_obs)                   # exact FE/trends
             full_obs = f_obs + proj.W @ gamma
             self._within_summaries(gamma)
-            SSE = float(np.sum((y_obs - full_obs) ** 2))
-            mean_tmp = float(np.nanmean(y_mat))
-            SST = float(np.sum((y_obs - mean_tmp) ** 2))
+            # Weighted SSE/SST, and n = Σw for the information criteria. With
+            # w = 1/n_c on the ee panel Σw = 6624 (207 countries x 32 years),
+            # which is what the weighted design asserts the sample to be; using
+            # the raw 73,184 rows would treat ~179 near-identical US units as
+            # independent and under-penalise each parameter by log(73184/6624)
+            # = 1.91. Unit weights give Σw = noObs, so 'wb' is unchanged.
+            wt = proj.w
+            n_eff = proj.sum_w
+            SSE = float(np.sum(wt * (y_obs - full_obs) ** 2))
+            mean_tmp = float(np.average(y_obs, weights=wt))
+            SST = float(np.sum(wt * (y_obs - mean_tmp) ** 2))
             self.R2['global'] = 1 - SSE / SST if SST > 0 else np.nan
-            MSE = SSE / self.noObs['global']
+            MSE = SSE / n_eff
             m_eff = int(self.m) + int(proj.rank)
             self.m_effective = m_eff
-            self.BIC = np.log(MSE) * self.noObs['global'] + m_eff * np.log(self.noObs['global'])
-            self.AIC = np.log(MSE) * self.noObs['global'] + 2 * m_eff
+            self.n_effective = n_eff
+            self.BIC = np.log(MSE) * n_eff + m_eff * np.log(n_eff)
+            self.AIC = np.log(MSE) * n_eff + 2 * m_eff
             return in_sample_preds
 
         # Initialize aggregation variable

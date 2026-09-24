@@ -157,9 +157,14 @@ def main():
         cc[:, 0] = gdp0; nc[:, 0] = gdp0
         bg = f(tb, p0); tot = np.zeros((len(YRS), 2))
         for i in range(1, len(YRS)):
+            # BHM's ComputeMainProjections.R runs a 1-based loop where j = i-1 is
+            # BOTH the previous array slot AND the number of years of warming.
+            # Those coincide only in 1-based indexing: here the previous slot is
+            # i-1 but the warming step is i, matching his newtemp = temp + j*ccd
+            # for j = 1..89.
             j = i - 1; gy = G_[:, i]
             nc[:, i] = nc[:, j] * (1.0 + gy)
-            nt = tb + j * ccd if cap is None else np.minimum(tb + j * ccd, cap)
+            nt = tb + i * ccd if cap is None else np.minimum(tb + i * ccd, cap)
             cc[:, i] = cc[:, j] * (1.0 + gy + f(nt, p0) - bg)
             wt = P_[:, i]
             tot[i, 0] = np.average(cc[:, i], weights=wt)
@@ -236,9 +241,10 @@ def main():
         cc[:, 0] = gdp0; nc[:, 0] = gdp0
         bg = f(tb, p0)
         for i in range(1, len(YRS)):
+            # previous array slot is i-1; years of warming is i (see project())
             j = i - 1; gy = G_[:, i]
             nc[:, i] = nc[:, j] * (1.0 + gy)
-            nt = tb + j * ccd if cap is None else np.minimum(tb + j * ccd, cap)
+            nt = tb + i * ccd if cap is None else np.minimum(tb + i * ccd, cap)
             cc[:, i] = cc[:, j] * (1.0 + gy + f(nt, p0) - bg)
         return (cc / nc - 1.0) * 100.0
 

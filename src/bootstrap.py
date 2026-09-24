@@ -41,6 +41,16 @@ Outputs into the Hydra run dir:
   - ``bootstrap_draw_countries.npy`` sampled country labels by rep
   - ``bootstrap_rep_status.csv``     status/loss metadata by rep and node
   - ``bootstrap_bands.npz``          T, P grids + per-node and equal-pooled bands
+  - ``bootstrap_weights.npz``        flat network weights by rep and node, plus
+                                     the shapes needed to unflatten them
+
+Config handles:
+  - ``instance.bootstrap.surface_t_max``  upper end of the temperature grid
+    (default 30 C, matching Burke's cap; read only here, so estimation runs are
+    unaffected).  Raise to 35 only for an explicit uncapped sensitivity: just 3
+    of 10,324 country-years exceed 30 C, so the surface beyond that is pure
+    functional-form extrapolation.  The grid keeps the legacy 30/89 spacing, so
+    the old 90-point grid is an exact prefix of the extended 105-point one.
 """
 from utils.miscelaneous import turn_off_warnings
 turn_off_warnings()
@@ -210,7 +220,13 @@ def _fit_one_init(node, g, p, t, seed):
     if not np.all(np.isfinite(Z)):
         raise RuntimeError("predicted surface contains non-finite values")
 
-    return best_loss, int(len(losses)), Z
+    # Keep the climate sub-network's weights as well as the surface: the surface
+    # alone cannot answer whether the hidden units specialise the same way in
+    # every draw (one unit loading on temperature, the other on precipitation).
+    wts = [np.asarray(w, dtype=np.float32)
+           for w in factory.model_visual.get_weights()]
+
+    return best_loss, int(len(losses)), Z, wts
 
 
 def _run_rep(task):
@@ -233,6 +249,8 @@ def _run_rep(task):
 
     nodes = _CTX["nodes"]
     rep_surfaces = np.full((len(nodes),) + _CTX["grid_shape"], np.nan, dtype=np.float32)
+    rep_weights = [None] * len(nodes)
+    rep_shapes = [None] * len(nodes)
     rows = []
 
     for node_idx, node in enumerate(nodes):
@@ -241,9 +259,9 @@ def _run_rep(task):
         for init_idx in range(_CTX["n_inits"]):
             init_seed = int(seed + 100_000 * (node_idx + 1) + init_idx)
             try:
-                best_loss, epochs, Z = _fit_one_init(node, g, p, t, init_seed)
+                best_loss, epochs, Z, wts = _fit_one_init(node, g, p, t, init_seed)
                 if best is None or best_loss < best[0]:
-                    best = (best_loss, init_idx, epochs, Z)
+                    best = (best_loss, init_idx, epochs, Z, wts)
             except Exception as exc:  # keep the pool alive; record the bad fit.
                 errors.append(f"init {init_idx}: {type(exc).__name__}: {exc}")
 
@@ -253,13 +271,16 @@ def _run_rep(task):
                              epochs=np.nan, error=" | ".join(errors)))
             continue
 
-        best_loss, best_init, epochs, Z = best
+        best_loss, best_init, epochs, Z, wts = best
         rep_surfaces[node_idx] = Z
+        rep_weights[node_idx] = np.concatenate([w.ravel() for w in wts]).astype(np.float32)
+        rep_shapes[node_idx] = [list(w.shape) for w in wts]
         rows.append(dict(rep=rep, node_idx=node_idx, node=str(node),
                          ok=True, best_init=best_init, best_loss=best_loss,
                          epochs=epochs, error=" | ".join(errors)))
 
-    return rep, draw.astype(np.int32), np.asarray(draw_countries, dtype=object), rep_surfaces, rows
+    return (rep, draw.astype(np.int32), np.asarray(draw_countries, dtype=object),
+            rep_surfaces, rep_weights, rep_shapes, rows)
 
 
 # --------------------------------------------------------------------------- #
@@ -360,10 +381,15 @@ def main(cfg: DictConfig):
         raw = raw[raw["Year"] <= inst.data_end]
     mean_T, std_T = float(np.nanmean(raw["TempPopWeight"])), float(np.nanstd(raw["TempPopWeight"]))
     mean_P, std_P = float(np.nanmean(raw["PrecipPopWeight"])), float(np.nanstd(raw["PrecipPopWeight"]))
+    # surface_t_max > 30 extends the grid past the support of the estimation
+    # sample; only set it when the projections are deliberately uncapped.
+    surface_t_max = float(boot.get("surface_t_max", 30.0))
     pred_input, T_grid, P_grid = create_pred_input(
         mc=False, mean_T=mean_T, std_T=std_T, mean_P=mean_P, std_P=std_P,
-        precip_capped=True)
+        precip_capped=True, t_max=surface_t_max)
     grid_shape = T_grid.shape
+    print(f"surface grid: T in [0, {T_grid[0, -1]:.4f}] with {grid_shape[1]} points, "
+          f"P in [{P_grid[0, 0]:.2f}, {P_grid[-1, 0]:.2f}] with {grid_shape[0]} points")
 
     cfg_dict = OmegaConf.to_container(inst, resolve=True)
     fit_kw = dict(lr=float(inst.lr), min_delta=float(inst.min_delta),
@@ -387,16 +413,29 @@ def main(cfg: DictConfig):
     draw_indices = np.full((n_boot, draw_width), -1, dtype=np.int32)
     draw_countries = np.full((n_boot, n_countries), "", dtype=object)
     status_rows = []
+    # Per-draw network weights, flattened.  Allocated on the first successful
+    # fit, once the flat length is known; NaN marks a failed fit.
+    weights_flat = None
+    weight_shapes = None
 
     init_args = (nodes, cfg_dict, growth, precip, temp, pred_input,
                  grid_shape, fit_kw, n_inits, scheme, block_len, Yhat, Uhat)
     done = 0
     with mp.Pool(processes=n_proc, initializer=_init_worker, initargs=init_args) as pool:
-        for rep, draw, countries, Z, rows in pool.imap_unordered(_run_rep, tasks):
+        for rep, draw, countries, Z, wflat, wshapes, rows in pool.imap_unordered(_run_rep, tasks):
             draw_indices[rep] = draw
             if scheme != "residual_block":
                 draw_countries[rep] = countries
             surfaces[rep] = Z
+            for node_idx, wv in enumerate(wflat):
+                if wv is None:
+                    continue
+                if weights_flat is None:
+                    weights_flat = np.full((n_boot, n_nodes, wv.size), np.nan,
+                                           dtype=np.float32)
+                    weight_shapes = wshapes[node_idx]
+                if wv.size == weights_flat.shape[2]:
+                    weights_flat[rep, node_idx] = wv
             status_rows.extend(rows)
             done += 1
             if done % report_every == 0 or done == n_boot:
@@ -422,6 +461,13 @@ def main(cfg: DictConfig):
     np.save(run_dir / "bootstrap_surfaces.npy", surfaces)
     np.save(run_dir / "bootstrap_draw_indices.npy", draw_indices)
     np.save(run_dir / "bootstrap_draw_countries.npy", draw_countries)
+    if weights_flat is not None:
+        # shapes are stored as a ragged object array so the flat vector can be
+        # split back into the original Keras weight list.
+        np.savez(run_dir / "bootstrap_weights.npz",
+                 flat=weights_flat,
+                 shapes=np.array(weight_shapes, dtype=object),
+                 nodes=np.array([str(n) for n in nodes], dtype=object))
     pd.DataFrame(status_rows).sort_values(["rep", "node_idx"]).to_csv(
         run_dir / "bootstrap_rep_status.csv", index=False
     )
@@ -449,6 +495,9 @@ def main(cfg: DictConfig):
     print(f"Saved draw countries -> {run_dir/'bootstrap_draw_countries.npy'}")
     print(f"Saved status -> {run_dir/'bootstrap_rep_status.csv'}")
     print(f"Saved bands -> {run_dir/'bootstrap_bands.npz'}")
+    if weights_flat is not None:
+        print(f"Saved weights -> {run_dir/'bootstrap_weights.npz'} "
+              f"{weights_flat.shape}")
     print(f"Bootstrap finished in {int(time.time()-t0)}s")
 
 

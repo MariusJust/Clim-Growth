@@ -60,6 +60,11 @@ the difference, across **SSP1-SSP5** (Burke's ported code already loops all scen
 regional/income decomposition of who drives it. This is the supervisor's "quantify how much our
 estimates change the downstream analysis", mirroring how Yuan et al. sold their results.
 
+**Headline statistic locked 2026-09-04 (D16):** median country and population share harmed,
+with Burke's ratio of population-weighted means alongside for comparability and never alone,
+and the leave-out-winners row as the standing robustness check. Closes the "decide headline
+projection specification given extreme fragility" question.
+
 ### WS2 — Panel bootstrap inference *(active)*
 500 country-cluster replications already exist for the global `(2,)` model. Diagnose and
 legitimately tighten the bands, then propagate them into WS1's projections. Same plan document.
@@ -155,6 +160,14 @@ Decisions are sticky: do not relitigate without a reason to.
 | D7 | Compile LaTeX in a sandbox copy, copy the PDF back | The OneDrive mount is too slow for pdflatex and truncates `.aux` on abort, causing a corrupt-aux loop |
 | D8 | EE robustness run uses **BIC and a single architecture**, matching the main text | One selection rule throughout the paper; the robustness check should differ from the headline model only in the data. Cost: the appendix's "AIC weights are less concentrated, so averaging is substantive" observation is dropped |
 | D9 | The finer-resolution appendix is **must-have**, not backlog | It answers the "country aggregates mask within-country heterogeneity" critique the paper itself lists as a limitation. Half-fixing it is worse than cutting it, so it gets implemented properly |
+| D10 | Projections cap the response at **30 °C** for every arm, `f(min(T,30))` | Burke's own choice ("so we are not projecting out of sample"); 30.1 °C is the warmest observed value; the saved bootstrap surfaces stop at 30 °C and linear extrapolation was measured to err by **1.92 pp/yr at 33.8 °C**. Measured cost of capping: only 0.3–0.7 pp at 2099. Supersedes the earlier "should not be capped" instruction |
+| D11 | Report projections as **two panels** — population-weighted aggregate *and* median country / population harmed | With bands attached the 2099 aggregate spans −51% to +317% and cannot discriminate between arms; the aggregate also hides that the median country is ≈ −70% in every arm, including Burke's own published coefficients (−22.5% aggregate vs −76.8% median) |
+| D13 | EE panel: **fixed effects per admin1 unit, trends per country** (linear + quadratic), global year FE | FE only absorb levels and admin1 units differ in level in ways correlated with climate, so per-unit FE is free and necessary. Trends per country because T=32: a per-unit quadratic trend would track that unit's own local warming and leave only weather. It also cuts the nuisance design from p=6893 to p=2733, making the within projection fit in memory. Matches what the 2026-06-01 EE run already used |
+| D14 | EE observations are **weighted `w = 1/n_c`** so every country carries equal total weight | Unweighted, the estimate is weighted by how finely a country happens to be administratively subdivided — USA 179 units, Mali 1 — which is geography, not evidence. Cost is near-illusory: within-country correlation of the identifying variation (within-unit, net of year FE) is **0.82** (median 0.929), so a 179-unit country carries the information of ~1.22 independent units. Unweighted USA influence 7.83% -> 0.48%. Population weights are unavailable (the `population_density` column is genuinely density; country sums are 0.30-0.60 of actual population) |
+| D15 | Weighted BIC uses **n = sum of weights = 6,624** (207 countries x 32 years) | It is what the weighted design asserts the sample to be, and is close to the true information content implied by rho=0.82. Using n=73,184 would treat 179 redundant US units as independent and under-penalise parameters by 1.91 each (~38 BIC units over a 20-parameter gap). Kish n_eff = 10,790 is the documented alternative |
+| D12 | The 2026-07-02 dynamic run is **not** evidence on a time-varying response | It carries no additive time FE, so it fit the time trend instead of the climate response: temperature amplitude collapses to 1–5 pp (vs ~19 pp static) and the surface is monotonically increasing in T at every date. Any future dynamic run must retain additive time FE |
+| D17 | **No claim about the shape of a fitted surface goes into the paper until it has survived a multi-init check.** Architecture selection by BIC is stable and can be reported as is; the surface conditional on that architecture cannot, until checked | Two levels runs differing only in the output-layer initialiser sit 1.03 BIC apart yet place the optimum 18 C apart (11.67 C versus 30.00 C, the latter pinned at the grid edge with no interior optimum over the supported range). Separately, the dynamic model's time-varying share ranges from 4.54 to 91.60 percent across architectures within 50 BIC, and the sign of corr(1961, 2023) flips. Both are near-equivalent fits implying qualitatively different surfaces, which points at many comparable local optima rather than at either specification. Evidence: `notes/2026-09-24/2026-09-24-post-holiday-run-analysis.md`. Supersedes the framing in D12: the binding constraint is not the absence of time FE but the identification of the surface itself |
+| D16 | **Headline projection statistic = median country and population share harmed.** Burke's ratio of population-weighted means is reported alongside for comparability, never alone. The leave-out-winners row is the standing robustness check. Refines D11, which set the two-panel format but left the headline unnamed | Burke's aggregate is a ratio of means, not a mean of ratios, so it decomposes as `agg = sum_i w_i (GDPcc_i - GDPnocc_i) / sum_j w_j GDPnocc_j` and contributions scale with absolute dollars times population. Six rich cold countries carry the whole NN number: USA alone contributes +10.39 pp, Canada +6.84 pp, while India loses 95 percent of income across 1.15 billion people for only -4.92 pp. Dropping the top 3 contributors moves the NN aggregate from +14.25 percent to -10.37 percent; top 5 to -23.52 percent. Under every other aggregator the sign is firmly negative (pop-weighted mean of country impacts -24.92 percent, geometric mean -70.12 percent, pop-weighted median -75.76 percent, median country -67.66 percent, 63.9 percent of world population worse off). The pathology is Burke's, not ours: his own specification run through his own aggregator gives -7.22 percent headline against a -72.99 percent median country and 87.4 percent of population worse off. Evidence: `scripts/2026-09-04-aggregation-decomposition.py`, `paper/Tables/2026-09-04-aggregation-decomposition.csv` |
 
 ---
 
@@ -174,8 +187,22 @@ Decisions are sticky: do not relitigate without a reason to.
 - `projections/Projections.py`: `data` and `model` used before assignment; `cfg.formulation` is
   attribute access on a dict from `yaml.safe_load`; climate deltas aligned to SSP rows
   **positionally** instead of merged on country code.
-- Bootstrap band-computation source is **lost** (only `src/__pycache__/bootstrap.cpython-*.pyc`);
-  must be rewritten.
+- ✅ **RESOLVED 2026-08-30 — `src/bootstrap.py` restored by the user** from an external copy.
+  The OneDrive → `C:\dev` move had silently dropped **four** never-committed source files:
+  `src/bootstrap.py`, `src/network_information_criterion.py` (both restored),
+  `src/utils/aic_weights.py` (still missing, but no longer imported anywhere — dead code), and
+  `src/utils/config.py`, which was **reconstructed from bytecode** and is load-bearing
+  (`bootstrap.py` imports `flatten_instance` from it). Root cause: git tracks only 64 files under
+  `src/`, all from the stale capital-M `src/Models/` tree, so the entire current lowercase
+  `src/models/` tree is untracked. **Commit it.**
+- **The dynamic model has no additive time fixed effects** (`beta is None`), so the network
+  competes with the time trend and wins: in `2026-07-02_12-01-08_global_dynamic` the
+  temperature-carrying hidden unit saturates off (pre-activation −0.6 in 1961 → −25.2 by 2020),
+  the response amplitude collapses to 1–5 pp against ~19 pp for the static model, and the surface
+  becomes monotonically *increasing* in temperature. See `notes/2026-08-30-bootstrap-projections-bands.md`.
+- The bootstrap saves **surfaces only, not weights**, so per-draw projections are limited to the
+  saved (T, P) grid (T ≤ 30 °C, P ≤ 3000 mm). Fine under D10; would need re-running with weight
+  saving if uncapped per-draw projections are ever required.
 - Within projection is unavailable for `ee` data (`NotImplementedError`, see WS5), and
   `WithinProjector` materialises a dense `B` that will not scale to the subnational panel.
 

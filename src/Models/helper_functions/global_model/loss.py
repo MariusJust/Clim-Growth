@@ -22,10 +22,16 @@ def individual_loss(mask, p_matrix=None, n_holdout=0, balanced=False, within=Non
             * loss function evaluated in y_true and y_pred.
         """
         if within is not None:
+            # Weighted within projection, applied WITHOUT ever forming the p x n
+            # matrix (WᵀW)⁺Wᵀ: with s = sqrt(w) and Ws = s⊙W,
+            #     P̃ f = s⊙f - Ws (M (Wsᵀ (s⊙f))),      M = (WsᵀWs)⁺  (p x p)
+            # `Py` already carries the same transform, so `resid` is the weighted
+            # annihilated residual and its mean square is the weighted objective.
             keep = tf.logical_not(tf.reshape(mask, [-1]))
             f = tf.boolean_mask(tf.reshape(y_pred, [-1]), keep)
-            Bf = tf.linalg.matvec(within["B"], f)
-            Pf = f - tf.linalg.matvec(within["W"], Bf)
+            Wtf = tf.linalg.matvec(within["W"], f * within["w"], transpose_a=True)   # Wᵀ(w⊙f)
+            Pf = within["s"] * (
+                f - tf.linalg.matvec(within["W"], tf.linalg.matvec(within["M"], Wtf)))
             resid = within["Py"] - Pf
             return tf.reduce_mean(tf.square(resid))
         time_len = tf.shape(y_pred)[1]
