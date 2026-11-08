@@ -5,9 +5,18 @@ runs/bootstrap/<job_id>/ instead of runs/estimation/.
 
     python scripts/slurm_bootstrap.py
 
-Sizing note: on the corrected-data run the BIC-best node (2,) averaged
-10.6 min per initialisation. With n_boot=1000 and n_inits=2 that is 2002 fits,
-about 6.5 h wall on 55 cores. --time is set to 48 h for headroom.
+Sizing note. The old figure of 10.6 min per initialisation was measured at
+patience=200. Post-D19 the config runs patience=600 with lr_reduce_patience=50,
+and n_inits is 3 rather than 2, so there are 3000 fits and each runs longer.
+Budget roughly 3x the old estimate, 18-24 h on 55 cores. --time is 48 h.
+
+Run a small n_boot first (25) and read the per-fit time out of the log before
+committing: there is no runtime history, bootstrap.log is empty in every
+previous run.
+
+The formulation is taken from instance.model.formulation. regional and income
+resample WITHIN each group and hold each group's reference country fixed; see
+resample_columns in src/bootstrap.py.
 """
 import shutil
 import subprocess
@@ -55,6 +64,14 @@ def job_func(job_name, job_dir, root_dir):
     s += 'export TF_ENABLE_ONEDNN_OPTS=0\n'
     s += 'export TF_CPP_MIN_LOG_LEVEL=3\n'
     s += 'export CUDA_VISIBLE_DEVICES=""\n'
+    # One thread per worker. 55 TensorFlow processes each opening a 55-thread
+    # pool is what left the 2026-09-28 estimation job at 10-35% CPU and deep in
+    # swap until the cgroup OOM killer took workers out.
+    s += 'export OMP_NUM_THREADS=1\n'
+    s += 'export TF_NUM_INTRAOP_THREADS=1\n'
+    s += 'export TF_NUM_INTEROP_THREADS=1\n'
+    s += 'export OPENBLAS_NUM_THREADS=1\n'
+    s += 'export MKL_NUM_THREADS=1\n'
     s += (
         f'python -u src/bootstrap.py '
         f'--config-path "{job_dir / "config"}" '

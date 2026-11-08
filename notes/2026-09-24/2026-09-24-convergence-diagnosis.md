@@ -195,6 +195,9 @@ exhibit rather than adjudicated. The within-architecture across-initialisation B
 spread is computed anyway and held for the appendix, since it is the only measured
 yardstick against which a 9.65 BIC gap can be judged.
 
-Analysis lives in `notebooks/dynamic_model.ipynb`. The standalone
+Analysis lives in `notebooks/dynamic_model.ipynb`, section 8 "Initialisation
+stability": set `stab_run` to the pilot run, `bic_tol` to the equivalence window
+and `stab_node` to the architecture, then read `lr_reached_min` (did the schedule
+anneal) and `BIC_spread` (the yardstick for the 9.65 gap). The standalone
 `scripts/2026-09-24-multi-init-stability.py` was deleted on 2026-09-24 at the
 user's request; it is recoverable from commit `aa8573c`.

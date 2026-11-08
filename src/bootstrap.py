@@ -69,7 +69,15 @@ from omegaconf import DictConfig, OmegaConf
 import multiprocessing as mp
 
 from models.helper_functions.global_model import load_data
-from models import MultivariateModelGlobal as Model
+from models.helper_functions.regional_model import load_data as load_data_regional
+from models import MultivariateModelGlobal, MultivariateModelRegional
+
+
+def pick_model(cfg):
+    """regional and income share the regional model; everything else is global."""
+    return (MultivariateModelRegional
+            if str(cfg.get("formulation", "global")).lower() in ("regional", "income")
+            else MultivariateModelGlobal)
 from utils import create_pred_input
 from utils.miscelaneous import Find_data_file
 from utils.config import flatten_instance
@@ -78,24 +86,65 @@ from utils.config import flatten_instance
 # --------------------------------------------------------------------------- #
 # Resampling
 # --------------------------------------------------------------------------- #
-def resample_columns(growth, precip, temp, rng):
+def resample_columns(growth, precip, temp, rng, stratified=False, pin_reference=False):
     """Country-cluster resample: draw the panel columns (countries) with
     replacement and relabel duplicates so each becomes a distinct unit. The
-    same column draw is applied to growth, precipitation, and temperature so
-    the three stay aligned."""
-    cols = list(growth["global"].columns)
-    n = len(cols)
-    draw = rng.integers(0, n, size=n)
-    new_names = [f"{cols[j]}__b{i}" for i, j in enumerate(draw)]
+    same column draw is applied to growth, precipitation and temperature so the
+    three stay aligned.
 
-    draw_countries = [str(cols[j]) for j in draw]
+    stratified=False (global). One key, "global". Countries are drawn from the
+    whole panel, so the regional composition of the sample varies across draws.
+    That variation belongs in a global band.
 
-    def take(dct):
-        df = dct["global"].iloc[:, draw].copy()
-        df.columns = new_names
-        return {"global": df}
+    stratified=True (regional, income). Each group is resampled WITHIN itself,
+    preserving its width. Two reasons:
 
-    return take(growth), take(precip), take(temp), draw, draw_countries
+      * Oceania has 9 countries. Drawn from the whole panel its count per draw
+        is roughly Poisson(9), so about 5% of draws would leave it with 4 or
+        fewer and its output head would be fitted on almost nothing. The band
+        would then be wide for a resampling reason, not a statistical one.
+      * The regional bands are read on their own, not against the global band,
+        so conditioning on the observed group sizes is the question we want.
+
+    pin_reference=True holds column 0 of each group out of the resample. That
+    column is the reference country, and when ``within_projection`` is FALSE the
+    model builds explicit FE dummies and omits it as the baseline category
+    (``alpha[region].columns = individuals[region][1:]``). Letting the baseline
+    wander between draws would change the parameterisation draw to draw.
+
+    When ``within_projection`` is TRUE there is no baseline to protect: the FE
+    layers are None and the design is annihilated by P = I - W(W'W)^+ W', which
+    depends only on the column space of W. Every choice of omitted country spans
+    the same space and gives a numerically identical climate surface. Pinning
+    would then only throw away the sampling variation of one unit per group, so
+    the caller passes pin_reference=False.
+
+    As of 2026-11: global and regional runs use within_projection, the income run
+    does not.
+    """
+    out = {}
+    draws = {}
+    drawn_countries = []
+
+    for key in growth:
+        cols = list(growth[key].columns)
+        n = len(cols)
+        if stratified and pin_reference:
+            draw = (np.concatenate([[0], rng.integers(1, n, size=n - 1)])
+                    if n > 1 else np.array([0]))
+        else:
+            # stratified: within the group. unstratified: across the whole panel.
+            draw = rng.integers(0, n, size=n)
+        draws[key] = draw
+        drawn_countries += [str(cols[j]) for j in draw]
+        new_names = [f"{cols[j]}__b{i}" for i, j in enumerate(draw)]
+        for src, dst in ((growth, "g"), (precip, "p"), (temp, "t")):
+            df = src[key].iloc[:, draw].copy()
+            df.columns = new_names
+            out.setdefault(dst, {})[key] = df
+
+    flat = np.concatenate([draws[k] for k in growth])
+    return out["g"], out["p"], out["t"], flat, drawn_countries
 
 
 def _moving_block_row_order(n_rows, block_len, rng):
@@ -147,6 +196,7 @@ def _point_fit_residuals(node, cfg_dict, growth, precip, temp, fit_kw, seed):
     np.random.seed(seed % (2**32 - 1))
     random.seed(seed)
 
+    Model = pick_model(cfg_dict)
     factory = Model(node=node, cfg=cfg_dict, x_train={0: temp, 1: precip}, y_train=growth)
     factory.country_map = None
     factory.Depth = len(node)
@@ -178,14 +228,16 @@ _CTX = {}
 
 
 def _init_worker(nodes, cfg_dict, growth, precip, temp, pred_input,
-                 grid_shape, fit_kw, n_inits, scheme, block_len, Yhat, Uhat):
+                 grid_shape, fit_kw, n_inits, scheme, block_len, Yhat, Uhat,
+                 stratified=False, pin_reference=False):
     """Pool initializer: stash the shared, read-only context once per worker
     (spawn pickles these args n_process times, not per replication)."""
     global _CTX
     _CTX = dict(nodes=nodes, cfg_dict=cfg_dict, growth=growth, precip=precip,
                 temp=temp, pred_input=pred_input, grid_shape=grid_shape,
                 fit_kw=fit_kw, n_inits=n_inits, scheme=scheme,
-                block_len=block_len, Yhat=Yhat, Uhat=Uhat)
+                block_len=block_len, Yhat=Yhat, Uhat=Uhat,
+                stratified=stratified, pin_reference=pin_reference)
 
 
 def _fit_one_init(node, g, p, t, seed):
@@ -195,6 +247,7 @@ def _fit_one_init(node, g, p, t, seed):
     np.random.seed(seed % (2**32 - 1))
     random.seed(seed)
 
+    Model = pick_model(_CTX["cfg_dict"])
     factory = Model(node=node, cfg=_CTX["cfg_dict"], x_train={0: t, 1: p}, y_train=g)
     factory.country_map = None
     factory.Depth = len(node)
@@ -233,6 +286,8 @@ def _run_rep(task):
     rep, seed = task
     rng = np.random.default_rng(seed)
 
+    if _CTX["scheme"] == "residual_block" and _CTX["stratified"]:
+        raise SystemExit("residual_block is implemented for the global formulation only")
     if _CTX["scheme"] == "residual_block":
         # Residual moving-block over time: precip/temp fixed, growth = Yhat + Uhat*.
         g, starts = resample_residual_block(
@@ -244,7 +299,8 @@ def _run_rep(task):
         draw_countries = np.array([], dtype=object)
     else:
         g, p, t, draw, draw_countries = resample_columns(
-            _CTX["growth"], _CTX["precip"], _CTX["temp"], rng
+            _CTX["growth"], _CTX["precip"], _CTX["temp"], rng,
+            stratified=_CTX["stratified"], pin_reference=_CTX["pin_reference"],
         )
 
     nodes = _CTX["nodes"]
@@ -371,7 +427,21 @@ def main(cfg: DictConfig):
         print("  scheme=cluster (country pairs/cluster)")
 
     # Full-sample prepared data (resampled per replication at column level).
-    growth, precip, temp = load_data("IC", inst.data_source,
+    formulation = str(inst.get("formulation", "global")).lower()
+    stratified = formulation in ("regional", "income")
+    # Only pin the baseline when it is a real baseline, i.e. when the FE enter as
+    # explicit dummies rather than being projected out.
+    pin_reference = stratified and not bool(inst.get("within_projection", False))
+    if stratified:
+        growth, precip, temp = load_data_regional(
+            "IC", formulation, inst.data_source, end_year=inst.data_end,
+            target_mode=getattr(inst, "target_mode", "growth"))
+        print(f"formulation {formulation}: {len(growth)} groups, "
+              f"{{{', '.join(f'{k}:{growth[k].shape[1]}' for k in growth)}}}")
+        print(f"resampling WITHIN each group; reference country "
+              f"{'PINNED (explicit FE dummies)' if pin_reference else 'resampled (within projection, no baseline)'}")
+    else:
+        growth, precip, temp = load_data("IC", inst.data_source,
                                      end_year=inst.get("data_end", None),
                                      target_mode=target_mode)
 
@@ -398,7 +468,7 @@ def main(cfg: DictConfig):
     # Residual moving-block needs one point fit on the original sample to build
     # the fitted-growth and residual base matrices (Yhat, Uhat).
     Yhat = Uhat = None
-    draw_width = n_countries = len(growth["global"].columns)
+    draw_width = n_countries = sum(growth[k].shape[1] for k in growth)
     if scheme == "residual_block":
         print("  fitting point model on the original sample for the residual base ...")
         Yhat, Uhat = _point_fit_residuals(nodes[0], cfg_dict, growth, precip,
@@ -419,7 +489,8 @@ def main(cfg: DictConfig):
     weight_shapes = None
 
     init_args = (nodes, cfg_dict, growth, precip, temp, pred_input,
-                 grid_shape, fit_kw, n_inits, scheme, block_len, Yhat, Uhat)
+                 grid_shape, fit_kw, n_inits, scheme, block_len, Yhat, Uhat,
+                 stratified, pin_reference)
     done = 0
     with mp.Pool(processes=n_proc, initializer=_init_worker, initargs=init_args) as pool:
         for rep, draw, countries, Z, wflat, wshapes, rows in pool.imap_unordered(_run_rep, tasks):

@@ -84,6 +84,13 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--budget", type=float, default=150.0,
                     help="seconds to work before saving and exiting (resumable)")
+    ap.add_argument("--draws", default=None,
+                    help="bootstrap_draw_countries.npy from the NN run. Reuses the "
+                         "SAME country resamples, so the quadratic and the network "
+                         "draws are paired and a draw-by-draw difference is valid. "
+                         "Without it each arm draws its own resamples and only the "
+                         "marginal bands are meaningful.")
+    ap.add_argument("--out", default=None, help="output npz; defaults to the cache")
     a = ap.parse_args()
 
     e = load_panel()
@@ -95,8 +102,23 @@ def main():
     yrs = {c: blocks[c]["Year"].to_numpy() for c in iso}
     year_codes = {y: i for i, y in enumerate(sorted(e.Year.unique()))}
 
-    if CACHE.exists():
-        z = np.load(CACHE)
+    OUTF = Path(a.out) if a.out else CACHE
+
+    paired = None
+    if a.draws:
+        paired = np.load(a.draws, allow_pickle=True)
+        keep = set(iso.tolist())
+        print(f"paired draws {paired.shape} from {a.draws}")
+        miss = sorted(set(np.unique(paired).tolist()) - keep)
+        if miss:
+            print(f"  {len(miss)} drawn countries are not in the quadratic panel "
+                  f"and are dropped: {miss[:8]}{' ...' if len(miss) > 8 else ''}")
+        if len(paired) < a.n:
+            a.n = len(paired)
+            print(f"  only {a.n} paired draws available")
+
+    if OUTF.exists():
+        z = np.load(OUTF)
         cB, cL = list(z["burke"]), list(z["leirvik"])
     else:
         cB, cL = [], []
@@ -106,15 +128,18 @@ def main():
         print("already complete"); return
 
     rng = np.random.default_rng(a.seed)
-    for _ in range(done):                  # replay to keep the stream identical
-        rng.integers(0, n_iso, size=n_iso)
+    if paired is None:
+        for _ in range(done):              # replay to keep the stream identical
+            rng.integers(0, n_iso, size=n_iso)
 
     t0 = time.time()
     while len(cB) < a.n and time.time() - t0 < a.budget:
-        draw = rng.integers(0, n_iso, size=n_iso)
+        if paired is None:
+            drawn = [iso[j] for j in rng.integers(0, n_iso, size=n_iso)]
+        else:
+            drawn = [str(c) for c in paired[len(cB)] if str(c) in set(iso.tolist())]
         Vs, us, ys = [], [], []
-        for i, j in enumerate(draw):
-            c = iso[j]
+        for i, c in enumerate(drawn):
             Vs.append(arrs[c])
             us.append(np.full(len(arrs[c]), i))
             ys.append([year_codes[y] for y in yrs[c]])
@@ -131,8 +156,9 @@ def main():
             el = time.time() - t0
             print(f"  {len(cB)}/{a.n} draws ({el:.0f}s, {el/(len(cB)-done):.2f}s per draw)")
 
-    np.savez_compressed(CACHE, burke=np.array(cB), leirvik=np.array(cL))
-    print(f"saved {len(cB)}/{a.n} draws -> {CACHE}")
+    np.savez_compressed(OUTF, burke=np.array(cB), leirvik=np.array(cL))
+    print(f"saved {len(cB)}/{a.n} draws -> {OUTF}"
+          + ("  (paired with the NN resamples)" if paired is not None else ""))
     if len(cB) < a.n:
         print("budget reached; rerun the same command to continue")
 

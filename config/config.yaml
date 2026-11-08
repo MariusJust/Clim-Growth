@@ -53,9 +53,11 @@ instance:
 
   bootstrap:
     n_boot: 1000                  # Burke (2015) uses 1000 country-cluster draws
-    n_inits: 2
+    n_inits: 3                    # the published bands used 3; the config said 2
     n_process: null               # null reuses server.n_process
-    run_dir: runs/estimation/2026-08-27_11-01-35_global_IC_country_trends
+    # The locked global run, i.e. the one the paper's Figure 4 comes from. A band
+    # around a different point estimate than the figure is not that figure's band.
+    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends
     node: (2,)                    # keep set: with node and nodes null, top_k ranks by AIC, not BIC
     nodes: null                   # optional explicit list, overrides node
     top_k: 1                      # only consulted when node and nodes are null
