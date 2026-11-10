@@ -45,7 +45,7 @@ import pandas as pd
 _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
-from scripts.archive.hdf5_min import read_weights  # noqa: E402
+from hdf5_min import read_weights  # noqa: E402
 
 # Insertion order of the ``regions`` dict in regional_model/prepare_data.Prepare.
 REGION_ORDER = ["Asia", "Europe", "Africa", "Americas", "Oceania"]

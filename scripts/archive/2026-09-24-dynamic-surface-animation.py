@@ -38,7 +38,7 @@ import plotly.graph_objects as go
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from scripts.archive.hdf5_min import read_weights  # noqa: E402
+from hdf5_min import read_weights  # noqa: E402
 
 DEF_RUN = "runs/estimation/2026-09-08_12-44-40_global_dynamic"
 DEF_NODE = "(2, 2, 2)"

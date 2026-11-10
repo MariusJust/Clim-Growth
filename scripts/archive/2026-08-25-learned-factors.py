@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, "/sessions/charming-admiring-fermat/mnt/.claude/skills/paper1-analysis/scripts")
-from scripts.archive.hdf5_min import read_weights  # noqa: E402
+from hdf5_min import read_weights  # noqa: E402
 
 WEIGHTS = ROOT / "runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(2,).weights.h5"
 OUTDIR = ROOT / "paper/Figures/Interpretability"

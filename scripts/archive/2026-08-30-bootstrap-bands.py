@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from scripts.archive.hdf5_min import read_weights                                   # noqa: E402
+from hdf5_min import read_weights                                   # noqa: E402
 
 BOOT = ROOT / "runs/bootstrap/2026-08-29_20-56-38global_IC"
 PEST = ROOT / ("runs/estimation/2026-08-27_11-01-35_global_IC_country_trends"

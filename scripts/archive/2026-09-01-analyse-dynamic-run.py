@@ -32,7 +32,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from scripts.archive.hdf5_min import read_weights                                    # noqa: E402
+from hdf5_min import read_weights                                    # noqa: E402
 
 RUN = ROOT / "runs/estimation/2026-09-03_12-03-43_global_dynamic"
 STATIC = ROOT / ("runs/estimation/2026-08-27_11-01-35_global_IC_country_trends"

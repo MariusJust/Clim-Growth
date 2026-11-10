@@ -25,7 +25,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from scripts.archive.regional_surface import RegionalSurfaces, REGION_ORDER, REGION_CODE  # noqa: E402
+from regional_surface import RegionalSurfaces, REGION_ORDER, REGION_CODE  # noqa: E402
 
 YRS = list(range(2010, 2100))
 TCAP = 30.0
@@ -144,7 +144,7 @@ def main():
     cc, nc = compound(dg, gdp0, G_)
 
     # ---- global model on the same countries, for comparison -----------------
-    from scripts.archive.hdf5_min import read_weights
+    from hdf5_min import read_weights
     w = read_weights(str(GLOBAL_W))
     K = np.asarray(w["layers/dense/vars/0"]); c0 = np.asarray(w["layers/dense/vars/1"])
     bt = np.asarray(w["layers/dense_1/vars/0"]).ravel()

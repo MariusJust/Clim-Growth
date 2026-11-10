@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, "/sessions/charming-admiring-fermat/mnt/.claude/skills/paper1-analysis/scripts")
-from scripts.archive.hdf5_min import read_weights  # noqa: E402
+from hdf5_min import read_weights  # noqa: E402
 
 YRS = np.arange(2010, 2100)
 TCAP = 30.0                      # Burke's damage-function temperature cap

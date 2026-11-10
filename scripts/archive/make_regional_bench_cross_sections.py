@@ -153,7 +153,7 @@ def main() -> None:
     # out of -35,474.94; global moments are off by 105.6.
     if str(Path(__file__).resolve().parent) not in sys.path:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from scripts.archive.regional_surface import region_moments          # noqa: E402
+    from regional_surface import region_moments          # noqa: E402
     reg_mom = region_moments(data)
     pred_inputs = {}
     for _r, (_mT, _sT, _mP, _sP) in reg_mom.items():

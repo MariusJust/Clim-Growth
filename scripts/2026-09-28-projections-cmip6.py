@@ -77,7 +77,7 @@ plt.rcParams.update({"font.size": 13, "axes.titlesize": 14, "axes.labelsize": 13
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from scripts.archive.hdf5_min import read_weights                                   # noqa: E402
+from hdf5_min import read_weights                                   # noqa: E402
 
 CMIP = ROOT / "data/projections/cmip6"
 BOOT = ROOT / "runs/bootstrap/2026-08-29_20-56-38global_IC"

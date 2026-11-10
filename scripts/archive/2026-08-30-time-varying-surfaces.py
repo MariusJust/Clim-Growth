@@ -42,7 +42,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from scripts.archive.hdf5_min import read_weights                                   # noqa: E402
+from hdf5_min import read_weights                                   # noqa: E402
 
 RUN = ROOT / "runs/estimation/2026-07-02_12-01-08_global_dynamic"
 WEIGHTS = RUN / "parameters/(2, 2).weights.h5"

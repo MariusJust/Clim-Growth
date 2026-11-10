@@ -52,7 +52,7 @@ def _go():
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from scripts.archive.hdf5_min import read_weights          # scripts/hdf5_min.py, next to this file
+from hdf5_min import read_weights          # scripts/hdf5_min.py, next to this file
 
 # ---- paper styling (do not change without changing the paper) -------------
 CIVIDIS = "Cividis"
