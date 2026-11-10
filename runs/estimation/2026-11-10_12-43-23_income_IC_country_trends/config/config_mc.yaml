@@ -1,0 +1,17 @@
+defaults:
+  - _self_
+  - config                        # inherits everything in config/config.yaml
+
+mc:
+  reps: 2
+  sample_data: False              # False simulates synthetic data, True samples the real panel
+  specifications: [linear, Burke] # available: linear, Burke, Leirvik, Trig
+  models: [NN]                    # available: NN, Quadratic, Interactive
+  breakpoints: [2]
+
+hydra:
+  hydra_logging:
+    level: DISABLED
+  job_logging:
+    level: WARNING
+  verbose: false
