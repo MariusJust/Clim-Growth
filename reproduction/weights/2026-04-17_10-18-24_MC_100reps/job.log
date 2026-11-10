@@ -1,0 +1,1965 @@
+===== JOB START =====
+Fri Apr 17 11:42:13 CEST 2026
+s43n20.grendel.cscaa.dk
+SLURM_JOB_ID=4743134
+SLURM_CPUS_PER_TASK=48
+===== PYTHON START =====
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776418948.478061 1445128 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776418948.518854 1445128 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+
+======== Running Monte Carlo for Burke data using model: NN ============
+
+=== Running initial training loop ===
+Starting parallel processing with 48 processes...
+Processing nodes:   0%|          | 0/55 [00:00<?, ?node/s]WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419044.962129 1445180 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419044.980512 1445180 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.120979 1445182 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.121096 1445165 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.139799 1445182 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.140311 1445165 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.148753 1445150 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.166349 1445150 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.289681 1445138 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.308184 1445138 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.330931 1445157 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.347689 1445157 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.411314 1445144 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.428167 1445144 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.774421 1445166 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.774500 1445161 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.783582 1445161 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.783600 1445166 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.820542 1445167 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.820755 1445143 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.821360 1445178 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.821453 1445154 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.822227 1445141 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.822631 1445183 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.823054 1445152 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.823870 1445169 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.823934 1445160 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.824273 1445174 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.824935 1445147 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.825300 1445151 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.825559 1445177 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.825624 1445162 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.825675 1445149 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.826210 1445156 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.827987 1445176 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.834879 1445167 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.835034 1445143 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.835564 1445178 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.835683 1445154 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.836366 1445141 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.837112 1445183 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.837206 1445152 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.838232 1445169 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.838313 1445160 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.838539 1445174 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.839028 1445147 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.839511 1445151 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.839786 1445149 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.840111 1445177 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.840254 1445162 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.840573 1445156 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.842461 1445176 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.939687 1445148 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.953047 1445148 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.958185 1445179 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.958244 1445142 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.958852 1445164 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.959792 1445181 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.960720 1445171 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.960809 1445139 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.960924 1445168 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.960942 1445146 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.961205 1445163 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.961339 1445172 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.961358 1445155 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.961451 1445185 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.961891 1445170 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962040 1445145 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962162 1445140 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962366 1445175 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962405 1445158 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962456 1445173 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962793 1445153 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.962925 1445159 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776419045.963020 1445184 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776419045.963588 1445179 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.963597 1445142 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.964044 1445164 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.964859 1445181 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.966082 1445171 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.966194 1445139 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.966319 1445168 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.966394 1445146 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.966697 1445163 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.967097 1445172 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.967117 1445155 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.967142 1445185 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.967618 1445170 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.967774 1445145 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.967926 1445140 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.968114 1445175 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.968182 1445158 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.968220 1445173 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.968695 1445153 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.968857 1445184 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776419045.968907 1445159 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Processing nodes:   2%|▏         | 1/55 [28:58<26:04:46, 1738.64s/node]Processing nodes:  15%|█▍        | 8/55 [33:11<2:29:31, 190.89s/node]  Processing nodes:  16%|█▋        | 9/55 [33:55<2:08:40, 167.84s/node]Processing nodes:  40%|████      | 22/55 [34:18<24:22, 44.33s/node]  Processing nodes: 100%|██████████| 55/55 [34:18<00:00, 37.44s/node]
+Finished node (16, 8, 4) with initialization 1/10 in 0 hours, 13 minutes, and 5 seconds
+Finished node (16, 8, 4) with initialization 2/10 in 0 hours, 1 minutes, and 40 seconds
+Finished node (16, 8, 4) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 8, 4) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 8, 4) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 8, 4) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 8, 4) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 8, 4) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (16, 8, 4) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (16, 8, 4) with initialization 10/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 16, 4) with initialization 1/10 in 0 hours, 14 minutes, and 37 seconds
+Finished node (32, 16, 4) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 16, 4) with initialization 3/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (32, 16, 4) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 16, 4) with initialization 5/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (32, 16, 4) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 16, 4) with initialization 7/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (32, 16, 4) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 16, 4) with initialization 9/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 16, 4) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 8) with initialization 1/10 in 0 hours, 14 minutes, and 54 seconds
+Finished node (16, 8) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 8) with initialization 3/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (16, 8) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 8) with initialization 5/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 8) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (16, 8) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 8) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (16, 8) with initialization 9/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (16, 8) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 16) with initialization 1/10 in 0 hours, 14 minutes, and 38 seconds
+Finished node (32, 16) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 16) with initialization 3/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (32, 16) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 16) with initialization 5/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (32, 16) with initialization 6/10 in 0 hours, 0 minutes, and 37 seconds
+Finished node (32, 16) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (32, 16) with initialization 8/10 in 0 hours, 0 minutes, and 33 seconds
+Finished node (32, 16) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 16) with initialization 10/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (16, 16, 8) with initialization 1/10 in 0 hours, 14 minutes, and 45 seconds
+Finished node (16, 16, 8) with initialization 2/10 in 0 hours, 1 minutes, and 2 seconds
+Finished node (16, 16, 8) with initialization 3/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 16, 8) with initialization 4/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (16, 16, 8) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 16, 8) with initialization 6/10 in 0 hours, 0 minutes, and 34 seconds
+Finished node (16, 16, 8) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 16, 8) with initialization 8/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 16, 8) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 16, 8) with initialization 10/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (32, 4) with initialization 1/10 in 0 hours, 15 minutes, and 54 seconds
+Finished node (32, 4) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 4) with initialization 4/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (32, 4) with initialization 5/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (32, 4) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (32, 4) with initialization 7/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 4) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 4) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8) with initialization 1/10 in 0 hours, 15 minutes, and 1 seconds
+Finished node (8, 8) with initialization 2/10 in 0 hours, 1 minutes, and 27 seconds
+Finished node (8, 8) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8) with initialization 4/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (16, 16) with initialization 1/10 in 0 hours, 15 minutes, and 46 seconds
+Finished node (16, 16) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 16) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (16, 16) with initialization 5/10 in 0 hours, 1 minutes, and 1 seconds
+Finished node (16, 16) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16) with initialization 7/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (16, 16) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 16) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (32, 8, 8) with initialization 1/10 in 0 hours, 16 minutes, and 19 seconds
+Finished node (32, 8, 8) with initialization 2/10 in 0 hours, 1 minutes, and 28 seconds
+Finished node (32, 8, 8) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 8, 8) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 8, 8) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 8, 8) with initialization 6/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 8, 8) with initialization 7/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (32, 8, 8) with initialization 8/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (32, 8, 8) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 8, 8) with initialization 10/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (32, 8, 2) with initialization 1/10 in 0 hours, 16 minutes, and 49 seconds
+Finished node (32, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 8, 2) with initialization 5/10 in 0 hours, 1 minutes, and 21 seconds
+Finished node (32, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (32, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (64,) with initialization 1/10 in 0 hours, 17 minutes, and 39 seconds
+Finished node (64,) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (64,) with initialization 3/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (64,) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (64,) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (64,) with initialization 6/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (64,) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (64,) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (64,) with initialization 9/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (64,) with initialization 10/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (16,) with initialization 1/10 in 0 hours, 18 minutes, and 34 seconds
+Finished node (16,) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16,) with initialization 3/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16,) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16,) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (16,) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16,) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16,) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16,) with initialization 9/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (16,) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 8, 8) with initialization 1/10 in 0 hours, 18 minutes, and 22 seconds
+Finished node (16, 8, 8) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 8, 8) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (16, 8, 8) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 8, 8) with initialization 5/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (16, 8, 8) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 8, 8) with initialization 7/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (16, 8, 8) with initialization 8/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 8, 8) with initialization 9/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (16, 8, 8) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 4) with initialization 1/10 in 0 hours, 17 minutes, and 48 seconds
+Finished node (8, 8, 4) with initialization 2/10 in 0 hours, 1 minutes, and 17 seconds
+Finished node (8, 8, 4) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 4) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 4) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 4) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 4) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 4) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 4) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 4) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 47 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 4) with initialization 1/10 in 0 hours, 17 minutes, and 50 seconds
+Finished node (8, 4) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 4) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 4) with initialization 4/10 in 0 hours, 1 minutes, and 16 seconds
+Finished node (8, 4) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 4) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 4) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 4) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 4) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 4) with initialization 10/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 16, 16) with initialization 1/10 in 0 hours, 17 minutes, and 24 seconds
+Finished node (16, 16, 16) with initialization 2/10 in 0 hours, 1 minutes, and 51 seconds
+Finished node (16, 16, 16) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16, 16) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (16, 16, 16) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 16, 16) with initialization 6/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (16, 16, 16) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 16, 16) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (16, 16, 16) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16, 16) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 8) with initialization 1/10 in 0 hours, 18 minutes, and 23 seconds
+Finished node (8, 8, 8) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 8) with initialization 3/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 8) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 8) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 8) with initialization 6/10 in 0 hours, 1 minutes, and 7 seconds
+Finished node (8, 8, 8) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 8) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 8) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 8) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 2, 2) with initialization 1/10 in 0 hours, 19 minutes, and 28 seconds
+Finished node (16, 2, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2, 2) with initialization 3/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (16, 2, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2, 2) with initialization 5/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (16, 2, 2) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 2, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 2, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2, 2) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2) with initialization 1/10 in 0 hours, 19 minutes, and 28 seconds
+Finished node (16, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2) with initialization 3/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (16, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 2) with initialization 5/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (16, 2) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (16, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 2) with initialization 9/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (16, 2) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (16, 4, 4) with initialization 1/10 in 0 hours, 18 minutes, and 31 seconds
+Finished node (16, 4, 4) with initialization 2/10 in 0 hours, 1 minutes, and 44 seconds
+Finished node (16, 4, 4) with initialization 3/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 4, 4) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 4, 4) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 4, 4) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (16, 4, 4) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 4, 4) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (16, 4, 4) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 4, 4) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8,) with initialization 1/10 in 0 hours, 20 minutes, and 35 seconds
+Finished node (8,) with initialization 2/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8,) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8,) with initialization 4/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8,) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8,) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8,) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8,) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8,) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8,) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (48,) with initialization 1/10 in 0 hours, 20 minutes, and 18 seconds
+Finished node (48,) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (48,) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (48,) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (48,) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (48,) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (48,) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (48,) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (48,) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (48,) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 4, 2) with initialization 1/10 in 0 hours, 20 minutes, and 27 seconds
+Finished node (32, 4, 2) with initialization 2/10 in 0 hours, 0 minutes, and 57 seconds
+Finished node (32, 4, 2) with initialization 3/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (32, 4, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 4, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 4, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 4, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (32, 4, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (32, 4, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (4,) with initialization 1/10 in 0 hours, 21 minutes, and 39 seconds
+Finished node (4,) with initialization 2/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4,) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (4,) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4,) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (4,) with initialization 6/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4,) with initialization 7/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (4,) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4,) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4,) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (32,) with initialization 1/10 in 0 hours, 22 minutes, and 28 seconds
+Finished node (32,) with initialization 2/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32,) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32,) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (32,) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32,) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32,) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32,) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32,) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32,) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 57 seconds
+Finished node (16, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (16, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (16, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (16, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4, 2) with initialization 1/10 in 0 hours, 21 minutes, and 33 seconds
+Finished node (4, 4, 2) with initialization 2/10 in 0 hours, 2 minutes, and 5 seconds
+Finished node (4, 4, 2) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (4, 4, 2) with initialization 5/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (4, 4, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (4, 4, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4, 2) with initialization 8/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (4, 4, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2) with initialization 1/10 in 0 hours, 23 minutes, and 28 seconds
+Finished node (32, 2) with initialization 2/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 2) with initialization 6/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 2) with initialization 8/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (16, 4, 2) with initialization 1/10 in 0 hours, 24 minutes, and 27 seconds
+Finished node (16, 4, 2) with initialization 2/10 in 0 hours, 0 minutes, and 34 seconds
+Finished node (16, 4, 2) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (16, 4, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 4, 2) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (16, 4, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 4, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (16, 4, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 4, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (16, 4, 2) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 4, 4) with initialization 1/10 in 0 hours, 24 minutes, and 27 seconds
+Finished node (8, 4, 4) with initialization 2/10 in 0 hours, 0 minutes, and 46 seconds
+Finished node (8, 4, 4) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 4, 4) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 4, 4) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 4, 4) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 4, 4) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 4, 4) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 4, 4) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 4, 4) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 4, 4) with initialization 1/10 in 0 hours, 24 minutes, and 7 seconds
+Finished node (4, 4, 4) with initialization 2/10 in 0 hours, 1 minutes, and 7 seconds
+Finished node (4, 4, 4) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4, 4) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (4, 4, 4) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4, 4) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (4, 4, 4) with initialization 7/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (4, 4, 4) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (4, 4, 4) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 4, 4) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (4, 4) with initialization 1/10 in 0 hours, 26 minutes, and 1 seconds
+Finished node (4, 4) with initialization 2/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4) with initialization 3/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (4, 4) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (4, 4) with initialization 5/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (4, 4) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (4, 4) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (4, 4) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 4) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 4) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (16, 16, 2) with initialization 1/10 in 0 hours, 12 minutes, and 38 seconds
+Finished node (16, 16, 2) with initialization 2/10 in 0 hours, 1 minutes, and 0 seconds
+Finished node (16, 16, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (16, 16, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 16, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 16, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 16, 2) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (16, 16, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (16, 16, 2) with initialization 9/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (16, 16, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 32, 2) with initialization 1/10 in 0 hours, 8 minutes, and 49 seconds
+Finished node (32, 32, 2) with initialization 2/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 2) with initialization 3/10 in 0 hours, 0 minutes, and 40 seconds
+Finished node (32, 32, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 32, 2) with initialization 6/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (32, 32, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 32, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 2) with initialization 10/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (2,) with initialization 1/10 in 0 hours, 26 minutes, and 21 seconds
+Finished node (2,) with initialization 2/10 in 0 hours, 0 minutes, and 39 seconds
+Finished node (2,) with initialization 3/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (2,) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (2,) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (2,) with initialization 6/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (2,) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (2,) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (2,) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (2,) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 8) with initialization 1/10 in 0 hours, 13 minutes, and 16 seconds
+Finished node (32, 8) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 8) with initialization 3/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (32, 8) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8) with initialization 5/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (32, 8) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (32, 8) with initialization 8/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 8) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8) with initialization 10/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (32, 32, 4) with initialization 1/10 in 0 hours, 9 minutes, and 45 seconds
+Finished node (32, 32, 4) with initialization 2/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 4) with initialization 3/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (32, 32, 4) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 4) with initialization 5/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (32, 32, 4) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 4) with initialization 7/10 in 0 hours, 0 minutes, and 39 seconds
+Finished node (32, 32, 4) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 4) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 32, 4) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 1/10 in 0 hours, 27 minutes, and 39 seconds
+Finished node (8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32) with initialization 1/10 in 0 hours, 9 minutes, and 0 seconds
+Finished node (32, 32) with initialization 2/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (32, 32) with initialization 3/10 in 0 hours, 0 minutes, and 34 seconds
+Finished node (32, 32) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 32) with initialization 5/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (32, 32) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 32) with initialization 7/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (32, 32) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 32) with initialization 9/10 in 0 hours, 0 minutes, and 34 seconds
+Finished node (32, 32) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 16, 8) with initialization 1/10 in 0 hours, 13 minutes, and 8 seconds
+Finished node (32, 16, 8) with initialization 2/10 in 0 hours, 1 minutes, and 18 seconds
+Finished node (32, 16, 8) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 16, 8) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 16, 8) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 16, 8) with initialization 6/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 16, 8) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 16, 8) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 16, 8) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 16, 8) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (32, 2, 2) with initialization 1/10 in 0 hours, 27 minutes, and 34 seconds
+Finished node (32, 2, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 2, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 2, 2) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 2, 2) with initialization 5/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 2, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 2, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2, 2) with initialization 8/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 2, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (16, 16, 4) with initialization 1/10 in 0 hours, 13 minutes, and 20 seconds
+Finished node (16, 16, 4) with initialization 2/10 in 0 hours, 1 minutes, and 18 seconds
+Finished node (16, 16, 4) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16, 4) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 16, 4) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (16, 16, 4) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (16, 16, 4) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16, 4) with initialization 8/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (16, 16, 4) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (16, 16, 4) with initialization 10/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (32, 32, 16) with initialization 1/10 in 0 hours, 9 minutes, and 57 seconds
+Finished node (32, 32, 16) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 16) with initialization 3/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (32, 32, 16) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 16) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 32, 16) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 16) with initialization 7/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (32, 32, 16) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 16) with initialization 9/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (32, 32, 16) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 2, 2) with initialization 1/10 in 0 hours, 28 minutes, and 54 seconds
+Finished node (8, 2, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2, 2) with initialization 3/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 2, 2) with initialization 4/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 2, 2) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 2, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 2, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 2, 2) with initialization 8/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 2, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 2, 2) with initialization 10/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (32, 8, 4) with initialization 1/10 in 0 hours, 13 minutes, and 8 seconds
+Finished node (32, 8, 4) with initialization 2/10 in 0 hours, 1 minutes, and 33 seconds
+Finished node (32, 8, 4) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8, 4) with initialization 4/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (32, 8, 4) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8, 4) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 8, 4) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 8, 4) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 8, 4) with initialization 9/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (32, 8, 4) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 32, 32) with initialization 1/10 in 0 hours, 10 minutes, and 10 seconds
+Finished node (32, 32, 32) with initialization 2/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 32) with initialization 3/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 32, 32) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 32) with initialization 5/10 in 0 hours, 0 minutes, and 45 seconds
+Finished node (32, 32, 32) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 32) with initialization 7/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (32, 32, 32) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 32) with initialization 9/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (32, 32, 32) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 4, 4) with initialization 1/10 in 0 hours, 12 minutes, and 5 seconds
+Finished node (32, 4, 4) with initialization 2/10 in 0 hours, 1 minutes, and 50 seconds
+Finished node (32, 4, 4) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4, 4) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 4, 4) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4, 4) with initialization 6/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (32, 4, 4) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4, 4) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 4, 4) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 4, 4) with initialization 10/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 32, 8) with initialization 1/10 in 0 hours, 11 minutes, and 23 seconds
+Finished node (32, 32, 8) with initialization 2/10 in 0 hours, 0 minutes, and 33 seconds
+Finished node (32, 32, 8) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (32, 32, 8) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (32, 32, 8) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 32, 8) with initialization 6/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (32, 32, 8) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 32, 8) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 32, 8) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (32, 32, 8) with initialization 10/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2) with initialization 1/10 in 0 hours, 31 minutes, and 11 seconds
+Finished node (4, 2) with initialization 2/10 in 0 hours, 1 minutes, and 7 seconds
+Finished node (4, 2) with initialization 3/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (4, 2) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 2) with initialization 5/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (4, 2) with initialization 6/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2) with initialization 7/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2) with initialization 8/10 in 0 hours, 0 minutes, and 9 seconds
+Finished node (4, 2) with initialization 9/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2) with initialization 10/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (32, 16, 2) with initialization 1/10 in 0 hours, 11 minutes, and 2 seconds
+Finished node (32, 16, 2) with initialization 2/10 in 0 hours, 1 minutes, and 5 seconds
+Finished node (32, 16, 2) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 16, 2) with initialization 4/10 in 0 hours, 0 minutes, and 38 seconds
+Finished node (32, 16, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 16, 2) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (32, 16, 2) with initialization 7/10 in 0 hours, 0 minutes, and 43 seconds
+Finished node (32, 16, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (32, 16, 2) with initialization 9/10 in 0 hours, 0 minutes, and 34 seconds
+Finished node (32, 16, 2) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 16, 16) with initialization 1/10 in 0 hours, 13 minutes, and 58 seconds
+Finished node (32, 16, 16) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 16, 16) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (32, 16, 16) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 16, 16) with initialization 5/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (32, 16, 16) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (32, 16, 16) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (32, 16, 16) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (32, 16, 16) with initialization 9/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (32, 16, 16) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (4, 2, 2) with initialization 1/10 in 0 hours, 30 minutes, and 50 seconds
+Finished node (4, 2, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2, 2) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 2, 2) with initialization 4/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2, 2) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 2, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 2, 2) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (4, 2, 2) with initialization 8/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (4, 2, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 2, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (2, 2, 2) with initialization 1/10 in 0 hours, 32 minutes, and 21 seconds
+Finished node (2, 2, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (2, 2, 2) with initialization 3/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (2, 2, 2) with initialization 4/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2, 2) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (2, 2, 2) with initialization 6/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2, 2) with initialization 7/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (2, 2, 2) with initialization 8/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2, 2) with initialization 9/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (2, 2, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (2, 2) with initialization 1/10 in 0 hours, 31 minutes, and 16 seconds
+Finished node (2, 2) with initialization 2/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2) with initialization 3/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (2, 2) with initialization 5/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2) with initialization 6/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (2, 2) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (2, 2) with initialization 8/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (2, 2) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (2, 2) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+
+=== Running 100 Monte Carlo itterations for model NN with best node: (8, 8, 2) ===
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776421104.343554 1976640 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776421104.348261 1976640 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423443.700134 1976759 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776423443.717662 1976759 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.152897 1976736 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.153454 1976738 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.153676 1976733 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.153956 1976741 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.154334 1976762 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.154360 1976755 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776423444.158516 1976736 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.158900 1976738 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.159009 1976733 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.159355 1976741 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.159737 1976755 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.159863 1976762 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.163341 1976746 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.163863 1976743 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.163939 1976751 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.164180 1976734 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.164679 1976745 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.164715 1976740 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.164961 1976766 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.165384 1976728 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.166052 1976719 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.166398 1976720 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.167412 1976758 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.167772 1976761 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.168736 1976754 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.168878 1976756 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776423444.168910 1976746 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.169781 1976743 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.169884 1976751 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.170011 1976750 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776423444.170299 1976734 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.171156 1976740 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.171213 1976745 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.171458 1976766 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.172294 1976728 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.173444 1976719 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.173358 1976764 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.174038 1976747 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776423444.174541 1976720 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.178551 1976758 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.179461 1976761 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.181639 1976754 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.181991 1976756 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.184075 1976750 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.190906 1976764 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.191194 1976747 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.329628 1976729 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.329658 1976749 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.329685 1976730 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.329726 1976739 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.329752 1976735 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.330847 1976726 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.331378 1976760 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.331684 1976752 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.331949 1976742 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.332516 1976763 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.332829 1976757 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.332932 1976722 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.332980 1976748 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.332981 1976721 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333046 1976723 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333094 1976731 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333121 1976765 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333229 1976737 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333421 1976725 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333540 1976724 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333572 1976727 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333673 1976753 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333708 1976732 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1776423444.333721 1976744 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1776423444.335341 1976730 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.335365 1976749 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.335380 1976729 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.335423 1976739 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.335436 1976735 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.336046 1976726 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.336520 1976760 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.336862 1976752 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.337220 1976742 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.337996 1976763 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.338812 1976757 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339028 1976722 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339122 1976748 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339317 1976721 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339383 1976737 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339415 1976731 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339462 1976723 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339506 1976765 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339688 1976725 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339774 1976724 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339784 1976727 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339913 1976753 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.339985 1976732 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1776423444.340010 1976744 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Process 1/100 completed in  17.55 min. Total elapsed time:  56.61 min.
+Process 2/100 completed in  18.95 min. Total elapsed time:  58.01 min.
+Process 3/100 completed in  20.28 min. Total elapsed time:  59.36 min.
+Process 4/100 completed in  20.51 min. Total elapsed time:  59.57 min.
+Process 5/100 completed in  20.71 min. Total elapsed time:  59.78 min.
+Process 6/100 completed in  20.85 min. Total elapsed time:  59.92 min.
+Process 7/100 completed in  21.04 min. Total elapsed time:  60.12 min.
+Process 8/100 completed in  21.17 min. Total elapsed time:  60.24 min.
+Process 9/100 completed in  21.43 min. Total elapsed time:  60.49 min.
+Process 10/100 completed in  21.87 min. Total elapsed time:  60.94 min.
+Process 11/100 completed in  21.90 min. Total elapsed time:  60.98 min.
+Process 12/100 completed in  21.91 min. Total elapsed time:  60.98 min.
+Process 13/100 completed in  21.99 min. Total elapsed time:  61.07 min.
+Process 14/100 completed in  22.36 min. Total elapsed time:  61.44 min.
+Process 15/100 completed in  22.94 min. Total elapsed time:  62.01 min.
+Process 16/100 completed in  22.99 min. Total elapsed time:  62.07 min.
+Process 17/100 completed in  23.59 min. Total elapsed time:  62.66 min.
+Process 18/100 completed in  23.70 min. Total elapsed time:  62.77 min.
+Process 19/100 completed in  23.80 min. Total elapsed time:  62.87 min.
+Process 20/100 completed in  23.88 min. Total elapsed time:  62.96 min.
+Process 21/100 completed in  24.00 min. Total elapsed time:  63.07 min.
+Process 22/100 completed in  24.23 min. Total elapsed time:  63.30 min.
+Process 23/100 completed in  24.26 min. Total elapsed time:  63.33 min.
+Process 24/100 completed in  24.82 min. Total elapsed time:  63.90 min.
+Process 25/100 completed in  24.89 min. Total elapsed time:  63.96 min.
+Process 26/100 completed in  24.99 min. Total elapsed time:  64.06 min.
+Process 27/100 completed in  25.40 min. Total elapsed time:  64.47 min.
+Process 28/100 completed in  25.51 min. Total elapsed time:  64.58 min.
+Process 29/100 completed in  25.80 min. Total elapsed time:  64.88 min.
+Process 30/100 completed in  25.86 min. Total elapsed time:  64.93 min.
+Process 31/100 completed in  26.17 min. Total elapsed time:  65.25 min.
+Process 32/100 completed in  26.92 min. Total elapsed time:  65.98 min.
+Process 33/100 completed in  27.18 min. Total elapsed time:  66.25 min.
+Process 34/100 completed in  27.26 min. Total elapsed time:  66.33 min.
+Process 35/100 completed in  27.56 min. Total elapsed time:  66.64 min.
+Process 36/100 completed in  28.15 min. Total elapsed time:  67.21 min.
+Process 37/100 completed in  28.41 min. Total elapsed time:  67.49 min.
+Process 38/100 completed in  29.06 min. Total elapsed time:  68.14 min.
+Process 39/100 completed in  29.42 min. Total elapsed time:  68.50 min.
+Process 40/100 completed in  29.55 min. Total elapsed time:  68.62 min.
+Process 41/100 completed in  29.66 min. Total elapsed time:  68.73 min.
+Process 42/100 completed in  30.12 min. Total elapsed time:  69.20 min.
+Process 43/100 completed in  30.71 min. Total elapsed time:  69.78 min.
+Process 44/100 completed in  30.77 min. Total elapsed time:  69.84 min.
+Process 45/100 completed in  31.29 min. Total elapsed time:  70.36 min.
+Process 46/100 completed in  33.01 min. Total elapsed time:  72.09 min.
+Process 47/100 completed in  33.72 min. Total elapsed time:  72.79 min.
+Process 48/100 completed in  38.46 min. Total elapsed time:  77.53 min.
+Process 49/100 completed in  22.36 min. Total elapsed time:  80.38 min.
+Process 50/100 completed in  24.17 min. Total elapsed time:  83.53 min.
+Process 51/100 completed in  22.88 min. Total elapsed time:  83.82 min.
+Process 52/100 completed in  23.71 min. Total elapsed time:  83.95 min.
+Process 53/100 completed in  22.79 min. Total elapsed time:  84.23 min.
+Process 54/100 completed in  18.97 min. Total elapsed time:  85.22 min.
+Process 55/100 completed in  23.33 min. Total elapsed time:  85.34 min.
+Process 56/100 completed in  25.32 min. Total elapsed time:  85.81 min.
+Process 57/100 completed in  26.57 min. Total elapsed time:  86.15 min.
+Process 58/100 completed in  16.39 min. Total elapsed time:  86.18 min.
+Process 59/100 completed in  25.16 min. Total elapsed time:  86.23 min.
+Process 60/100 completed in  20.29 min. Total elapsed time:  86.27 min.
+Process 61/100 completed in  25.37 min. Total elapsed time:  86.36 min.
+Process 62/100 completed in  26.92 min. Total elapsed time:  86.70 min.
+Process 63/100 completed in  30.19 min. Total elapsed time:  86.81 min.
+Process 64/100 completed in  20.94 min. Total elapsed time:  87.58 min.
+Process 65/100 completed in  23.01 min. Total elapsed time:  87.59 min.
+Process 66/100 completed in  24.42 min. Total elapsed time:  88.48 min.
+Process 67/100 completed in  26.51 min. Total elapsed time:  88.58 min.
+Process 68/100 completed in  20.61 min. Total elapsed time:  88.75 min.
+Process 69/100 completed in  26.19 min. Total elapsed time:  89.06 min.
+Process 70/100 completed in  26.02 min. Total elapsed time:  89.33 min.
+Process 71/100 completed in  24.90 min. Total elapsed time:  89.37 min.
+Process 72/100 completed in  23.40 min. Total elapsed time:  89.74 min.
+Process 73/100 completed in  29.63 min. Total elapsed time:  89.75 min.
+Process 74/100 completed in  22.38 min. Total elapsed time:  89.87 min.
+Process 75/100 completed in  26.75 min. Total elapsed time:  90.08 min.
+Process 76/100 completed in  22.98 min. Total elapsed time:  90.20 min.
+Process 77/100 completed in  26.34 min. Total elapsed time:  90.31 min.
+Process 78/100 completed in  29.40 min. Total elapsed time:  90.38 min.
+Process 79/100 completed in  27.78 min. Total elapsed time:  90.45 min.
+Process 80/100 completed in  21.95 min. Total elapsed time:  90.67 min.
+Process 81/100 completed in  22.60 min. Total elapsed time:  91.10 min.
+Process 82/100 completed in  21.43 min. Total elapsed time:  91.27 min.
+Process 83/100 completed in  28.23 min. Total elapsed time:  91.31 min.
+Process 84/100 completed in  28.39 min. Total elapsed time:  91.35 min.
+Process 85/100 completed in  26.92 min. Total elapsed time:  91.81 min.
+Process 86/100 completed in  32.02 min. Total elapsed time:  91.95 min.
+Process 87/100 completed in  22.03 min. Total elapsed time:  92.39 min.
+Process 88/100 completed in  25.31 min. Total elapsed time:  93.94 min.
+Process 89/100 completed in  30.42 min. Total elapsed time:  94.32 min.
+Process 90/100 completed in  29.61 min. Total elapsed time:  94.54 min.
+Process 91/100 completed in  22.71 min. Total elapsed time:  94.80 min.
+Process 92/100 completed in  26.03 min. Total elapsed time:  95.23 min.
+Process 93/100 completed in  30.44 min. Total elapsed time:  95.69 min.
+Process 94/100 completed in  33.36 min. Total elapsed time:  96.13 min.
+Process 95/100 completed in  23.40 min. Total elapsed time:  96.19 min.
+Process 96/100 completed in  17.17 min. Total elapsed time:  97.54 min.
+Process 97/100 completed in  14.84 min. Total elapsed time:  98.37 min.
+Process 98/100 completed in  14.60 min. Total elapsed time:  98.56 min.
+Process 99/100 completed in  14.82 min. Total elapsed time:  98.64 min.
+Process 100/100 completed in  22.86 min. Total elapsed time:  100.39 min.
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 43 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 2 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 14 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 40 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 38 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 36 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 36 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 49 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 40 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 27 minutes, and 39 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 13 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 6 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 2 minutes, and 40 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 15 minutes, and 49 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 41 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 51 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 2 minutes, and 51 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 2 minutes, and 1 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 13 minutes, and 1 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 26 minutes, and 50 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 24 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 42 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 36 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 2 minutes, and 56 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 41 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 45 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 25 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 39 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 6 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 56 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 1 minutes, and 6 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 1 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 50 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 16 minutes, and 50 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 26 minutes, and 39 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 25 minutes, and 43 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 54 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 3 minutes, and 6 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 54 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 55 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 1 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 26 minutes, and 47 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 35 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 24 minutes, and 56 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 1 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 2 minutes, and 50 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 7 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 27 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 53 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 39 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 5 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 37 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 25 minutes, and 56 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 34 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 24 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 24 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 4 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 27 minutes, and 45 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 33 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 41 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 21 minutes, and 40 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 28 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 26 minutes, and 7 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 34 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 56 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 26 minutes, and 43 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 51 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 29 minutes, and 47 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 26 minutes, and 54 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 23 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 42 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 22 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 37 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 36 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 27 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 50 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 1 minutes, and 39 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 31 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 30 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 53 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 44 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 12 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 17 minutes, and 41 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 27 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 32 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 12 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 15 minutes, and 10 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 33 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 15 minutes, and 3 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 18 minutes, and 35 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 19 minutes, and 41 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 22 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 12 minutes, and 33 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 37 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 13 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 34 minutes, and 37 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 25 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 19 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 29 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 20 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 26 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 35 seconds
+Finished node (8, 8, 2) with initialization 1/10 in 0 hours, 20 minutes, and 53 seconds
+Finished node (8, 8, 2) with initialization 2/10 in 0 hours, 0 minutes, and 11 seconds
+Finished node (8, 8, 2) with initialization 3/10 in 0 hours, 0 minutes, and 17 seconds
+Finished node (8, 8, 2) with initialization 4/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (8, 8, 2) with initialization 5/10 in 0 hours, 0 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 6/10 in 0 hours, 0 minutes, and 14 seconds
+Finished node (8, 8, 2) with initialization 7/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (8, 8, 2) with initialization 8/10 in 0 hours, 0 minutes, and 16 seconds
+Finished node (8, 8, 2) with initialization 9/10 in 0 hours, 0 minutes, and 10 seconds
+Finished node (8, 8, 2) with initialization 10/10 in 0 hours, 0 minutes, and 13 seconds
+
+All specifications processed.
+
+Monte Carlo simulations completed for all models in 02:15:20
+===== JOB END =====
+Fri Apr 17 13:58:56 CEST 2026
+Python exit status: 0

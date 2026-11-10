@@ -1,0 +1,34 @@
+
+defaults:
+  - _self_
+  - config       # pulls in config/config.yaml
+
+# Monte Carlo–specific block
+mc:
+  reps:         2
+  base_seed:    0
+  sample_data: True     # whether to sample from real-world data or simulate entirely synthetic data
+  specifications:
+    - linear
+    - Burke
+    # - Leirvik
+    # - Trig
+
+  models:
+    - NN
+    # - Quadratic
+    # - Interactive
+
+  breakpoints:
+    - 2
+
+instance:
+
+
+hydra:
+  hydra_logging:
+    level: DISABLED
+  job_logging:
+    level: WARNING
+  verbose: false
+

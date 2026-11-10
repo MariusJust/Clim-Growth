@@ -20,13 +20,26 @@ the LaTeX source, so neither needs a notebook.
 | 5 | `global` | `figure5.ipynb` | same locked global, plus the quadratic benchmark | to port |
 | 6 | `regional` | `figure6.ipynb` | `2026-06-16_19-10-06_regional_IC_country_trends` | to port |
 | 7 | `income` | `figure7.ipynb` | `archive/2026-06-03_10-22-50_income_IC_country_trends` | confirmed, to port |
-| 8 | `projections` | `figure8.ipynb` | locked global, via the CMIP6 script | ported |
+| 8 | `projections` | `figure8.ipynb` | `2026-08-27_11-01-35_global_IC_country_trends` + bootstrap `2026-08-29_20-56-38_global_IC_bootstrap`, via `scripts/2026-09-28-projections-cmip6.py` | confirmed, ported. **Not the June run**, see below |
 | 9 | `monte_carlo` | `figure9.ipynb` | `2026-05-15_10-52-58_MC_100reps` | to port |
 | 10 | `monte_carlo` | `figure10.ipynb` | `2026-04-17_10-18-24_MC_100reps` | ported |
 
-The locked global run is
-`runs/estimation/2026-06-13_22-11-06_global_IC_country_trends`. Do not change it without
-updating `CLAUDE.md` and regenerating every figure that depends on it.
+Every run in the table is frozen in `weights/<run id>/` (`results.npy`, `parameters/`, `config/`,
+logs), and the notebooks read from there, not from the gitignored `runs/`. The Monte Carlo
+benchmark surfaces for Figure 9 are in `weights/monte_carlo/`. Figure 7 also needs the
+pre-bugfix data, frozen as `data/2026-08-27-MainData-PREBUGFIX.xlsx` and
+`weights/2026-06-03_10-22-50_income_IC_country_trends/prebugfix_moments.npy`.
+`evidence/` holds the plotly exports that pin a figure to its run.
+
+The locked global run is `2026-06-13_22-11-06_global_IC_country_trends` (confirmed 2026-11-10).
+Do not change it without updating `.claude/CLAUDE.md` and regenerating every figure that
+depends on it.
+
+**Figure 8 is on a different run, deliberately.** `scripts/2026-09-28-projections-cmip6.py`
+hard-codes the August run `2026-08-27_11-01-35` (corrected climate data) and its bootstrap
+`2026-08-29_20-56-38`. Decision 2026-11-10: keep it and flag it rather than regenerate the
+projections from the June run. Figures 4 and 5 and Figure 8 therefore rest on different fits
+and different data vintages.
 
 ## How the runs were identified
 
@@ -34,7 +47,12 @@ No figure except the locked global carries its run in the filename, so each was 
 comparing the figure's creation date against the runs that existed at the time:
 
 - **Figure 6**, created 2026-07-16. Two regional runs exist; only
-  `2026-06-16_19-10-06` predates the figure. The other is from 2026-08-27.
+  `2026-06-16_19-10-06` predates the figure. The other is from 2026-08-27. **Doubtful (checked
+  2026-11-10):** the regional plotly exports, now in `evidence/unverified/`, were written
+  2026-06-02/03, two weeks before `2026-06-16_19-10-06` finished, and the paper's regional PDFs
+  differ from the PDFs exported next to them. Older regional runs exist in
+  `runs/estimation/archive/` (newest before those exports: `2026-06-01_14-23-41`). Settle it by
+  comparing each export's z grid against each candidate run, as for Figure 7.
 - **Figure 10** is confirmed directly, and the timestamp inference was wrong. The run
   `2026-04-17_10-18-24_MC_100reps` keeps its own copies of `country_FE_MC.pdf` and
   `time_FE_MC.pdf`, and holds exactly the files the paper's plotting code asked for:
@@ -73,7 +91,8 @@ round-off in the stored export. No constant offset: the surfaces are plotted as 
 
 ### How it was identified, after two wrong turns
 
-The ground truth is `results/images/robustness/High_CT.html` and `Low_CT.html`, exported
+The ground truth is `evidence/2026-06-03_10-22-50_income_IC_country_trends_{High,Low}_CT.html`
+(originally `results/images/robustness/High_CT.html` and `Low_CT.html`), exported
 2026-06-04. A plotly HTML carries the full 90x90 z grid as base64, so it pins the answer
 exactly where a PDF cannot. The paper's `High_CT.pdf` and the renamed
 `2026-07-16-high-income-CT-left-margin.pdf` are the same image recropped by a LaTeX pass, so

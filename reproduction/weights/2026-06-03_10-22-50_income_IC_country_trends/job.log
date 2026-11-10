@@ -1,0 +1,1642 @@
+===== JOB START =====
+Wed Jun  3 10:25:21 CEST 2026
+s51n16.grendel.cscaa.dk
+SLURM_JOB_ID=5301029
+SLURM_CPUS_PER_TASK=55
+===== CONFIG =====
+instance:
+  no_inits: 25
+  seed_value: 0
+  lr: 0.001
+  min_delta: 1e-7
+  patience: 500
+  verbose: 0
+  dropout: 0
+  n_process: 55
+  model_selection: 'IC' #  'Holdout', 'IC'
+  formulation : 'income'          # Model formulation, "global", "regional" or "income"
+  timeout_per_node: 100000
+  reduce_lr_on_plateau: true   # attach a Keras ReduceLROnPlateau callback to training
+  lr_reduce_factor: 0.3         # multiply lr by this when monitored loss plateaus
+  lr_reduce_patience: 100        # epochs with no improvement before each reduction
+  lr_min: 1.0e-7                # floor for the learning rate
+  use_diagnostics: true
+  target_mode: 'growth'   # 'growth' (model GrowthWDI) or 'levels' (model log GDP per capita)
+  input_vars:
+    - temp
+    - precip
+  activation: 'swish' #
+  country_trends: True
+  quadratic_trends: True   # only used when country_trends is True; set False for linear-only trends
+  group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
+  dynamic_model: False
+  data_source: 'wb'   # "ee" or "wb"
+  ram: 500
+  data_end: 2024
+  nodes_list:
+    - (2,)
+    - (4,)
+    - (8,)
+    - (16,)
+    - (32,)
+    - (48,)
+    - (64,)
+    - (2,2,)
+    - (4,2,)
+    - (4,4,)
+    - (8,2,)
+    - (8,4,)
+    - (8,8,)
+    - (16,2,)
+    - (16,8,)
+    - (16,16,)
+    - (32,2,)
+    - (32,4,)
+    - (32,8,)
+    - (32,16,)
+    - (32,32,)
+    - (2,2,2,)
+    - (4,2,2,)
+    - (4,4,2,)
+    - (4,4,4,)
+    - (8,2,2,)
+    - (8,4,4,)
+    - (8,8,2,)
+    - (8,8,4,)
+    - (8,8,8,)
+    - (16,2,2,)
+    - (16,4,2,)
+    - (16,4,4,)
+    - (16,8,2,)
+    - (16,8,4,)
+    - (16,8,8,)
+    - (16,16,2,)
+    - (16,16,4,)
+    - (16,16,8,)
+    - (16,16,16,)
+    - (32,2,2,)
+    - (32,4,2,)
+    - (32,4,4,)
+    - (32,8,2,)
+    - (32,8,4,)
+    - (32,8,8,)
+    - (32,16,2,)
+    - (32,16,4,)
+    - (32,16,8,)
+    - (32,16,16,)
+    - (32,32,2,)
+    - (32,32,4,)
+    - (32,32,8,)
+    - (32,32,16,)
+    - (32,32,32,)
+===== PYTHON START =====
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475134.937929 4190114 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475134.974200 4190114 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Starting parallel processing with 55 processes...
+Processing nodes:   0%|          | 0/55 [00:00<?, ?node/s]WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475202.432432 4190156 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475202.450903 4190156 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475202.635265 4190169 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475202.653123 4190169 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475202.878646 4190164 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475202.894065 4190164 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475202.942252 4190136 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475202.956735 4190136 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.090534 4190141 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.101969 4190141 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.254471 4190126 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.254545 4190138 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.254578 4190159 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.254655 4190172 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.254734 4190127 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.254900 4190166 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.255046 4190163 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.255187 4190158 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.255366 4190143 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.255556 4190137 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.255903 4190144 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.256238 4190150 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.256616 4190129 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.257190 4190132 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.257251 4190147 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.257306 4190165 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.258442 4190170 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.258576 4190130 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.258737 4190149 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.259316 4190176 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.260464 4190162 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.264587 4190139 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.270145 4190126 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.270325 4190138 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.270433 4190163 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.270462 4190159 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.270671 4190166 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.270754 4190172 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.270893 4190137 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.271025 4190127 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.271199 4190143 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.271333 4190158 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.271487 4190144 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.271680 4190150 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.272013 4190129 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.272330 4190132 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.273085 4190165 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.273327 4190147 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.273496 4190170 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.274004 4190130 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.274219 4190149 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.274469 4190176 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.275342 4190162 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.280738 4190139 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.333881 4190171 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.334803 4190125 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.336741 4190133 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.338858 4190134 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.340299 4190131 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.342562 4190167 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.345121 4190173 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.345497 4190145 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.346550 4190155 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.348325 4190177 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.349874 4190128 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.349942 4190171 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.350391 4190125 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.351552 4190153 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.351670 4190160 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.351893 4190142 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.352294 4190124 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.352347 4190168 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.352450 4190133 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.352578 4190140 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.354043 4190152 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.354219 4190134 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.354210 4190146 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.354267 4190161 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.354618 4190175 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.355258 4190174 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.355690 4190131 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.356089 4190157 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.356271 4190178 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.357263 4190154 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.357404 4190151 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1780475203.357984 4190135 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.357986 4190148 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1780475203.358603 4190167 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.360989 4190173 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.361209 4190145 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.362457 4190155 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.364425 4190177 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.365610 4190128 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.367221 4190153 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.367392 4190160 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.367832 4190142 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.368021 4190168 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.368428 4190140 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.368588 4190124 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.369485 4190152 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.369604 4190175 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.369878 4190146 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.370288 4190174 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.371027 4190161 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.371445 4190178 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.371949 4190157 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.372339 4190154 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.372868 4190151 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.373293 4190135 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1780475203.373713 4190148 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Processing nodes:   2%|▏         | 1/55 [2:20:08<126:07:27, 8408.29s/node]Processing nodes: 100%|██████████| 55/55 [2:20:08<00:00, 152.88s/node]    
+Initialization 1/25 for node (32, 32) done
+Initialization 2/25 for node (32, 32) done
+Initialization 3/25 for node (32, 32) done
+Initialization 4/25 for node (32, 32) done
+Initialization 5/25 for node (32, 32) done
+Initialization 6/25 for node (32, 32) done
+Initialization 7/25 for node (32, 32) done
+Initialization 8/25 for node (32, 32) done
+Initialization 9/25 for node (32, 32) done
+Initialization 10/25 for node (32, 32) done
+Initialization 11/25 for node (32, 32) done
+Initialization 12/25 for node (32, 32) done
+Initialization 13/25 for node (32, 32) done
+Initialization 14/25 for node (32, 32) done
+Initialization 15/25 for node (32, 32) done
+Initialization 16/25 for node (32, 32) done
+Initialization 17/25 for node (32, 32) done
+Initialization 18/25 for node (32, 32) done
+Initialization 19/25 for node (32, 32) done
+Initialization 20/25 for node (32, 32) done
+Initialization 21/25 for node (32, 32) done
+Initialization 22/25 for node (32, 32) done
+Initialization 23/25 for node (32, 32) done
+Initialization 24/25 for node (32, 32) done
+Initialization 25/25 for node (32, 32) done
+Initialization 1/25 for node (8, 8, 2) done
+Initialization 2/25 for node (8, 8, 2) done
+Initialization 3/25 for node (8, 8, 2) done
+Initialization 4/25 for node (8, 8, 2) done
+Initialization 5/25 for node (8, 8, 2) done
+Initialization 6/25 for node (8, 8, 2) done
+Initialization 7/25 for node (8, 8, 2) done
+Initialization 8/25 for node (8, 8, 2) done
+Initialization 9/25 for node (8, 8, 2) done
+Initialization 10/25 for node (8, 8, 2) done
+Initialization 11/25 for node (8, 8, 2) done
+Initialization 12/25 for node (8, 8, 2) done
+Initialization 13/25 for node (8, 8, 2) done
+Initialization 14/25 for node (8, 8, 2) done
+Initialization 15/25 for node (8, 8, 2) done
+Initialization 16/25 for node (8, 8, 2) done
+Initialization 17/25 for node (8, 8, 2) done
+Initialization 18/25 for node (8, 8, 2) done
+Initialization 19/25 for node (8, 8, 2) done
+Initialization 20/25 for node (8, 8, 2) done
+Initialization 21/25 for node (8, 8, 2) done
+Initialization 22/25 for node (8, 8, 2) done
+Initialization 23/25 for node (8, 8, 2) done
+Initialization 24/25 for node (8, 8, 2) done
+Initialization 25/25 for node (8, 8, 2) done
+Initialization 1/25 for node (16, 8) done
+Initialization 2/25 for node (16, 8) done
+Initialization 3/25 for node (16, 8) done
+Initialization 4/25 for node (16, 8) done
+Initialization 5/25 for node (16, 8) done
+Initialization 6/25 for node (16, 8) done
+Initialization 7/25 for node (16, 8) done
+Initialization 8/25 for node (16, 8) done
+Initialization 9/25 for node (16, 8) done
+Initialization 10/25 for node (16, 8) done
+Initialization 11/25 for node (16, 8) done
+Initialization 12/25 for node (16, 8) done
+Initialization 13/25 for node (16, 8) done
+Initialization 14/25 for node (16, 8) done
+Initialization 15/25 for node (16, 8) done
+Initialization 16/25 for node (16, 8) done
+Initialization 17/25 for node (16, 8) done
+Initialization 18/25 for node (16, 8) done
+Initialization 19/25 for node (16, 8) done
+Initialization 20/25 for node (16, 8) done
+Initialization 21/25 for node (16, 8) done
+Initialization 22/25 for node (16, 8) done
+Initialization 23/25 for node (16, 8) done
+Initialization 24/25 for node (16, 8) done
+Initialization 25/25 for node (16, 8) done
+Initialization 1/25 for node (32, 16, 8) done
+Initialization 2/25 for node (32, 16, 8) done
+Initialization 3/25 for node (32, 16, 8) done
+Initialization 4/25 for node (32, 16, 8) done
+Initialization 5/25 for node (32, 16, 8) done
+Initialization 6/25 for node (32, 16, 8) done
+Initialization 7/25 for node (32, 16, 8) done
+Initialization 8/25 for node (32, 16, 8) done
+Initialization 9/25 for node (32, 16, 8) done
+Initialization 10/25 for node (32, 16, 8) done
+Initialization 11/25 for node (32, 16, 8) done
+Initialization 12/25 for node (32, 16, 8) done
+Initialization 13/25 for node (32, 16, 8) done
+Initialization 14/25 for node (32, 16, 8) done
+Initialization 15/25 for node (32, 16, 8) done
+Initialization 16/25 for node (32, 16, 8) done
+Initialization 17/25 for node (32, 16, 8) done
+Initialization 18/25 for node (32, 16, 8) done
+Initialization 19/25 for node (32, 16, 8) done
+Initialization 20/25 for node (32, 16, 8) done
+Initialization 21/25 for node (32, 16, 8) done
+Initialization 22/25 for node (32, 16, 8) done
+Initialization 23/25 for node (32, 16, 8) done
+Initialization 24/25 for node (32, 16, 8) done
+Initialization 25/25 for node (32, 16, 8) done
+Initialization 1/25 for node (2, 2, 2) done
+Initialization 2/25 for node (2, 2, 2) done
+Initialization 3/25 for node (2, 2, 2) done
+Initialization 4/25 for node (2, 2, 2) done
+Initialization 5/25 for node (2, 2, 2) done
+Initialization 6/25 for node (2, 2, 2) done
+Initialization 7/25 for node (2, 2, 2) done
+Initialization 8/25 for node (2, 2, 2) done
+Initialization 9/25 for node (2, 2, 2) done
+Initialization 10/25 for node (2, 2, 2) done
+Initialization 11/25 for node (2, 2, 2) done
+Initialization 12/25 for node (2, 2, 2) done
+Initialization 13/25 for node (2, 2, 2) done
+Initialization 14/25 for node (2, 2, 2) done
+Initialization 15/25 for node (2, 2, 2) done
+Initialization 16/25 for node (2, 2, 2) done
+Initialization 17/25 for node (2, 2, 2) done
+Initialization 18/25 for node (2, 2, 2) done
+Initialization 19/25 for node (2, 2, 2) done
+Initialization 20/25 for node (2, 2, 2) done
+Initialization 21/25 for node (2, 2, 2) done
+Initialization 22/25 for node (2, 2, 2) done
+Initialization 23/25 for node (2, 2, 2) done
+Initialization 24/25 for node (2, 2, 2) done
+Initialization 25/25 for node (2, 2, 2) done
+Initialization 1/25 for node (32, 16, 2) done
+Initialization 2/25 for node (32, 16, 2) done
+Initialization 3/25 for node (32, 16, 2) done
+Initialization 4/25 for node (32, 16, 2) done
+Initialization 5/25 for node (32, 16, 2) done
+Initialization 6/25 for node (32, 16, 2) done
+Initialization 7/25 for node (32, 16, 2) done
+Initialization 8/25 for node (32, 16, 2) done
+Initialization 9/25 for node (32, 16, 2) done
+Initialization 10/25 for node (32, 16, 2) done
+Initialization 11/25 for node (32, 16, 2) done
+Initialization 12/25 for node (32, 16, 2) done
+Initialization 13/25 for node (32, 16, 2) done
+Initialization 14/25 for node (32, 16, 2) done
+Initialization 15/25 for node (32, 16, 2) done
+Initialization 16/25 for node (32, 16, 2) done
+Initialization 17/25 for node (32, 16, 2) done
+Initialization 18/25 for node (32, 16, 2) done
+Initialization 19/25 for node (32, 16, 2) done
+Initialization 20/25 for node (32, 16, 2) done
+Initialization 21/25 for node (32, 16, 2) done
+Initialization 22/25 for node (32, 16, 2) done
+Initialization 23/25 for node (32, 16, 2) done
+Initialization 24/25 for node (32, 16, 2) done
+Initialization 25/25 for node (32, 16, 2) done
+Initialization 1/25 for node (16, 2) done
+Initialization 2/25 for node (16, 2) done
+Initialization 3/25 for node (16, 2) done
+Initialization 4/25 for node (16, 2) done
+Initialization 5/25 for node (16, 2) done
+Initialization 6/25 for node (16, 2) done
+Initialization 7/25 for node (16, 2) done
+Initialization 8/25 for node (16, 2) done
+Initialization 9/25 for node (16, 2) done
+Initialization 10/25 for node (16, 2) done
+Initialization 11/25 for node (16, 2) done
+Initialization 12/25 for node (16, 2) done
+Initialization 13/25 for node (16, 2) done
+Initialization 14/25 for node (16, 2) done
+Initialization 15/25 for node (16, 2) done
+Initialization 16/25 for node (16, 2) done
+Initialization 17/25 for node (16, 2) done
+Initialization 18/25 for node (16, 2) done
+Initialization 19/25 for node (16, 2) done
+Initialization 20/25 for node (16, 2) done
+Initialization 21/25 for node (16, 2) done
+Initialization 22/25 for node (16, 2) done
+Initialization 23/25 for node (16, 2) done
+Initialization 24/25 for node (16, 2) done
+Initialization 25/25 for node (16, 2) done
+Initialization 1/25 for node (8, 4) done
+Initialization 2/25 for node (8, 4) done
+Initialization 3/25 for node (8, 4) done
+Initialization 4/25 for node (8, 4) done
+Initialization 5/25 for node (8, 4) done
+Initialization 6/25 for node (8, 4) done
+Initialization 7/25 for node (8, 4) done
+Initialization 8/25 for node (8, 4) done
+Initialization 9/25 for node (8, 4) done
+Initialization 10/25 for node (8, 4) done
+Initialization 11/25 for node (8, 4) done
+Initialization 12/25 for node (8, 4) done
+Initialization 13/25 for node (8, 4) done
+Initialization 14/25 for node (8, 4) done
+Initialization 15/25 for node (8, 4) done
+Initialization 16/25 for node (8, 4) done
+Initialization 17/25 for node (8, 4) done
+Initialization 18/25 for node (8, 4) done
+Initialization 19/25 for node (8, 4) done
+Initialization 20/25 for node (8, 4) done
+Initialization 21/25 for node (8, 4) done
+Initialization 22/25 for node (8, 4) done
+Initialization 23/25 for node (8, 4) done
+Initialization 24/25 for node (8, 4) done
+Initialization 25/25 for node (8, 4) done
+Initialization 1/25 for node (16, 16) done
+Initialization 2/25 for node (16, 16) done
+Initialization 3/25 for node (16, 16) done
+Initialization 4/25 for node (16, 16) done
+Initialization 5/25 for node (16, 16) done
+Initialization 6/25 for node (16, 16) done
+Initialization 7/25 for node (16, 16) done
+Initialization 8/25 for node (16, 16) done
+Initialization 9/25 for node (16, 16) done
+Initialization 10/25 for node (16, 16) done
+Initialization 11/25 for node (16, 16) done
+Initialization 12/25 for node (16, 16) done
+Initialization 13/25 for node (16, 16) done
+Initialization 14/25 for node (16, 16) done
+Initialization 15/25 for node (16, 16) done
+Initialization 16/25 for node (16, 16) done
+Initialization 17/25 for node (16, 16) done
+Initialization 18/25 for node (16, 16) done
+Initialization 19/25 for node (16, 16) done
+Initialization 20/25 for node (16, 16) done
+Initialization 21/25 for node (16, 16) done
+Initialization 22/25 for node (16, 16) done
+Initialization 23/25 for node (16, 16) done
+Initialization 24/25 for node (16, 16) done
+Initialization 25/25 for node (16, 16) done
+Initialization 1/25 for node (32, 32, 4) done
+Initialization 2/25 for node (32, 32, 4) done
+Initialization 3/25 for node (32, 32, 4) done
+Initialization 4/25 for node (32, 32, 4) done
+Initialization 5/25 for node (32, 32, 4) done
+Initialization 6/25 for node (32, 32, 4) done
+Initialization 7/25 for node (32, 32, 4) done
+Initialization 8/25 for node (32, 32, 4) done
+Initialization 9/25 for node (32, 32, 4) done
+Initialization 10/25 for node (32, 32, 4) done
+Initialization 11/25 for node (32, 32, 4) done
+Initialization 12/25 for node (32, 32, 4) done
+Initialization 13/25 for node (32, 32, 4) done
+Initialization 14/25 for node (32, 32, 4) done
+Initialization 15/25 for node (32, 32, 4) done
+Initialization 16/25 for node (32, 32, 4) done
+Initialization 17/25 for node (32, 32, 4) done
+Initialization 18/25 for node (32, 32, 4) done
+Initialization 19/25 for node (32, 32, 4) done
+Initialization 20/25 for node (32, 32, 4) done
+Initialization 21/25 for node (32, 32, 4) done
+Initialization 22/25 for node (32, 32, 4) done
+Initialization 23/25 for node (32, 32, 4) done
+Initialization 24/25 for node (32, 32, 4) done
+Initialization 25/25 for node (32, 32, 4) done
+Initialization 1/25 for node (16, 16, 8) done
+Initialization 2/25 for node (16, 16, 8) done
+Initialization 3/25 for node (16, 16, 8) done
+Initialization 4/25 for node (16, 16, 8) done
+Initialization 5/25 for node (16, 16, 8) done
+Initialization 6/25 for node (16, 16, 8) done
+Initialization 7/25 for node (16, 16, 8) done
+Initialization 8/25 for node (16, 16, 8) done
+Initialization 9/25 for node (16, 16, 8) done
+Initialization 10/25 for node (16, 16, 8) done
+Initialization 11/25 for node (16, 16, 8) done
+Initialization 12/25 for node (16, 16, 8) done
+Initialization 13/25 for node (16, 16, 8) done
+Initialization 14/25 for node (16, 16, 8) done
+Initialization 15/25 for node (16, 16, 8) done
+Initialization 16/25 for node (16, 16, 8) done
+Initialization 17/25 for node (16, 16, 8) done
+Initialization 18/25 for node (16, 16, 8) done
+Initialization 19/25 for node (16, 16, 8) done
+Initialization 20/25 for node (16, 16, 8) done
+Initialization 21/25 for node (16, 16, 8) done
+Initialization 22/25 for node (16, 16, 8) done
+Initialization 23/25 for node (16, 16, 8) done
+Initialization 24/25 for node (16, 16, 8) done
+Initialization 25/25 for node (16, 16, 8) done
+Initialization 1/25 for node (8, 8) done
+Initialization 2/25 for node (8, 8) done
+Initialization 3/25 for node (8, 8) done
+Initialization 4/25 for node (8, 8) done
+Initialization 5/25 for node (8, 8) done
+Initialization 6/25 for node (8, 8) done
+Initialization 7/25 for node (8, 8) done
+Initialization 8/25 for node (8, 8) done
+Initialization 9/25 for node (8, 8) done
+Initialization 10/25 for node (8, 8) done
+Initialization 11/25 for node (8, 8) done
+Initialization 12/25 for node (8, 8) done
+Initialization 13/25 for node (8, 8) done
+Initialization 14/25 for node (8, 8) done
+Initialization 15/25 for node (8, 8) done
+Initialization 16/25 for node (8, 8) done
+Initialization 17/25 for node (8, 8) done
+Initialization 18/25 for node (8, 8) done
+Initialization 19/25 for node (8, 8) done
+Initialization 20/25 for node (8, 8) done
+Initialization 21/25 for node (8, 8) done
+Initialization 22/25 for node (8, 8) done
+Initialization 23/25 for node (8, 8) done
+Initialization 24/25 for node (8, 8) done
+Initialization 25/25 for node (8, 8) done
+Initialization 1/25 for node (32, 8, 2) done
+Initialization 2/25 for node (32, 8, 2) done
+Initialization 3/25 for node (32, 8, 2) done
+Initialization 4/25 for node (32, 8, 2) done
+Initialization 5/25 for node (32, 8, 2) done
+Initialization 6/25 for node (32, 8, 2) done
+Initialization 7/25 for node (32, 8, 2) done
+Initialization 8/25 for node (32, 8, 2) done
+Initialization 9/25 for node (32, 8, 2) done
+Initialization 10/25 for node (32, 8, 2) done
+Initialization 11/25 for node (32, 8, 2) done
+Initialization 12/25 for node (32, 8, 2) done
+Initialization 13/25 for node (32, 8, 2) done
+Initialization 14/25 for node (32, 8, 2) done
+Initialization 15/25 for node (32, 8, 2) done
+Initialization 16/25 for node (32, 8, 2) done
+Initialization 17/25 for node (32, 8, 2) done
+Initialization 18/25 for node (32, 8, 2) done
+Initialization 19/25 for node (32, 8, 2) done
+Initialization 20/25 for node (32, 8, 2) done
+Initialization 21/25 for node (32, 8, 2) done
+Initialization 22/25 for node (32, 8, 2) done
+Initialization 23/25 for node (32, 8, 2) done
+Initialization 24/25 for node (32, 8, 2) done
+Initialization 25/25 for node (32, 8, 2) done
+Initialization 1/25 for node (48,) done
+Initialization 2/25 for node (48,) done
+Initialization 3/25 for node (48,) done
+Initialization 4/25 for node (48,) done
+Initialization 5/25 for node (48,) done
+Initialization 6/25 for node (48,) done
+Initialization 7/25 for node (48,) done
+Initialization 8/25 for node (48,) done
+Initialization 9/25 for node (48,) done
+Initialization 10/25 for node (48,) done
+Initialization 11/25 for node (48,) done
+Initialization 12/25 for node (48,) done
+Initialization 13/25 for node (48,) done
+Initialization 14/25 for node (48,) done
+Initialization 15/25 for node (48,) done
+Initialization 16/25 for node (48,) done
+Initialization 17/25 for node (48,) done
+Initialization 18/25 for node (48,) done
+Initialization 19/25 for node (48,) done
+Initialization 20/25 for node (48,) done
+Initialization 21/25 for node (48,) done
+Initialization 22/25 for node (48,) done
+Initialization 23/25 for node (48,) done
+Initialization 24/25 for node (48,) done
+Initialization 25/25 for node (48,) done
+Initialization 1/25 for node (4, 4) done
+Initialization 2/25 for node (4, 4) done
+Initialization 3/25 for node (4, 4) done
+Initialization 4/25 for node (4, 4) done
+Initialization 5/25 for node (4, 4) done
+Initialization 6/25 for node (4, 4) done
+Initialization 7/25 for node (4, 4) done
+Initialization 8/25 for node (4, 4) done
+Initialization 9/25 for node (4, 4) done
+Initialization 10/25 for node (4, 4) done
+Initialization 11/25 for node (4, 4) done
+Initialization 12/25 for node (4, 4) done
+Initialization 13/25 for node (4, 4) done
+Initialization 14/25 for node (4, 4) done
+Initialization 15/25 for node (4, 4) done
+Initialization 16/25 for node (4, 4) done
+Initialization 17/25 for node (4, 4) done
+Initialization 18/25 for node (4, 4) done
+Initialization 19/25 for node (4, 4) done
+Initialization 20/25 for node (4, 4) done
+Initialization 21/25 for node (4, 4) done
+Initialization 22/25 for node (4, 4) done
+Initialization 23/25 for node (4, 4) done
+Initialization 24/25 for node (4, 4) done
+Initialization 25/25 for node (4, 4) done
+Initialization 1/25 for node (32, 8, 8) done
+Initialization 2/25 for node (32, 8, 8) done
+Initialization 3/25 for node (32, 8, 8) done
+Initialization 4/25 for node (32, 8, 8) done
+Initialization 5/25 for node (32, 8, 8) done
+Initialization 6/25 for node (32, 8, 8) done
+Initialization 7/25 for node (32, 8, 8) done
+Initialization 8/25 for node (32, 8, 8) done
+Initialization 9/25 for node (32, 8, 8) done
+Initialization 10/25 for node (32, 8, 8) done
+Initialization 11/25 for node (32, 8, 8) done
+Initialization 12/25 for node (32, 8, 8) done
+Initialization 13/25 for node (32, 8, 8) done
+Initialization 14/25 for node (32, 8, 8) done
+Initialization 15/25 for node (32, 8, 8) done
+Initialization 16/25 for node (32, 8, 8) done
+Initialization 17/25 for node (32, 8, 8) done
+Initialization 18/25 for node (32, 8, 8) done
+Initialization 19/25 for node (32, 8, 8) done
+Initialization 20/25 for node (32, 8, 8) done
+Initialization 21/25 for node (32, 8, 8) done
+Initialization 22/25 for node (32, 8, 8) done
+Initialization 23/25 for node (32, 8, 8) done
+Initialization 24/25 for node (32, 8, 8) done
+Initialization 25/25 for node (32, 8, 8) done
+Initialization 1/25 for node (2, 2) done
+Initialization 2/25 for node (2, 2) done
+Initialization 3/25 for node (2, 2) done
+Initialization 4/25 for node (2, 2) done
+Initialization 5/25 for node (2, 2) done
+Initialization 6/25 for node (2, 2) done
+Initialization 7/25 for node (2, 2) done
+Initialization 8/25 for node (2, 2) done
+Initialization 9/25 for node (2, 2) done
+Initialization 10/25 for node (2, 2) done
+Initialization 11/25 for node (2, 2) done
+Initialization 12/25 for node (2, 2) done
+Initialization 13/25 for node (2, 2) done
+Initialization 14/25 for node (2, 2) done
+Initialization 15/25 for node (2, 2) done
+Initialization 16/25 for node (2, 2) done
+Initialization 17/25 for node (2, 2) done
+Initialization 18/25 for node (2, 2) done
+Initialization 19/25 for node (2, 2) done
+Initialization 20/25 for node (2, 2) done
+Initialization 21/25 for node (2, 2) done
+Initialization 22/25 for node (2, 2) done
+Initialization 23/25 for node (2, 2) done
+Initialization 24/25 for node (2, 2) done
+Initialization 25/25 for node (2, 2) done
+Initialization 1/25 for node (8, 4, 4) done
+Initialization 2/25 for node (8, 4, 4) done
+Initialization 3/25 for node (8, 4, 4) done
+Initialization 4/25 for node (8, 4, 4) done
+Initialization 5/25 for node (8, 4, 4) done
+Initialization 6/25 for node (8, 4, 4) done
+Initialization 7/25 for node (8, 4, 4) done
+Initialization 8/25 for node (8, 4, 4) done
+Initialization 9/25 for node (8, 4, 4) done
+Initialization 10/25 for node (8, 4, 4) done
+Initialization 11/25 for node (8, 4, 4) done
+Initialization 12/25 for node (8, 4, 4) done
+Initialization 13/25 for node (8, 4, 4) done
+Initialization 14/25 for node (8, 4, 4) done
+Initialization 15/25 for node (8, 4, 4) done
+Initialization 16/25 for node (8, 4, 4) done
+Initialization 17/25 for node (8, 4, 4) done
+Initialization 18/25 for node (8, 4, 4) done
+Initialization 19/25 for node (8, 4, 4) done
+Initialization 20/25 for node (8, 4, 4) done
+Initialization 21/25 for node (8, 4, 4) done
+Initialization 22/25 for node (8, 4, 4) done
+Initialization 23/25 for node (8, 4, 4) done
+Initialization 24/25 for node (8, 4, 4) done
+Initialization 25/25 for node (8, 4, 4) done
+Initialization 1/25 for node (32, 16) done
+Initialization 2/25 for node (32, 16) done
+Initialization 3/25 for node (32, 16) done
+Initialization 4/25 for node (32, 16) done
+Initialization 5/25 for node (32, 16) done
+Initialization 6/25 for node (32, 16) done
+Initialization 7/25 for node (32, 16) done
+Initialization 8/25 for node (32, 16) done
+Initialization 9/25 for node (32, 16) done
+Initialization 10/25 for node (32, 16) done
+Initialization 11/25 for node (32, 16) done
+Initialization 12/25 for node (32, 16) done
+Initialization 13/25 for node (32, 16) done
+Initialization 14/25 for node (32, 16) done
+Initialization 15/25 for node (32, 16) done
+Initialization 16/25 for node (32, 16) done
+Initialization 17/25 for node (32, 16) done
+Initialization 18/25 for node (32, 16) done
+Initialization 19/25 for node (32, 16) done
+Initialization 20/25 for node (32, 16) done
+Initialization 21/25 for node (32, 16) done
+Initialization 22/25 for node (32, 16) done
+Initialization 23/25 for node (32, 16) done
+Initialization 24/25 for node (32, 16) done
+Initialization 25/25 for node (32, 16) done
+Initialization 1/25 for node (4, 4, 2) done
+Initialization 2/25 for node (4, 4, 2) done
+Initialization 3/25 for node (4, 4, 2) done
+Initialization 4/25 for node (4, 4, 2) done
+Initialization 5/25 for node (4, 4, 2) done
+Initialization 6/25 for node (4, 4, 2) done
+Initialization 7/25 for node (4, 4, 2) done
+Initialization 8/25 for node (4, 4, 2) done
+Initialization 9/25 for node (4, 4, 2) done
+Initialization 10/25 for node (4, 4, 2) done
+Initialization 11/25 for node (4, 4, 2) done
+Initialization 12/25 for node (4, 4, 2) done
+Initialization 13/25 for node (4, 4, 2) done
+Initialization 14/25 for node (4, 4, 2) done
+Initialization 15/25 for node (4, 4, 2) done
+Initialization 16/25 for node (4, 4, 2) done
+Initialization 17/25 for node (4, 4, 2) done
+Initialization 18/25 for node (4, 4, 2) done
+Initialization 19/25 for node (4, 4, 2) done
+Initialization 20/25 for node (4, 4, 2) done
+Initialization 21/25 for node (4, 4, 2) done
+Initialization 22/25 for node (4, 4, 2) done
+Initialization 23/25 for node (4, 4, 2) done
+Initialization 24/25 for node (4, 4, 2) done
+Initialization 25/25 for node (4, 4, 2) done
+Initialization 1/25 for node (8, 8, 4) done
+Initialization 2/25 for node (8, 8, 4) done
+Initialization 3/25 for node (8, 8, 4) done
+Initialization 4/25 for node (8, 8, 4) done
+Initialization 5/25 for node (8, 8, 4) done
+Initialization 6/25 for node (8, 8, 4) done
+Initialization 7/25 for node (8, 8, 4) done
+Initialization 8/25 for node (8, 8, 4) done
+Initialization 9/25 for node (8, 8, 4) done
+Initialization 10/25 for node (8, 8, 4) done
+Initialization 11/25 for node (8, 8, 4) done
+Initialization 12/25 for node (8, 8, 4) done
+Initialization 13/25 for node (8, 8, 4) done
+Initialization 14/25 for node (8, 8, 4) done
+Initialization 15/25 for node (8, 8, 4) done
+Initialization 16/25 for node (8, 8, 4) done
+Initialization 17/25 for node (8, 8, 4) done
+Initialization 18/25 for node (8, 8, 4) done
+Initialization 19/25 for node (8, 8, 4) done
+Initialization 20/25 for node (8, 8, 4) done
+Initialization 21/25 for node (8, 8, 4) done
+Initialization 22/25 for node (8, 8, 4) done
+Initialization 23/25 for node (8, 8, 4) done
+Initialization 24/25 for node (8, 8, 4) done
+Initialization 25/25 for node (8, 8, 4) done
+Initialization 1/25 for node (32, 32, 32) done
+Initialization 2/25 for node (32, 32, 32) done
+Initialization 3/25 for node (32, 32, 32) done
+Initialization 4/25 for node (32, 32, 32) done
+Initialization 5/25 for node (32, 32, 32) done
+Initialization 6/25 for node (32, 32, 32) done
+Initialization 7/25 for node (32, 32, 32) done
+Initialization 8/25 for node (32, 32, 32) done
+Initialization 9/25 for node (32, 32, 32) done
+Initialization 10/25 for node (32, 32, 32) done
+Initialization 11/25 for node (32, 32, 32) done
+Initialization 12/25 for node (32, 32, 32) done
+Initialization 13/25 for node (32, 32, 32) done
+Initialization 14/25 for node (32, 32, 32) done
+Initialization 15/25 for node (32, 32, 32) done
+Initialization 16/25 for node (32, 32, 32) done
+Initialization 17/25 for node (32, 32, 32) done
+Initialization 18/25 for node (32, 32, 32) done
+Initialization 19/25 for node (32, 32, 32) done
+Initialization 20/25 for node (32, 32, 32) done
+Initialization 21/25 for node (32, 32, 32) done
+Initialization 22/25 for node (32, 32, 32) done
+Initialization 23/25 for node (32, 32, 32) done
+Initialization 24/25 for node (32, 32, 32) done
+Initialization 25/25 for node (32, 32, 32) done
+Initialization 1/25 for node (16, 8, 4) done
+Initialization 2/25 for node (16, 8, 4) done
+Initialization 3/25 for node (16, 8, 4) done
+Initialization 4/25 for node (16, 8, 4) done
+Initialization 5/25 for node (16, 8, 4) done
+Initialization 6/25 for node (16, 8, 4) done
+Initialization 7/25 for node (16, 8, 4) done
+Initialization 8/25 for node (16, 8, 4) done
+Initialization 9/25 for node (16, 8, 4) done
+Initialization 10/25 for node (16, 8, 4) done
+Initialization 11/25 for node (16, 8, 4) done
+Initialization 12/25 for node (16, 8, 4) done
+Initialization 13/25 for node (16, 8, 4) done
+Initialization 14/25 for node (16, 8, 4) done
+Initialization 15/25 for node (16, 8, 4) done
+Initialization 16/25 for node (16, 8, 4) done
+Initialization 17/25 for node (16, 8, 4) done
+Initialization 18/25 for node (16, 8, 4) done
+Initialization 19/25 for node (16, 8, 4) done
+Initialization 20/25 for node (16, 8, 4) done
+Initialization 21/25 for node (16, 8, 4) done
+Initialization 22/25 for node (16, 8, 4) done
+Initialization 23/25 for node (16, 8, 4) done
+Initialization 24/25 for node (16, 8, 4) done
+Initialization 25/25 for node (16, 8, 4) done
+Initialization 1/25 for node (64,) done
+Initialization 2/25 for node (64,) done
+Initialization 3/25 for node (64,) done
+Initialization 4/25 for node (64,) done
+Initialization 5/25 for node (64,) done
+Initialization 6/25 for node (64,) done
+Initialization 7/25 for node (64,) done
+Initialization 8/25 for node (64,) done
+Initialization 9/25 for node (64,) done
+Initialization 10/25 for node (64,) done
+Initialization 11/25 for node (64,) done
+Initialization 12/25 for node (64,) done
+Initialization 13/25 for node (64,) done
+Initialization 14/25 for node (64,) done
+Initialization 15/25 for node (64,) done
+Initialization 16/25 for node (64,) done
+Initialization 17/25 for node (64,) done
+Initialization 18/25 for node (64,) done
+Initialization 19/25 for node (64,) done
+Initialization 20/25 for node (64,) done
+Initialization 21/25 for node (64,) done
+Initialization 22/25 for node (64,) done
+Initialization 23/25 for node (64,) done
+Initialization 24/25 for node (64,) done
+Initialization 25/25 for node (64,) done
+Initialization 1/25 for node (8, 8, 8) done
+Initialization 2/25 for node (8, 8, 8) done
+Initialization 3/25 for node (8, 8, 8) done
+Initialization 4/25 for node (8, 8, 8) done
+Initialization 5/25 for node (8, 8, 8) done
+Initialization 6/25 for node (8, 8, 8) done
+Initialization 7/25 for node (8, 8, 8) done
+Initialization 8/25 for node (8, 8, 8) done
+Initialization 9/25 for node (8, 8, 8) done
+Initialization 10/25 for node (8, 8, 8) done
+Initialization 11/25 for node (8, 8, 8) done
+Initialization 12/25 for node (8, 8, 8) done
+Initialization 13/25 for node (8, 8, 8) done
+Initialization 14/25 for node (8, 8, 8) done
+Initialization 15/25 for node (8, 8, 8) done
+Initialization 16/25 for node (8, 8, 8) done
+Initialization 17/25 for node (8, 8, 8) done
+Initialization 18/25 for node (8, 8, 8) done
+Initialization 19/25 for node (8, 8, 8) done
+Initialization 20/25 for node (8, 8, 8) done
+Initialization 21/25 for node (8, 8, 8) done
+Initialization 22/25 for node (8, 8, 8) done
+Initialization 23/25 for node (8, 8, 8) done
+Initialization 24/25 for node (8, 8, 8) done
+Initialization 25/25 for node (8, 8, 8) done
+Initialization 1/25 for node (32, 4, 4) done
+Initialization 2/25 for node (32, 4, 4) done
+Initialization 3/25 for node (32, 4, 4) done
+Initialization 4/25 for node (32, 4, 4) done
+Initialization 5/25 for node (32, 4, 4) done
+Initialization 6/25 for node (32, 4, 4) done
+Initialization 7/25 for node (32, 4, 4) done
+Initialization 8/25 for node (32, 4, 4) done
+Initialization 9/25 for node (32, 4, 4) done
+Initialization 10/25 for node (32, 4, 4) done
+Initialization 11/25 for node (32, 4, 4) done
+Initialization 12/25 for node (32, 4, 4) done
+Initialization 13/25 for node (32, 4, 4) done
+Initialization 14/25 for node (32, 4, 4) done
+Initialization 15/25 for node (32, 4, 4) done
+Initialization 16/25 for node (32, 4, 4) done
+Initialization 17/25 for node (32, 4, 4) done
+Initialization 18/25 for node (32, 4, 4) done
+Initialization 19/25 for node (32, 4, 4) done
+Initialization 20/25 for node (32, 4, 4) done
+Initialization 21/25 for node (32, 4, 4) done
+Initialization 22/25 for node (32, 4, 4) done
+Initialization 23/25 for node (32, 4, 4) done
+Initialization 24/25 for node (32, 4, 4) done
+Initialization 25/25 for node (32, 4, 4) done
+Initialization 1/25 for node (4, 2, 2) done
+Initialization 2/25 for node (4, 2, 2) done
+Initialization 3/25 for node (4, 2, 2) done
+Initialization 4/25 for node (4, 2, 2) done
+Initialization 5/25 for node (4, 2, 2) done
+Initialization 6/25 for node (4, 2, 2) done
+Initialization 7/25 for node (4, 2, 2) done
+Initialization 8/25 for node (4, 2, 2) done
+Initialization 9/25 for node (4, 2, 2) done
+Initialization 10/25 for node (4, 2, 2) done
+Initialization 11/25 for node (4, 2, 2) done
+Initialization 12/25 for node (4, 2, 2) done
+Initialization 13/25 for node (4, 2, 2) done
+Initialization 14/25 for node (4, 2, 2) done
+Initialization 15/25 for node (4, 2, 2) done
+Initialization 16/25 for node (4, 2, 2) done
+Initialization 17/25 for node (4, 2, 2) done
+Initialization 18/25 for node (4, 2, 2) done
+Initialization 19/25 for node (4, 2, 2) done
+Initialization 20/25 for node (4, 2, 2) done
+Initialization 21/25 for node (4, 2, 2) done
+Initialization 22/25 for node (4, 2, 2) done
+Initialization 23/25 for node (4, 2, 2) done
+Initialization 24/25 for node (4, 2, 2) done
+Initialization 25/25 for node (4, 2, 2) done
+Initialization 1/25 for node (32, 32, 16) done
+Initialization 2/25 for node (32, 32, 16) done
+Initialization 3/25 for node (32, 32, 16) done
+Initialization 4/25 for node (32, 32, 16) done
+Initialization 5/25 for node (32, 32, 16) done
+Initialization 6/25 for node (32, 32, 16) done
+Initialization 7/25 for node (32, 32, 16) done
+Initialization 8/25 for node (32, 32, 16) done
+Initialization 9/25 for node (32, 32, 16) done
+Initialization 10/25 for node (32, 32, 16) done
+Initialization 11/25 for node (32, 32, 16) done
+Initialization 12/25 for node (32, 32, 16) done
+Initialization 13/25 for node (32, 32, 16) done
+Initialization 14/25 for node (32, 32, 16) done
+Initialization 15/25 for node (32, 32, 16) done
+Initialization 16/25 for node (32, 32, 16) done
+Initialization 17/25 for node (32, 32, 16) done
+Initialization 18/25 for node (32, 32, 16) done
+Initialization 19/25 for node (32, 32, 16) done
+Initialization 20/25 for node (32, 32, 16) done
+Initialization 21/25 for node (32, 32, 16) done
+Initialization 22/25 for node (32, 32, 16) done
+Initialization 23/25 for node (32, 32, 16) done
+Initialization 24/25 for node (32, 32, 16) done
+Initialization 25/25 for node (32, 32, 16) done
+Initialization 1/25 for node (8, 2, 2) done
+Initialization 2/25 for node (8, 2, 2) done
+Initialization 3/25 for node (8, 2, 2) done
+Initialization 4/25 for node (8, 2, 2) done
+Initialization 5/25 for node (8, 2, 2) done
+Initialization 6/25 for node (8, 2, 2) done
+Initialization 7/25 for node (8, 2, 2) done
+Initialization 8/25 for node (8, 2, 2) done
+Initialization 9/25 for node (8, 2, 2) done
+Initialization 10/25 for node (8, 2, 2) done
+Initialization 11/25 for node (8, 2, 2) done
+Initialization 12/25 for node (8, 2, 2) done
+Initialization 13/25 for node (8, 2, 2) done
+Initialization 14/25 for node (8, 2, 2) done
+Initialization 15/25 for node (8, 2, 2) done
+Initialization 16/25 for node (8, 2, 2) done
+Initialization 17/25 for node (8, 2, 2) done
+Initialization 18/25 for node (8, 2, 2) done
+Initialization 19/25 for node (8, 2, 2) done
+Initialization 20/25 for node (8, 2, 2) done
+Initialization 21/25 for node (8, 2, 2) done
+Initialization 22/25 for node (8, 2, 2) done
+Initialization 23/25 for node (8, 2, 2) done
+Initialization 24/25 for node (8, 2, 2) done
+Initialization 25/25 for node (8, 2, 2) done
+Initialization 1/25 for node (16, 16, 4) done
+Initialization 2/25 for node (16, 16, 4) done
+Initialization 3/25 for node (16, 16, 4) done
+Initialization 4/25 for node (16, 16, 4) done
+Initialization 5/25 for node (16, 16, 4) done
+Initialization 6/25 for node (16, 16, 4) done
+Initialization 7/25 for node (16, 16, 4) done
+Initialization 8/25 for node (16, 16, 4) done
+Initialization 9/25 for node (16, 16, 4) done
+Initialization 10/25 for node (16, 16, 4) done
+Initialization 11/25 for node (16, 16, 4) done
+Initialization 12/25 for node (16, 16, 4) done
+Initialization 13/25 for node (16, 16, 4) done
+Initialization 14/25 for node (16, 16, 4) done
+Initialization 15/25 for node (16, 16, 4) done
+Initialization 16/25 for node (16, 16, 4) done
+Initialization 17/25 for node (16, 16, 4) done
+Initialization 18/25 for node (16, 16, 4) done
+Initialization 19/25 for node (16, 16, 4) done
+Initialization 20/25 for node (16, 16, 4) done
+Initialization 21/25 for node (16, 16, 4) done
+Initialization 22/25 for node (16, 16, 4) done
+Initialization 23/25 for node (16, 16, 4) done
+Initialization 24/25 for node (16, 16, 4) done
+Initialization 25/25 for node (16, 16, 4) done
+Initialization 1/25 for node (32, 8, 4) done
+Initialization 2/25 for node (32, 8, 4) done
+Initialization 3/25 for node (32, 8, 4) done
+Initialization 4/25 for node (32, 8, 4) done
+Initialization 5/25 for node (32, 8, 4) done
+Initialization 6/25 for node (32, 8, 4) done
+Initialization 7/25 for node (32, 8, 4) done
+Initialization 8/25 for node (32, 8, 4) done
+Initialization 9/25 for node (32, 8, 4) done
+Initialization 10/25 for node (32, 8, 4) done
+Initialization 11/25 for node (32, 8, 4) done
+Initialization 12/25 for node (32, 8, 4) done
+Initialization 13/25 for node (32, 8, 4) done
+Initialization 14/25 for node (32, 8, 4) done
+Initialization 15/25 for node (32, 8, 4) done
+Initialization 16/25 for node (32, 8, 4) done
+Initialization 17/25 for node (32, 8, 4) done
+Initialization 18/25 for node (32, 8, 4) done
+Initialization 19/25 for node (32, 8, 4) done
+Initialization 20/25 for node (32, 8, 4) done
+Initialization 21/25 for node (32, 8, 4) done
+Initialization 22/25 for node (32, 8, 4) done
+Initialization 23/25 for node (32, 8, 4) done
+Initialization 24/25 for node (32, 8, 4) done
+Initialization 25/25 for node (32, 8, 4) done
+Initialization 1/25 for node (32, 8) done
+Initialization 2/25 for node (32, 8) done
+Initialization 3/25 for node (32, 8) done
+Initialization 4/25 for node (32, 8) done
+Initialization 5/25 for node (32, 8) done
+Initialization 6/25 for node (32, 8) done
+Initialization 7/25 for node (32, 8) done
+Initialization 8/25 for node (32, 8) done
+Initialization 9/25 for node (32, 8) done
+Initialization 10/25 for node (32, 8) done
+Initialization 11/25 for node (32, 8) done
+Initialization 12/25 for node (32, 8) done
+Initialization 13/25 for node (32, 8) done
+Initialization 14/25 for node (32, 8) done
+Initialization 15/25 for node (32, 8) done
+Initialization 16/25 for node (32, 8) done
+Initialization 17/25 for node (32, 8) done
+Initialization 18/25 for node (32, 8) done
+Initialization 19/25 for node (32, 8) done
+Initialization 20/25 for node (32, 8) done
+Initialization 21/25 for node (32, 8) done
+Initialization 22/25 for node (32, 8) done
+Initialization 23/25 for node (32, 8) done
+Initialization 24/25 for node (32, 8) done
+Initialization 25/25 for node (32, 8) done
+Initialization 1/25 for node (32, 16, 16) done
+Initialization 2/25 for node (32, 16, 16) done
+Initialization 3/25 for node (32, 16, 16) done
+Initialization 4/25 for node (32, 16, 16) done
+Initialization 5/25 for node (32, 16, 16) done
+Initialization 6/25 for node (32, 16, 16) done
+Initialization 7/25 for node (32, 16, 16) done
+Initialization 8/25 for node (32, 16, 16) done
+Initialization 9/25 for node (32, 16, 16) done
+Initialization 10/25 for node (32, 16, 16) done
+Initialization 11/25 for node (32, 16, 16) done
+Initialization 12/25 for node (32, 16, 16) done
+Initialization 13/25 for node (32, 16, 16) done
+Initialization 14/25 for node (32, 16, 16) done
+Initialization 15/25 for node (32, 16, 16) done
+Initialization 16/25 for node (32, 16, 16) done
+Initialization 17/25 for node (32, 16, 16) done
+Initialization 18/25 for node (32, 16, 16) done
+Initialization 19/25 for node (32, 16, 16) done
+Initialization 20/25 for node (32, 16, 16) done
+Initialization 21/25 for node (32, 16, 16) done
+Initialization 22/25 for node (32, 16, 16) done
+Initialization 23/25 for node (32, 16, 16) done
+Initialization 24/25 for node (32, 16, 16) done
+Initialization 25/25 for node (32, 16, 16) done
+Initialization 1/25 for node (16, 4, 2) done
+Initialization 2/25 for node (16, 4, 2) done
+Initialization 3/25 for node (16, 4, 2) done
+Initialization 4/25 for node (16, 4, 2) done
+Initialization 5/25 for node (16, 4, 2) done
+Initialization 6/25 for node (16, 4, 2) done
+Initialization 7/25 for node (16, 4, 2) done
+Initialization 8/25 for node (16, 4, 2) done
+Initialization 9/25 for node (16, 4, 2) done
+Initialization 10/25 for node (16, 4, 2) done
+Initialization 11/25 for node (16, 4, 2) done
+Initialization 12/25 for node (16, 4, 2) done
+Initialization 13/25 for node (16, 4, 2) done
+Initialization 14/25 for node (16, 4, 2) done
+Initialization 15/25 for node (16, 4, 2) done
+Initialization 16/25 for node (16, 4, 2) done
+Initialization 17/25 for node (16, 4, 2) done
+Initialization 18/25 for node (16, 4, 2) done
+Initialization 19/25 for node (16, 4, 2) done
+Initialization 20/25 for node (16, 4, 2) done
+Initialization 21/25 for node (16, 4, 2) done
+Initialization 22/25 for node (16, 4, 2) done
+Initialization 23/25 for node (16, 4, 2) done
+Initialization 24/25 for node (16, 4, 2) done
+Initialization 25/25 for node (16, 4, 2) done
+Initialization 1/25 for node (16, 8, 2) done
+Initialization 2/25 for node (16, 8, 2) done
+Initialization 3/25 for node (16, 8, 2) done
+Initialization 4/25 for node (16, 8, 2) done
+Initialization 5/25 for node (16, 8, 2) done
+Initialization 6/25 for node (16, 8, 2) done
+Initialization 7/25 for node (16, 8, 2) done
+Initialization 8/25 for node (16, 8, 2) done
+Initialization 9/25 for node (16, 8, 2) done
+Initialization 10/25 for node (16, 8, 2) done
+Initialization 11/25 for node (16, 8, 2) done
+Initialization 12/25 for node (16, 8, 2) done
+Initialization 13/25 for node (16, 8, 2) done
+Initialization 14/25 for node (16, 8, 2) done
+Initialization 15/25 for node (16, 8, 2) done
+Initialization 16/25 for node (16, 8, 2) done
+Initialization 17/25 for node (16, 8, 2) done
+Initialization 18/25 for node (16, 8, 2) done
+Initialization 19/25 for node (16, 8, 2) done
+Initialization 20/25 for node (16, 8, 2) done
+Initialization 21/25 for node (16, 8, 2) done
+Initialization 22/25 for node (16, 8, 2) done
+Initialization 23/25 for node (16, 8, 2) done
+Initialization 24/25 for node (16, 8, 2) done
+Initialization 25/25 for node (16, 8, 2) done
+Initialization 1/25 for node (16, 8, 8) done
+Initialization 2/25 for node (16, 8, 8) done
+Initialization 3/25 for node (16, 8, 8) done
+Initialization 4/25 for node (16, 8, 8) done
+Initialization 5/25 for node (16, 8, 8) done
+Initialization 6/25 for node (16, 8, 8) done
+Initialization 7/25 for node (16, 8, 8) done
+Initialization 8/25 for node (16, 8, 8) done
+Initialization 9/25 for node (16, 8, 8) done
+Initialization 10/25 for node (16, 8, 8) done
+Initialization 11/25 for node (16, 8, 8) done
+Initialization 12/25 for node (16, 8, 8) done
+Initialization 13/25 for node (16, 8, 8) done
+Initialization 14/25 for node (16, 8, 8) done
+Initialization 15/25 for node (16, 8, 8) done
+Initialization 16/25 for node (16, 8, 8) done
+Initialization 17/25 for node (16, 8, 8) done
+Initialization 18/25 for node (16, 8, 8) done
+Initialization 19/25 for node (16, 8, 8) done
+Initialization 20/25 for node (16, 8, 8) done
+Initialization 21/25 for node (16, 8, 8) done
+Initialization 22/25 for node (16, 8, 8) done
+Initialization 23/25 for node (16, 8, 8) done
+Initialization 24/25 for node (16, 8, 8) done
+Initialization 25/25 for node (16, 8, 8) done
+Initialization 1/25 for node (32, 2, 2) done
+Initialization 2/25 for node (32, 2, 2) done
+Initialization 3/25 for node (32, 2, 2) done
+Initialization 4/25 for node (32, 2, 2) done
+Initialization 5/25 for node (32, 2, 2) done
+Initialization 6/25 for node (32, 2, 2) done
+Initialization 7/25 for node (32, 2, 2) done
+Initialization 8/25 for node (32, 2, 2) done
+Initialization 9/25 for node (32, 2, 2) done
+Initialization 10/25 for node (32, 2, 2) done
+Initialization 11/25 for node (32, 2, 2) done
+Initialization 12/25 for node (32, 2, 2) done
+Initialization 13/25 for node (32, 2, 2) done
+Initialization 14/25 for node (32, 2, 2) done
+Initialization 15/25 for node (32, 2, 2) done
+Initialization 16/25 for node (32, 2, 2) done
+Initialization 17/25 for node (32, 2, 2) done
+Initialization 18/25 for node (32, 2, 2) done
+Initialization 19/25 for node (32, 2, 2) done
+Initialization 20/25 for node (32, 2, 2) done
+Initialization 21/25 for node (32, 2, 2) done
+Initialization 22/25 for node (32, 2, 2) done
+Initialization 23/25 for node (32, 2, 2) done
+Initialization 24/25 for node (32, 2, 2) done
+Initialization 25/25 for node (32, 2, 2) done
+Initialization 1/25 for node (16, 16, 16) done
+Initialization 2/25 for node (16, 16, 16) done
+Initialization 3/25 for node (16, 16, 16) done
+Initialization 4/25 for node (16, 16, 16) done
+Initialization 5/25 for node (16, 16, 16) done
+Initialization 6/25 for node (16, 16, 16) done
+Initialization 7/25 for node (16, 16, 16) done
+Initialization 8/25 for node (16, 16, 16) done
+Initialization 9/25 for node (16, 16, 16) done
+Initialization 10/25 for node (16, 16, 16) done
+Initialization 11/25 for node (16, 16, 16) done
+Initialization 12/25 for node (16, 16, 16) done
+Initialization 13/25 for node (16, 16, 16) done
+Initialization 14/25 for node (16, 16, 16) done
+Initialization 15/25 for node (16, 16, 16) done
+Initialization 16/25 for node (16, 16, 16) done
+Initialization 17/25 for node (16, 16, 16) done
+Initialization 18/25 for node (16, 16, 16) done
+Initialization 19/25 for node (16, 16, 16) done
+Initialization 20/25 for node (16, 16, 16) done
+Initialization 21/25 for node (16, 16, 16) done
+Initialization 22/25 for node (16, 16, 16) done
+Initialization 23/25 for node (16, 16, 16) done
+Initialization 24/25 for node (16, 16, 16) done
+Initialization 25/25 for node (16, 16, 16) done
+Initialization 1/25 for node (32, 4, 2) done
+Initialization 2/25 for node (32, 4, 2) done
+Initialization 3/25 for node (32, 4, 2) done
+Initialization 4/25 for node (32, 4, 2) done
+Initialization 5/25 for node (32, 4, 2) done
+Initialization 6/25 for node (32, 4, 2) done
+Initialization 7/25 for node (32, 4, 2) done
+Initialization 8/25 for node (32, 4, 2) done
+Initialization 9/25 for node (32, 4, 2) done
+Initialization 10/25 for node (32, 4, 2) done
+Initialization 11/25 for node (32, 4, 2) done
+Initialization 12/25 for node (32, 4, 2) done
+Initialization 13/25 for node (32, 4, 2) done
+Initialization 14/25 for node (32, 4, 2) done
+Initialization 15/25 for node (32, 4, 2) done
+Initialization 16/25 for node (32, 4, 2) done
+Initialization 17/25 for node (32, 4, 2) done
+Initialization 18/25 for node (32, 4, 2) done
+Initialization 19/25 for node (32, 4, 2) done
+Initialization 20/25 for node (32, 4, 2) done
+Initialization 21/25 for node (32, 4, 2) done
+Initialization 22/25 for node (32, 4, 2) done
+Initialization 23/25 for node (32, 4, 2) done
+Initialization 24/25 for node (32, 4, 2) done
+Initialization 25/25 for node (32, 4, 2) done
+Initialization 1/25 for node (16, 2, 2) done
+Initialization 2/25 for node (16, 2, 2) done
+Initialization 3/25 for node (16, 2, 2) done
+Initialization 4/25 for node (16, 2, 2) done
+Initialization 5/25 for node (16, 2, 2) done
+Initialization 6/25 for node (16, 2, 2) done
+Initialization 7/25 for node (16, 2, 2) done
+Initialization 8/25 for node (16, 2, 2) done
+Initialization 9/25 for node (16, 2, 2) done
+Initialization 10/25 for node (16, 2, 2) done
+Initialization 11/25 for node (16, 2, 2) done
+Initialization 12/25 for node (16, 2, 2) done
+Initialization 13/25 for node (16, 2, 2) done
+Initialization 14/25 for node (16, 2, 2) done
+Initialization 15/25 for node (16, 2, 2) done
+Initialization 16/25 for node (16, 2, 2) done
+Initialization 17/25 for node (16, 2, 2) done
+Initialization 18/25 for node (16, 2, 2) done
+Initialization 19/25 for node (16, 2, 2) done
+Initialization 20/25 for node (16, 2, 2) done
+Initialization 21/25 for node (16, 2, 2) done
+Initialization 22/25 for node (16, 2, 2) done
+Initialization 23/25 for node (16, 2, 2) done
+Initialization 24/25 for node (16, 2, 2) done
+Initialization 25/25 for node (16, 2, 2) done
+Initialization 1/25 for node (32, 16, 4) done
+Initialization 2/25 for node (32, 16, 4) done
+Initialization 3/25 for node (32, 16, 4) done
+Initialization 4/25 for node (32, 16, 4) done
+Initialization 5/25 for node (32, 16, 4) done
+Initialization 6/25 for node (32, 16, 4) done
+Initialization 7/25 for node (32, 16, 4) done
+Initialization 8/25 for node (32, 16, 4) done
+Initialization 9/25 for node (32, 16, 4) done
+Initialization 10/25 for node (32, 16, 4) done
+Initialization 11/25 for node (32, 16, 4) done
+Initialization 12/25 for node (32, 16, 4) done
+Initialization 13/25 for node (32, 16, 4) done
+Initialization 14/25 for node (32, 16, 4) done
+Initialization 15/25 for node (32, 16, 4) done
+Initialization 16/25 for node (32, 16, 4) done
+Initialization 17/25 for node (32, 16, 4) done
+Initialization 18/25 for node (32, 16, 4) done
+Initialization 19/25 for node (32, 16, 4) done
+Initialization 20/25 for node (32, 16, 4) done
+Initialization 21/25 for node (32, 16, 4) done
+Initialization 22/25 for node (32, 16, 4) done
+Initialization 23/25 for node (32, 16, 4) done
+Initialization 24/25 for node (32, 16, 4) done
+Initialization 25/25 for node (32, 16, 4) done
+Initialization 1/25 for node (16, 16, 2) done
+Initialization 2/25 for node (16, 16, 2) done
+Initialization 3/25 for node (16, 16, 2) done
+Initialization 4/25 for node (16, 16, 2) done
+Initialization 5/25 for node (16, 16, 2) done
+Initialization 6/25 for node (16, 16, 2) done
+Initialization 7/25 for node (16, 16, 2) done
+Initialization 8/25 for node (16, 16, 2) done
+Initialization 9/25 for node (16, 16, 2) done
+Initialization 10/25 for node (16, 16, 2) done
+Initialization 11/25 for node (16, 16, 2) done
+Initialization 12/25 for node (16, 16, 2) done
+Initialization 13/25 for node (16, 16, 2) done
+Initialization 14/25 for node (16, 16, 2) done
+Initialization 15/25 for node (16, 16, 2) done
+Initialization 16/25 for node (16, 16, 2) done
+Initialization 17/25 for node (16, 16, 2) done
+Initialization 18/25 for node (16, 16, 2) done
+Initialization 19/25 for node (16, 16, 2) done
+Initialization 20/25 for node (16, 16, 2) done
+Initialization 21/25 for node (16, 16, 2) done
+Initialization 22/25 for node (16, 16, 2) done
+Initialization 23/25 for node (16, 16, 2) done
+Initialization 24/25 for node (16, 16, 2) done
+Initialization 25/25 for node (16, 16, 2) done
+Initialization 1/25 for node (16, 4, 4) done
+Initialization 2/25 for node (16, 4, 4) done
+Initialization 3/25 for node (16, 4, 4) done
+Initialization 4/25 for node (16, 4, 4) done
+Initialization 5/25 for node (16, 4, 4) done
+Initialization 6/25 for node (16, 4, 4) done
+Initialization 7/25 for node (16, 4, 4) done
+Initialization 8/25 for node (16, 4, 4) done
+Initialization 9/25 for node (16, 4, 4) done
+Initialization 10/25 for node (16, 4, 4) done
+Initialization 11/25 for node (16, 4, 4) done
+Initialization 12/25 for node (16, 4, 4) done
+Initialization 13/25 for node (16, 4, 4) done
+Initialization 14/25 for node (16, 4, 4) done
+Initialization 15/25 for node (16, 4, 4) done
+Initialization 16/25 for node (16, 4, 4) done
+Initialization 17/25 for node (16, 4, 4) done
+Initialization 18/25 for node (16, 4, 4) done
+Initialization 19/25 for node (16, 4, 4) done
+Initialization 20/25 for node (16, 4, 4) done
+Initialization 21/25 for node (16, 4, 4) done
+Initialization 22/25 for node (16, 4, 4) done
+Initialization 23/25 for node (16, 4, 4) done
+Initialization 24/25 for node (16, 4, 4) done
+Initialization 25/25 for node (16, 4, 4) done
+Initialization 1/25 for node (32, 4) done
+Initialization 2/25 for node (32, 4) done
+Initialization 3/25 for node (32, 4) done
+Initialization 4/25 for node (32, 4) done
+Initialization 5/25 for node (32, 4) done
+Initialization 6/25 for node (32, 4) done
+Initialization 7/25 for node (32, 4) done
+Initialization 8/25 for node (32, 4) done
+Initialization 9/25 for node (32, 4) done
+Initialization 10/25 for node (32, 4) done
+Initialization 11/25 for node (32, 4) done
+Initialization 12/25 for node (32, 4) done
+Initialization 13/25 for node (32, 4) done
+Initialization 14/25 for node (32, 4) done
+Initialization 15/25 for node (32, 4) done
+Initialization 16/25 for node (32, 4) done
+Initialization 17/25 for node (32, 4) done
+Initialization 18/25 for node (32, 4) done
+Initialization 19/25 for node (32, 4) done
+Initialization 20/25 for node (32, 4) done
+Initialization 21/25 for node (32, 4) done
+Initialization 22/25 for node (32, 4) done
+Initialization 23/25 for node (32, 4) done
+Initialization 24/25 for node (32, 4) done
+Initialization 25/25 for node (32, 4) done
+Initialization 1/25 for node (32, 32, 8) done
+Initialization 2/25 for node (32, 32, 8) done
+Initialization 3/25 for node (32, 32, 8) done
+Initialization 4/25 for node (32, 32, 8) done
+Initialization 5/25 for node (32, 32, 8) done
+Initialization 6/25 for node (32, 32, 8) done
+Initialization 7/25 for node (32, 32, 8) done
+Initialization 8/25 for node (32, 32, 8) done
+Initialization 9/25 for node (32, 32, 8) done
+Initialization 10/25 for node (32, 32, 8) done
+Initialization 11/25 for node (32, 32, 8) done
+Initialization 12/25 for node (32, 32, 8) done
+Initialization 13/25 for node (32, 32, 8) done
+Initialization 14/25 for node (32, 32, 8) done
+Initialization 15/25 for node (32, 32, 8) done
+Initialization 16/25 for node (32, 32, 8) done
+Initialization 17/25 for node (32, 32, 8) done
+Initialization 18/25 for node (32, 32, 8) done
+Initialization 19/25 for node (32, 32, 8) done
+Initialization 20/25 for node (32, 32, 8) done
+Initialization 21/25 for node (32, 32, 8) done
+Initialization 22/25 for node (32, 32, 8) done
+Initialization 23/25 for node (32, 32, 8) done
+Initialization 24/25 for node (32, 32, 8) done
+Initialization 25/25 for node (32, 32, 8) done
+Initialization 1/25 for node (32, 2) done
+Initialization 2/25 for node (32, 2) done
+Initialization 3/25 for node (32, 2) done
+Initialization 4/25 for node (32, 2) done
+Initialization 5/25 for node (32, 2) done
+Initialization 6/25 for node (32, 2) done
+Initialization 7/25 for node (32, 2) done
+Initialization 8/25 for node (32, 2) done
+Initialization 9/25 for node (32, 2) done
+Initialization 10/25 for node (32, 2) done
+Initialization 11/25 for node (32, 2) done
+Initialization 12/25 for node (32, 2) done
+Initialization 13/25 for node (32, 2) done
+Initialization 14/25 for node (32, 2) done
+Initialization 15/25 for node (32, 2) done
+Initialization 16/25 for node (32, 2) done
+Initialization 17/25 for node (32, 2) done
+Initialization 18/25 for node (32, 2) done
+Initialization 19/25 for node (32, 2) done
+Initialization 20/25 for node (32, 2) done
+Initialization 21/25 for node (32, 2) done
+Initialization 22/25 for node (32, 2) done
+Initialization 23/25 for node (32, 2) done
+Initialization 24/25 for node (32, 2) done
+Initialization 25/25 for node (32, 2) done
+Initialization 1/25 for node (4, 4, 4) done
+Initialization 2/25 for node (4, 4, 4) done
+Initialization 3/25 for node (4, 4, 4) done
+Initialization 4/25 for node (4, 4, 4) done
+Initialization 5/25 for node (4, 4, 4) done
+Initialization 6/25 for node (4, 4, 4) done
+Initialization 7/25 for node (4, 4, 4) done
+Initialization 8/25 for node (4, 4, 4) done
+Initialization 9/25 for node (4, 4, 4) done
+Initialization 10/25 for node (4, 4, 4) done
+Initialization 11/25 for node (4, 4, 4) done
+Initialization 12/25 for node (4, 4, 4) done
+Initialization 13/25 for node (4, 4, 4) done
+Initialization 14/25 for node (4, 4, 4) done
+Initialization 15/25 for node (4, 4, 4) done
+Initialization 16/25 for node (4, 4, 4) done
+Initialization 17/25 for node (4, 4, 4) done
+Initialization 18/25 for node (4, 4, 4) done
+Initialization 19/25 for node (4, 4, 4) done
+Initialization 20/25 for node (4, 4, 4) done
+Initialization 21/25 for node (4, 4, 4) done
+Initialization 22/25 for node (4, 4, 4) done
+Initialization 23/25 for node (4, 4, 4) done
+Initialization 24/25 for node (4, 4, 4) done
+Initialization 25/25 for node (4, 4, 4) done
+Initialization 1/25 for node (32, 32, 2) done
+Initialization 2/25 for node (32, 32, 2) done
+Initialization 3/25 for node (32, 32, 2) done
+Initialization 4/25 for node (32, 32, 2) done
+Initialization 5/25 for node (32, 32, 2) done
+Initialization 6/25 for node (32, 32, 2) done
+Initialization 7/25 for node (32, 32, 2) done
+Initialization 8/25 for node (32, 32, 2) done
+Initialization 9/25 for node (32, 32, 2) done
+Initialization 10/25 for node (32, 32, 2) done
+Initialization 11/25 for node (32, 32, 2) done
+Initialization 12/25 for node (32, 32, 2) done
+Initialization 13/25 for node (32, 32, 2) done
+Initialization 14/25 for node (32, 32, 2) done
+Initialization 15/25 for node (32, 32, 2) done
+Initialization 16/25 for node (32, 32, 2) done
+Initialization 17/25 for node (32, 32, 2) done
+Initialization 18/25 for node (32, 32, 2) done
+Initialization 19/25 for node (32, 32, 2) done
+Initialization 20/25 for node (32, 32, 2) done
+Initialization 21/25 for node (32, 32, 2) done
+Initialization 22/25 for node (32, 32, 2) done
+Initialization 23/25 for node (32, 32, 2) done
+Initialization 24/25 for node (32, 32, 2) done
+Initialization 25/25 for node (32, 32, 2) done
+Initialization 1/25 for node (32,) done
+Initialization 2/25 for node (32,) done
+Initialization 3/25 for node (32,) done
+Initialization 4/25 for node (32,) done
+Initialization 5/25 for node (32,) done
+Initialization 6/25 for node (32,) done
+Initialization 7/25 for node (32,) done
+Initialization 8/25 for node (32,) done
+Initialization 9/25 for node (32,) done
+Initialization 10/25 for node (32,) done
+Initialization 11/25 for node (32,) done
+Initialization 12/25 for node (32,) done
+Initialization 13/25 for node (32,) done
+Initialization 14/25 for node (32,) done
+Initialization 15/25 for node (32,) done
+Initialization 16/25 for node (32,) done
+Initialization 17/25 for node (32,) done
+Initialization 18/25 for node (32,) done
+Initialization 19/25 for node (32,) done
+Initialization 20/25 for node (32,) done
+Initialization 21/25 for node (32,) done
+Initialization 22/25 for node (32,) done
+Initialization 23/25 for node (32,) done
+Initialization 24/25 for node (32,) done
+Initialization 25/25 for node (32,) done
+Initialization 1/25 for node (8, 2) done
+Initialization 2/25 for node (8, 2) done
+Initialization 3/25 for node (8, 2) done
+Initialization 4/25 for node (8, 2) done
+Initialization 5/25 for node (8, 2) done
+Initialization 6/25 for node (8, 2) done
+Initialization 7/25 for node (8, 2) done
+Initialization 8/25 for node (8, 2) done
+Initialization 9/25 for node (8, 2) done
+Initialization 10/25 for node (8, 2) done
+Initialization 11/25 for node (8, 2) done
+Initialization 12/25 for node (8, 2) done
+Initialization 13/25 for node (8, 2) done
+Initialization 14/25 for node (8, 2) done
+Initialization 15/25 for node (8, 2) done
+Initialization 16/25 for node (8, 2) done
+Initialization 17/25 for node (8, 2) done
+Initialization 18/25 for node (8, 2) done
+Initialization 19/25 for node (8, 2) done
+Initialization 20/25 for node (8, 2) done
+Initialization 21/25 for node (8, 2) done
+Initialization 22/25 for node (8, 2) done
+Initialization 23/25 for node (8, 2) done
+Initialization 24/25 for node (8, 2) done
+Initialization 25/25 for node (8, 2) done
+Initialization 1/25 for node (4,) done
+Initialization 2/25 for node (4,) done
+Initialization 3/25 for node (4,) done
+Initialization 4/25 for node (4,) done
+Initialization 5/25 for node (4,) done
+Initialization 6/25 for node (4,) done
+Initialization 7/25 for node (4,) done
+Initialization 8/25 for node (4,) done
+Initialization 9/25 for node (4,) done
+Initialization 10/25 for node (4,) done
+Initialization 11/25 for node (4,) done
+Initialization 12/25 for node (4,) done
+Initialization 13/25 for node (4,) done
+Initialization 14/25 for node (4,) done
+Initialization 15/25 for node (4,) done
+Initialization 16/25 for node (4,) done
+Initialization 17/25 for node (4,) done
+Initialization 18/25 for node (4,) done
+Initialization 19/25 for node (4,) done
+Initialization 20/25 for node (4,) done
+Initialization 21/25 for node (4,) done
+Initialization 22/25 for node (4,) done
+Initialization 23/25 for node (4,) done
+Initialization 24/25 for node (4,) done
+Initialization 25/25 for node (4,) done
+Initialization 1/25 for node (8,) done
+Initialization 2/25 for node (8,) done
+Initialization 3/25 for node (8,) done
+Initialization 4/25 for node (8,) done
+Initialization 5/25 for node (8,) done
+Initialization 6/25 for node (8,) done
+Initialization 7/25 for node (8,) done
+Initialization 8/25 for node (8,) done
+Initialization 9/25 for node (8,) done
+Initialization 10/25 for node (8,) done
+Initialization 11/25 for node (8,) done
+Initialization 12/25 for node (8,) done
+Initialization 13/25 for node (8,) done
+Initialization 14/25 for node (8,) done
+Initialization 15/25 for node (8,) done
+Initialization 16/25 for node (8,) done
+Initialization 17/25 for node (8,) done
+Initialization 18/25 for node (8,) done
+Initialization 19/25 for node (8,) done
+Initialization 20/25 for node (8,) done
+Initialization 21/25 for node (8,) done
+Initialization 22/25 for node (8,) done
+Initialization 23/25 for node (8,) done
+Initialization 24/25 for node (8,) done
+Initialization 25/25 for node (8,) done
+Initialization 1/25 for node (16,) done
+Initialization 2/25 for node (16,) done
+Initialization 3/25 for node (16,) done
+Initialization 4/25 for node (16,) done
+Initialization 5/25 for node (16,) done
+Initialization 6/25 for node (16,) done
+Initialization 7/25 for node (16,) done
+Initialization 8/25 for node (16,) done
+Initialization 9/25 for node (16,) done
+Initialization 10/25 for node (16,) done
+Initialization 11/25 for node (16,) done
+Initialization 12/25 for node (16,) done
+Initialization 13/25 for node (16,) done
+Initialization 14/25 for node (16,) done
+Initialization 15/25 for node (16,) done
+Initialization 16/25 for node (16,) done
+Initialization 17/25 for node (16,) done
+Initialization 18/25 for node (16,) done
+Initialization 19/25 for node (16,) done
+Initialization 20/25 for node (16,) done
+Initialization 21/25 for node (16,) done
+Initialization 22/25 for node (16,) done
+Initialization 23/25 for node (16,) done
+Initialization 24/25 for node (16,) done
+Initialization 25/25 for node (16,) done
+Initialization 1/25 for node (2,) done
+Initialization 2/25 for node (2,) done
+Initialization 3/25 for node (2,) done
+Initialization 4/25 for node (2,) done
+Initialization 5/25 for node (2,) done
+Initialization 6/25 for node (2,) done
+Initialization 7/25 for node (2,) done
+Initialization 8/25 for node (2,) done
+Initialization 9/25 for node (2,) done
+Initialization 10/25 for node (2,) done
+Initialization 11/25 for node (2,) done
+Initialization 12/25 for node (2,) done
+Initialization 13/25 for node (2,) done
+Initialization 14/25 for node (2,) done
+Initialization 15/25 for node (2,) done
+Initialization 16/25 for node (2,) done
+Initialization 17/25 for node (2,) done
+Initialization 18/25 for node (2,) done
+Initialization 19/25 for node (2,) done
+Initialization 20/25 for node (2,) done
+Initialization 21/25 for node (2,) done
+Initialization 22/25 for node (2,) done
+Initialization 23/25 for node (2,) done
+Initialization 24/25 for node (2,) done
+Initialization 25/25 for node (2,) done
+Initialization 1/25 for node (4, 2) done
+Initialization 2/25 for node (4, 2) done
+Initialization 3/25 for node (4, 2) done
+Initialization 4/25 for node (4, 2) done
+Initialization 5/25 for node (4, 2) done
+Initialization 6/25 for node (4, 2) done
+Initialization 7/25 for node (4, 2) done
+Initialization 8/25 for node (4, 2) done
+Initialization 9/25 for node (4, 2) done
+Initialization 10/25 for node (4, 2) done
+Initialization 11/25 for node (4, 2) done
+Initialization 12/25 for node (4, 2) done
+Initialization 13/25 for node (4, 2) done
+Initialization 14/25 for node (4, 2) done
+Initialization 15/25 for node (4, 2) done
+Initialization 16/25 for node (4, 2) done
+Initialization 17/25 for node (4, 2) done
+Initialization 18/25 for node (4, 2) done
+Initialization 19/25 for node (4, 2) done
+Initialization 20/25 for node (4, 2) done
+Initialization 21/25 for node (4, 2) done
+Initialization 22/25 for node (4, 2) done
+Initialization 23/25 for node (4, 2) done
+Initialization 24/25 for node (4, 2) done
+Initialization 25/25 for node (4, 2) done
+Saving results to: /home/mjust/runs/estimation/2026-06-03_10-22-50_income_IC_country_trends/results.npy
+Job finished in: 2 hours, 20 minutes, and 11 seconds
+===== JOB END =====
+Wed Jun  3 12:46:54 CEST 2026
+Python exit status: 0

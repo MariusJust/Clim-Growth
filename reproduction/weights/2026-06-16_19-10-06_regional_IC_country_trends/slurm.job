@@ -1,0 +1,41 @@
+#!/bin/bash
+#SBATCH --job-name=IC_regional
+#SBATCH --partition=q64
+#SBATCH --mem=500G
+#SBATCH --nodes=1
+#SBATCH --time=200:00:00
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=55
+#SBATCH --output=/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/slurm-%j.out
+#SBATCH --error=/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/slurm-%j.err
+
+set -euo pipefail
+
+cd "/home/mjust/Clim_Growth"
+
+export TF_ENABLE_ONEDNN_OPTS=0
+export TF_CPP_MIN_LOG_LEVEL=3
+export CUDA_VISIBLE_DEVICES=""
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export VECLIB_MAXIMUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export TF_NUM_INTRAOP_THREADS=1
+export TF_NUM_INTEROP_THREADS=1
+
+echo "===== JOB START =====" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+date | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+hostname | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+echo "SLURM_JOB_ID=$SLURM_JOB_ID" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+echo "SLURM_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+echo "===== CONFIG =====" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+cat "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/config/config.yaml" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+echo "===== PYTHON START =====" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+python -u src/Main.py --config-path "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/config" --config-name config hydra.run.dir="/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends" 2>&1 | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log" | grep -Ev "All log messages before absl::InitializeLog|Unable to register cuDNN factory|Unable to register cuBLAS factory"
+status=${PIPESTATUS[0]}
+echo "===== JOB END =====" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+date | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+echo "Python exit status: $status" | tee -a "/home/mjust/Clim_Growth/runs/estimation/2026-06-16_19-10-06_regional_IC_country_trends/job.log"
+exit $status

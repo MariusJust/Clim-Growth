@@ -61,7 +61,7 @@ Run on the server (needs TensorFlow), Hydra-driven like ``Main.py`` /
 and differentiates the fitted model.
 
     PYTHONPATH=src python src/network_information_criterion.py \
-        instance.nic.run_dir="results/paper/weights/global_model" \
+        instance.nic.run_dir="reproduction/weights/2026-06-13_22-11-06_global_IC_country_trends" \
         instance.nic.top_k=20
 
 Config keys (all optional, under ``instance.nic``; sensible fallbacks):
@@ -116,7 +116,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 def _resolve_run_dir(run_dir_cfg):
     """Locate a run dir containing parameters/ or results.npy. Accepts an
     absolute path, a path relative to the repo root, or a bare run name that is
-    searched under runs/estimation/ and results/paper/weights/."""
+    searched under runs/estimation/ and reproduction/weights/."""
     if run_dir_cfg:
         p = Path(str(run_dir_cfg))
         if p.is_absolute():
@@ -125,11 +125,12 @@ def _resolve_run_dir(run_dir_cfg):
             candidates = [
                 PROJECT_ROOT / p,
                 PROJECT_ROOT / "runs" / "estimation" / p,
-                PROJECT_ROOT / "results" / "paper" / "weights" / p,
+                PROJECT_ROOT / "reproduction" / "weights" / p,
                 Path.cwd() / p,
             ]
     else:
-        candidates = [PROJECT_ROOT / "results" / "paper" / "weights" / "global_model"]
+        # Default: the frozen run behind the paper (see reproduction/README.md).
+        candidates = [PROJECT_ROOT / "reproduction" / "weights" / "2026-06-13_22-11-06_global_IC_country_trends"]
 
     for c in candidates:
         if (c / "parameters").is_dir() or (c / "results.npy").exists():

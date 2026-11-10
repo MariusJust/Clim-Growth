@@ -1,0 +1,39 @@
+#!/bin/bash
+#SBATCH --job-name=MC_100reps
+#SBATCH --partition=q48
+#SBATCH --mem=300G
+#SBATCH --nodes=1
+#SBATCH --time=200:00:00
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=48
+#SBATCH --output=/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/slurm-%j.out
+#SBATCH --error=/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/slurm-%j.err
+
+set -euo pipefail
+cd "/home/mjust"
+export PYTHONPATH="/home/mjust/src:${PYTHONPATH:-}"
+
+export TF_ENABLE_ONEDNN_OPTS=0
+export TF_CPP_MIN_LOG_LEVEL=3
+export CUDA_VISIBLE_DEVICES=""
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export VECLIB_MAXIMUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export TF_NUM_INTRAOP_THREADS=1
+export TF_NUM_INTEROP_THREADS=1
+
+echo "===== JOB START =====" | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+date | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+hostname | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+echo "SLURM_JOB_ID=$SLURM_JOB_ID" | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+echo "SLURM_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK" | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+echo "===== PYTHON START =====" | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+python -u src/simulations/monte_carlo.py --config-path "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/config" --config-name config_mc hydra.run.dir="/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps" 2>&1 | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log" | grep -Ev "All log messages before absl::InitializeLog|Unable to register cuDNN factory|Unable to register cuBLAS factory"
+status=${PIPESTATUS[0]}
+echo "===== JOB END =====" | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+date | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+echo "Python exit status: $status" | tee -a "/home/mjust/runs/monte_carlo/2026-04-17_10-18-24_MC_100reps/job.log"
+exit $status

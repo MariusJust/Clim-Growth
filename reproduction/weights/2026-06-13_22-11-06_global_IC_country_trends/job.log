@@ -1,0 +1,1985 @@
+===== JOB START =====
+Sat Jun 13 22:11:07 CEST 2026
+s51n08.grendel.cscaa.dk
+SLURM_JOB_ID=5376902
+SLURM_CPUS_PER_TASK=55
+===== CONFIG =====
+instance:
+  no_inits: 30
+  seed_value: 10
+  lr: 0.001
+  min_delta: 1e-7
+  patience: 200
+  optimizer: 'adam'        # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
+  opt_momentum: 0.9        # sgd_momentum / nesterov / rmsprop
+  opt_weight_decay: 0.004  # adamw
+  verbose: 0
+  dropout: 0
+  n_process: 55
+  model_selection: 'IC' #  'Holdout', 'IC'
+  formulation : 'global'          # Model formulation, "global", "regional" or "income"
+  timeout_per_node: 100000
+  reduce_lr_on_plateau: true   # attach a Keras ReduceLROnPlateau callback to training
+  lr_reduce_factor: 0.3         # multiply lr by this when monitored loss plateaus
+  lr_reduce_patience: 100        # epochs with no improvement before each reduction
+  lr_min: 1.0e-7                # floor for the learning rate
+  within_projection: true
+  use_diagnostics: true
+  target_mode: 'growth'   # 'growth' (model GrowthWDI) or 'levels' (model log GDP per capita)
+  input_vars:
+    - temp
+    - precip
+  activation: 'swish' #
+  country_trends: True
+  quadratic_trends: True   # only used when country_trends is True; set False for linear-only trends
+  group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
+  dynamic_model: False
+  data_source: 'wb'   # "ee" or "wb"
+  ram: 500
+  data_end: 2024
+  nodes_list:
+    - (2,)
+    - (4,)
+    - (8,)
+    - (16,)
+    - (32,)
+    - (48,)
+    - (64,)
+    - (2,2,)
+    - (4,2,)
+    - (4,4,)
+    - (8,2,)
+    - (8,4,)
+    - (8,8,)
+    - (16,2,)
+    - (16,8,)
+    - (16,16,)
+    - (32,2,)
+    - (32,4,)
+    - (32,8,)
+    - (32,16,)
+    - (32,32,)
+    - (2,2,2,)
+    - (4,2,2,)
+    - (4,4,2,)
+    - (4,4,4,)
+    - (8,2,2,)
+    - (8,4,4,)
+    - (8,8,2,)
+    - (8,8,4,)
+    - (8,8,8,)
+    - (16,2,2,)
+    - (16,4,2,)
+    - (16,4,4,)
+    - (16,8,2,)
+    - (16,8,4,)
+    - (16,8,8,)
+    - (16,16,2,)
+    - (16,16,4,)
+    - (16,16,8,)
+    - (16,16,16,)
+    - (32,2,2,)
+    - (32,4,2,)
+    - (32,4,4,)
+    - (32,8,2,)
+    - (32,8,4,)
+    - (32,8,8,)
+    - (32,16,2,)
+    - (32,16,4,)
+    - (32,16,8,)
+    - (32,16,16,)
+    - (32,32,2,)
+    - (32,32,4,)
+    - (32,32,8,)
+    - (32,32,16,)
+    - (32,32,32,)
+  bootstrap:
+    n_boot: 200
+    n_process: null          # null means reuse instance.n_process
+    n_inits: 5               # random initializations per bootstrap/node fit
+    top_k: 10                # top AIC-ranked architectures from run_dir
+    run_dir: runs/estimation/2026-05-28_11-22-20_global_IC_country_trends         # finished estimation run with results.npy
+    nodes: null              # optional explicit list, e.g. ["(2,)", "(4,)"]
+    node: null               # optional single architecture, e.g. "(2,)"
+    report_every: 25
+===== PYTHON START =====
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381472.582229  700648 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381472.618503  700648 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Starting parallel processing with 55 processes...
+Processing nodes:   0%|          | 0/55 [00:00<?, ?node/s]WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.199288  700690 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.216949  700690 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.274999  700694 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.275487  700676 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.292422  700694 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.292888  700676 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.337354  700674 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.354537  700674 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.516610  700672 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.531137  700672 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.662346  700666 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.676131  700666 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.691303  700700 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.703489  700700 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.808718  700665 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.824431  700665 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.830347  700688 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.846121  700688 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.865817  700669 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.865913  700691 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.865942  700671 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.867728  700682 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.881048  700669 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.881112  700671 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.881179  700691 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.881940  700682 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.886217  700701 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.897612  700667 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.900163  700701 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.910038  700667 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.917166  700661 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.917277  700685 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.920962  700675 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.921051  700673 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.921421  700663 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.921674  700707 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.922447  700693 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.922715  700709 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.923669  700680 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.923705  700699 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.924988  700711 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.925031  700696 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.925190  700684 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.925423  700714 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.926062  700702 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.930448  700685 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.930557  700661 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.933783  700675 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.934055  700673 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.934090  700663 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.934281  700707 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.935141  700693 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.935282  700709 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.936311  700680 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.936655  700699 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.937641  700711 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.937778  700696 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.938125  700714 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.938220  700684 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.938706  700702 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.940468  700703 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.940557  700697 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.940710  700708 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.944320  700678 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.948821  700683 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.949036  700713 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.949431  700712 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.950151  700689 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.950968  700686 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.951256  700687 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.951607  700706 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.953089  700677 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.954273  700697 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.954390  700703 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.954526  700708 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.954738  700679 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.956206  700705 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.956554  700698 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.957350  700678 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.958192  700662 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.958363  700704 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.959236  700692 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.959466  700670 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.959858  700664 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.962053  700683 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.962120  700713 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.962379  700712 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.963034  700689 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.963339  700686 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.963417  700695 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.963656  700668 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.963827  700681 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.964343  700710 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381480.964473  700687 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.964676  700706 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.965845  700677 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.967624  700679 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.969412  700705 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.969863  700698 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.971942  700662 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.972495  700704 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.973228  700670 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.973516  700692 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.974194  700664 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.978246  700695 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.978331  700668 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.978373  700681 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1781381480.978629  700710 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1781381480.993419  700660 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1781381481.007317  700660 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+Processing nodes:   2%|▏         | 1/55 [1:08:10<61:21:52, 4090.97s/node]Processing nodes:   4%|▎         | 2/55 [1:26:30<34:19:27, 2331.45s/node]Processing nodes:   5%|▌         | 3/55 [2:07:58<34:42:27, 2402.85s/node]Processing nodes:   7%|▋         | 4/55 [3:54:17<56:16:41, 3972.58s/node]Processing nodes:  13%|█▎        | 7/55 [5:46:21<38:27:34, 2884.48s/node]Processing nodes:  27%|██▋       | 15/55 [6:41:41<12:41:40, 1142.52s/node]Processing nodes:  29%|██▉       | 16/55 [9:15:46<22:11:49, 2048.97s/node]Processing nodes:  38%|███▊      | 21/55 [9:45:02<12:13:44, 1294.84s/node]Processing nodes:  65%|██████▌   | 36/55 [10:37:05<3:04:26, 582.46s/node] Processing nodes:  69%|██████▉   | 38/55 [11:03:55<2:52:01, 607.15s/node]Processing nodes:  71%|███████   | 39/55 [14:19:29<6:19:53, 1424.61s/node]Processing nodes:  73%|███████▎  | 40/55 [15:49:42<7:30:53, 1803.54s/node]Processing nodes:  91%|█████████ | 50/55 [19:00:31<1:58:41, 1424.31s/node]Processing nodes:  98%|█████████▊| 54/55 [24:42:58<39:03, 2343.33s/node]  Processing nodes: 100%|██████████| 55/55 [34:10:47<00:00, 4920.29s/node]Processing nodes: 100%|██████████| 55/55 [34:10:47<00:00, 2237.22s/node]
+Finished node (2,) with initialization 1/30 in 0 hours, 1 minutes, and 4 seconds
+Finished node (2,) with initialization 2/30 in 0 hours, 3 minutes, and 33 seconds
+Finished node (2,) with initialization 3/30 in 0 hours, 4 minutes, and 26 seconds
+Finished node (2,) with initialization 4/30 in 0 hours, 0 minutes, and 36 seconds
+Finished node (2,) with initialization 5/30 in 0 hours, 2 minutes, and 27 seconds
+Finished node (2,) with initialization 6/30 in 0 hours, 1 minutes, and 57 seconds
+Finished node (2,) with initialization 7/30 in 0 hours, 0 minutes, and 44 seconds
+Finished node (2,) with initialization 8/30 in 0 hours, 3 minutes, and 20 seconds
+Finished node (2,) with initialization 9/30 in 0 hours, 1 minutes, and 55 seconds
+Finished node (2,) with initialization 10/30 in 0 hours, 2 minutes, and 44 seconds
+Finished node (2,) with initialization 11/30 in 0 hours, 0 minutes, and 56 seconds
+Finished node (2,) with initialization 12/30 in 0 hours, 2 minutes, and 14 seconds
+Finished node (2,) with initialization 13/30 in 0 hours, 4 minutes, and 2 seconds
+Finished node (2,) with initialization 14/30 in 0 hours, 3 minutes, and 4 seconds
+Finished node (2,) with initialization 15/30 in 0 hours, 2 minutes, and 31 seconds
+Finished node (2,) with initialization 16/30 in 0 hours, 0 minutes, and 22 seconds
+Finished node (2,) with initialization 17/30 in 0 hours, 0 minutes, and 22 seconds
+Finished node (2,) with initialization 18/30 in 0 hours, 2 minutes, and 35 seconds
+Finished node (2,) with initialization 19/30 in 0 hours, 1 minutes, and 21 seconds
+Finished node (2,) with initialization 20/30 in 0 hours, 0 minutes, and 44 seconds
+Finished node (2,) with initialization 21/30 in 0 hours, 3 minutes, and 59 seconds
+Finished node (2,) with initialization 22/30 in 0 hours, 2 minutes, and 21 seconds
+Finished node (2,) with initialization 23/30 in 0 hours, 0 minutes, and 23 seconds
+Finished node (2,) with initialization 24/30 in 0 hours, 2 minutes, and 44 seconds
+Finished node (2,) with initialization 25/30 in 0 hours, 2 minutes, and 18 seconds
+Finished node (2,) with initialization 26/30 in 0 hours, 2 minutes, and 7 seconds
+Finished node (2,) with initialization 27/30 in 0 hours, 4 minutes, and 4 seconds
+Finished node (2,) with initialization 28/30 in 0 hours, 3 minutes, and 13 seconds
+Finished node (2,) with initialization 29/30 in 0 hours, 1 minutes, and 52 seconds
+Finished node (2,) with initialization 30/30 in 0 hours, 3 minutes, and 18 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(2,).weights.h5
+Finished node (4, 2) with initialization 1/30 in 0 hours, 1 minutes, and 54 seconds
+Finished node (4, 2) with initialization 2/30 in 0 hours, 3 minutes, and 1 seconds
+Finished node (4, 2) with initialization 3/30 in 0 hours, 1 minutes, and 41 seconds
+Finished node (4, 2) with initialization 4/30 in 0 hours, 2 minutes, and 41 seconds
+Finished node (4, 2) with initialization 5/30 in 0 hours, 2 minutes, and 14 seconds
+Finished node (4, 2) with initialization 6/30 in 0 hours, 2 minutes, and 30 seconds
+Finished node (4, 2) with initialization 7/30 in 0 hours, 2 minutes, and 14 seconds
+Finished node (4, 2) with initialization 8/30 in 0 hours, 2 minutes, and 44 seconds
+Finished node (4, 2) with initialization 9/30 in 0 hours, 6 minutes, and 23 seconds
+Finished node (4, 2) with initialization 10/30 in 0 hours, 2 minutes, and 33 seconds
+Finished node (4, 2) with initialization 11/30 in 0 hours, 1 minutes, and 15 seconds
+Finished node (4, 2) with initialization 12/30 in 0 hours, 6 minutes, and 30 seconds
+Finished node (4, 2) with initialization 13/30 in 0 hours, 1 minutes, and 45 seconds
+Finished node (4, 2) with initialization 14/30 in 0 hours, 4 minutes, and 52 seconds
+Finished node (4, 2) with initialization 15/30 in 0 hours, 2 minutes, and 11 seconds
+Finished node (4, 2) with initialization 16/30 in 0 hours, 1 minutes, and 30 seconds
+Finished node (4, 2) with initialization 17/30 in 0 hours, 2 minutes, and 22 seconds
+Finished node (4, 2) with initialization 18/30 in 0 hours, 1 minutes, and 10 seconds
+Finished node (4, 2) with initialization 19/30 in 0 hours, 2 minutes, and 12 seconds
+Finished node (4, 2) with initialization 20/30 in 0 hours, 3 minutes, and 19 seconds
+Finished node (4, 2) with initialization 21/30 in 0 hours, 3 minutes, and 15 seconds
+Finished node (4, 2) with initialization 22/30 in 0 hours, 2 minutes, and 10 seconds
+Finished node (4, 2) with initialization 23/30 in 0 hours, 3 minutes, and 36 seconds
+Finished node (4, 2) with initialization 24/30 in 0 hours, 2 minutes, and 12 seconds
+Finished node (4, 2) with initialization 25/30 in 0 hours, 3 minutes, and 53 seconds
+Finished node (4, 2) with initialization 26/30 in 0 hours, 0 minutes, and 13 seconds
+Finished node (4, 2) with initialization 27/30 in 0 hours, 0 minutes, and 36 seconds
+Finished node (4, 2) with initialization 28/30 in 0 hours, 3 minutes, and 21 seconds
+Finished node (4, 2) with initialization 29/30 in 0 hours, 3 minutes, and 27 seconds
+Finished node (4, 2) with initialization 30/30 in 0 hours, 2 minutes, and 22 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(4, 2).weights.h5
+Finished node (2, 2) with initialization 1/30 in 0 hours, 0 minutes, and 37 seconds
+Finished node (2, 2) with initialization 2/30 in 0 hours, 2 minutes, and 43 seconds
+Finished node (2, 2) with initialization 3/30 in 0 hours, 3 minutes, and 33 seconds
+Finished node (2, 2) with initialization 4/30 in 0 hours, 1 minutes, and 33 seconds
+Finished node (2, 2) with initialization 5/30 in 0 hours, 3 minutes, and 57 seconds
+Finished node (2, 2) with initialization 6/30 in 0 hours, 2 minutes, and 27 seconds
+Finished node (2, 2) with initialization 7/30 in 0 hours, 1 minutes, and 37 seconds
+Finished node (2, 2) with initialization 8/30 in 0 hours, 2 minutes, and 13 seconds
+Finished node (2, 2) with initialization 9/30 in 0 hours, 4 minutes, and 18 seconds
+Finished node (2, 2) with initialization 10/30 in 0 hours, 2 minutes, and 41 seconds
+Finished node (2, 2) with initialization 11/30 in 0 hours, 1 minutes, and 23 seconds
+Finished node (2, 2) with initialization 12/30 in 0 hours, 2 minutes, and 28 seconds
+Finished node (2, 2) with initialization 13/30 in 0 hours, 4 minutes, and 47 seconds
+Finished node (2, 2) with initialization 14/30 in 0 hours, 2 minutes, and 48 seconds
+Finished node (2, 2) with initialization 15/30 in 0 hours, 2 minutes, and 28 seconds
+Finished node (2, 2) with initialization 16/30 in 0 hours, 3 minutes, and 50 seconds
+Finished node (2, 2) with initialization 17/30 in 0 hours, 3 minutes, and 27 seconds
+Finished node (2, 2) with initialization 18/30 in 0 hours, 3 minutes, and 18 seconds
+Finished node (2, 2) with initialization 19/30 in 0 hours, 2 minutes, and 42 seconds
+Finished node (2, 2) with initialization 20/30 in 0 hours, 2 minutes, and 5 seconds
+Finished node (2, 2) with initialization 21/30 in 0 hours, 2 minutes, and 56 seconds
+Finished node (2, 2) with initialization 22/30 in 0 hours, 2 minutes, and 12 seconds
+Finished node (2, 2) with initialization 23/30 in 0 hours, 3 minutes, and 7 seconds
+Finished node (2, 2) with initialization 24/30 in 0 hours, 2 minutes, and 58 seconds
+Finished node (2, 2) with initialization 25/30 in 0 hours, 2 minutes, and 3 seconds
+Finished node (2, 2) with initialization 26/30 in 0 hours, 1 minutes, and 22 seconds
+Finished node (2, 2) with initialization 27/30 in 0 hours, 4 minutes, and 44 seconds
+Finished node (2, 2) with initialization 28/30 in 0 hours, 2 minutes, and 56 seconds
+Finished node (2, 2) with initialization 29/30 in 0 hours, 2 minutes, and 0 seconds
+Finished node (2, 2) with initialization 30/30 in 0 hours, 3 minutes, and 9 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(2, 2).weights.h5
+Finished node (4,) with initialization 1/30 in 0 hours, 2 minutes, and 41 seconds
+Finished node (4,) with initialization 2/30 in 0 hours, 2 minutes, and 11 seconds
+Finished node (4,) with initialization 3/30 in 0 hours, 3 minutes, and 29 seconds
+Finished node (4,) with initialization 4/30 in 0 hours, 3 minutes, and 23 seconds
+Finished node (4,) with initialization 5/30 in 0 hours, 1 minutes, and 58 seconds
+Finished node (4,) with initialization 6/30 in 0 hours, 1 minutes, and 50 seconds
+Finished node (4,) with initialization 7/30 in 0 hours, 2 minutes, and 37 seconds
+Finished node (4,) with initialization 8/30 in 0 hours, 3 minutes, and 24 seconds
+Finished node (4,) with initialization 9/30 in 0 hours, 2 minutes, and 28 seconds
+Finished node (4,) with initialization 10/30 in 0 hours, 2 minutes, and 29 seconds
+Finished node (4,) with initialization 11/30 in 0 hours, 2 minutes, and 22 seconds
+Finished node (4,) with initialization 12/30 in 0 hours, 1 minutes, and 58 seconds
+Finished node (4,) with initialization 13/30 in 0 hours, 2 minutes, and 9 seconds
+Finished node (4,) with initialization 14/30 in 0 hours, 3 minutes, and 39 seconds
+Finished node (4,) with initialization 15/30 in 0 hours, 2 minutes, and 27 seconds
+Finished node (4,) with initialization 16/30 in 0 hours, 5 minutes, and 27 seconds
+Finished node (4,) with initialization 17/30 in 0 hours, 1 minutes, and 47 seconds
+Finished node (4,) with initialization 18/30 in 0 hours, 3 minutes, and 55 seconds
+Finished node (4,) with initialization 19/30 in 0 hours, 2 minutes, and 21 seconds
+Finished node (4,) with initialization 20/30 in 0 hours, 2 minutes, and 22 seconds
+Finished node (4,) with initialization 21/30 in 0 hours, 3 minutes, and 17 seconds
+Finished node (4,) with initialization 22/30 in 0 hours, 5 minutes, and 10 seconds
+Finished node (4,) with initialization 23/30 in 0 hours, 3 minutes, and 44 seconds
+Finished node (4,) with initialization 24/30 in 0 hours, 3 minutes, and 51 seconds
+Finished node (4,) with initialization 25/30 in 0 hours, 3 minutes, and 0 seconds
+Finished node (4,) with initialization 26/30 in 0 hours, 2 minutes, and 15 seconds
+Finished node (4,) with initialization 27/30 in 0 hours, 1 minutes, and 16 seconds
+Finished node (4,) with initialization 28/30 in 0 hours, 2 minutes, and 8 seconds
+Finished node (4,) with initialization 29/30 in 0 hours, 3 minutes, and 24 seconds
+Finished node (4,) with initialization 30/30 in 0 hours, 2 minutes, and 30 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(4,).weights.h5
+Finished node (2, 2, 2) with initialization 1/30 in 0 hours, 2 minutes, and 8 seconds
+Finished node (2, 2, 2) with initialization 2/30 in 0 hours, 2 minutes, and 22 seconds
+Finished node (2, 2, 2) with initialization 3/30 in 0 hours, 0 minutes, and 25 seconds
+Finished node (2, 2, 2) with initialization 4/30 in 0 hours, 5 minutes, and 36 seconds
+Finished node (2, 2, 2) with initialization 5/30 in 0 hours, 4 minutes, and 4 seconds
+Finished node (2, 2, 2) with initialization 6/30 in 0 hours, 3 minutes, and 4 seconds
+Finished node (2, 2, 2) with initialization 7/30 in 0 hours, 2 minutes, and 38 seconds
+Finished node (2, 2, 2) with initialization 8/30 in 0 hours, 4 minutes, and 55 seconds
+Finished node (2, 2, 2) with initialization 9/30 in 0 hours, 4 minutes, and 12 seconds
+Finished node (2, 2, 2) with initialization 10/30 in 0 hours, 2 minutes, and 7 seconds
+Finished node (2, 2, 2) with initialization 11/30 in 0 hours, 4 minutes, and 13 seconds
+Finished node (2, 2, 2) with initialization 12/30 in 0 hours, 3 minutes, and 9 seconds
+Finished node (2, 2, 2) with initialization 13/30 in 0 hours, 3 minutes, and 36 seconds
+Finished node (2, 2, 2) with initialization 14/30 in 0 hours, 6 minutes, and 27 seconds
+Finished node (2, 2, 2) with initialization 15/30 in 0 hours, 3 minutes, and 34 seconds
+Finished node (2, 2, 2) with initialization 16/30 in 0 hours, 3 minutes, and 28 seconds
+Finished node (2, 2, 2) with initialization 17/30 in 0 hours, 2 minutes, and 22 seconds
+Finished node (2, 2, 2) with initialization 18/30 in 0 hours, 5 minutes, and 16 seconds
+Finished node (2, 2, 2) with initialization 19/30 in 0 hours, 2 minutes, and 24 seconds
+Finished node (2, 2, 2) with initialization 20/30 in 0 hours, 2 minutes, and 33 seconds
+Finished node (2, 2, 2) with initialization 21/30 in 0 hours, 4 minutes, and 1 seconds
+Finished node (2, 2, 2) with initialization 22/30 in 0 hours, 4 minutes, and 41 seconds
+Finished node (2, 2, 2) with initialization 23/30 in 0 hours, 7 minutes, and 9 seconds
+Finished node (2, 2, 2) with initialization 24/30 in 0 hours, 3 minutes, and 47 seconds
+Finished node (2, 2, 2) with initialization 25/30 in 0 hours, 4 minutes, and 38 seconds
+Finished node (2, 2, 2) with initialization 26/30 in 0 hours, 2 minutes, and 17 seconds
+Finished node (2, 2, 2) with initialization 27/30 in 0 hours, 4 minutes, and 2 seconds
+Finished node (2, 2, 2) with initialization 28/30 in 0 hours, 3 minutes, and 22 seconds
+Finished node (2, 2, 2) with initialization 29/30 in 0 hours, 2 minutes, and 1 seconds
+Finished node (2, 2, 2) with initialization 30/30 in 0 hours, 1 minutes, and 33 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(2, 2, 2).weights.h5
+Finished node (4, 4) with initialization 1/30 in 0 hours, 2 minutes, and 0 seconds
+Finished node (4, 4) with initialization 2/30 in 0 hours, 5 minutes, and 9 seconds
+Finished node (4, 4) with initialization 3/30 in 0 hours, 2 minutes, and 18 seconds
+Finished node (4, 4) with initialization 4/30 in 0 hours, 6 minutes, and 7 seconds
+Finished node (4, 4) with initialization 5/30 in 0 hours, 5 minutes, and 48 seconds
+Finished node (4, 4) with initialization 6/30 in 0 hours, 1 minutes, and 49 seconds
+Finished node (4, 4) with initialization 7/30 in 0 hours, 5 minutes, and 26 seconds
+Finished node (4, 4) with initialization 8/30 in 0 hours, 8 minutes, and 16 seconds
+Finished node (4, 4) with initialization 9/30 in 0 hours, 6 minutes, and 28 seconds
+Finished node (4, 4) with initialization 10/30 in 0 hours, 2 minutes, and 49 seconds
+Finished node (4, 4) with initialization 11/30 in 0 hours, 4 minutes, and 47 seconds
+Finished node (4, 4) with initialization 12/30 in 0 hours, 3 minutes, and 58 seconds
+Finished node (4, 4) with initialization 13/30 in 0 hours, 1 minutes, and 41 seconds
+Finished node (4, 4) with initialization 14/30 in 0 hours, 5 minutes, and 45 seconds
+Finished node (4, 4) with initialization 15/30 in 0 hours, 2 minutes, and 29 seconds
+Finished node (4, 4) with initialization 16/30 in 0 hours, 4 minutes, and 41 seconds
+Finished node (4, 4) with initialization 17/30 in 0 hours, 3 minutes, and 24 seconds
+Finished node (4, 4) with initialization 18/30 in 0 hours, 2 minutes, and 8 seconds
+Finished node (4, 4) with initialization 19/30 in 0 hours, 1 minutes, and 12 seconds
+Finished node (4, 4) with initialization 20/30 in 0 hours, 1 minutes, and 8 seconds
+Finished node (4, 4) with initialization 21/30 in 0 hours, 3 minutes, and 45 seconds
+Finished node (4, 4) with initialization 22/30 in 0 hours, 2 minutes, and 48 seconds
+Finished node (4, 4) with initialization 23/30 in 0 hours, 8 minutes, and 38 seconds
+Finished node (4, 4) with initialization 24/30 in 0 hours, 2 minutes, and 54 seconds
+Finished node (4, 4) with initialization 25/30 in 0 hours, 6 minutes, and 47 seconds
+Finished node (4, 4) with initialization 26/30 in 0 hours, 0 minutes, and 51 seconds
+Finished node (4, 4) with initialization 27/30 in 0 hours, 3 minutes, and 19 seconds
+Finished node (4, 4) with initialization 28/30 in 0 hours, 4 minutes, and 7 seconds
+Finished node (4, 4) with initialization 29/30 in 0 hours, 6 minutes, and 12 seconds
+Finished node (4, 4) with initialization 30/30 in 0 hours, 2 minutes, and 27 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(4, 4).weights.h5
+Finished node (8,) with initialization 1/30 in 0 hours, 2 minutes, and 15 seconds
+Finished node (8,) with initialization 2/30 in 0 hours, 5 minutes, and 34 seconds
+Finished node (8,) with initialization 3/30 in 0 hours, 4 minutes, and 4 seconds
+Finished node (8,) with initialization 4/30 in 0 hours, 6 minutes, and 48 seconds
+Finished node (8,) with initialization 5/30 in 0 hours, 3 minutes, and 3 seconds
+Finished node (8,) with initialization 6/30 in 0 hours, 2 minutes, and 56 seconds
+Finished node (8,) with initialization 7/30 in 0 hours, 3 minutes, and 32 seconds
+Finished node (8,) with initialization 8/30 in 0 hours, 6 minutes, and 16 seconds
+Finished node (8,) with initialization 9/30 in 0 hours, 3 minutes, and 36 seconds
+Finished node (8,) with initialization 10/30 in 0 hours, 3 minutes, and 48 seconds
+Finished node (8,) with initialization 11/30 in 0 hours, 1 minutes, and 35 seconds
+Finished node (8,) with initialization 12/30 in 0 hours, 1 minutes, and 35 seconds
+Finished node (8,) with initialization 13/30 in 0 hours, 4 minutes, and 13 seconds
+Finished node (8,) with initialization 14/30 in 0 hours, 5 minutes, and 0 seconds
+Finished node (8,) with initialization 15/30 in 0 hours, 6 minutes, and 6 seconds
+Finished node (8,) with initialization 16/30 in 0 hours, 5 minutes, and 29 seconds
+Finished node (8,) with initialization 17/30 in 0 hours, 4 minutes, and 50 seconds
+Finished node (8,) with initialization 18/30 in 0 hours, 7 minutes, and 31 seconds
+Finished node (8,) with initialization 19/30 in 0 hours, 4 minutes, and 54 seconds
+Finished node (8,) with initialization 20/30 in 0 hours, 2 minutes, and 23 seconds
+Finished node (8,) with initialization 21/30 in 0 hours, 6 minutes, and 34 seconds
+Finished node (8,) with initialization 22/30 in 0 hours, 6 minutes, and 3 seconds
+Finished node (8,) with initialization 23/30 in 0 hours, 3 minutes, and 55 seconds
+Finished node (8,) with initialization 24/30 in 0 hours, 3 minutes, and 28 seconds
+Finished node (8,) with initialization 25/30 in 0 hours, 3 minutes, and 14 seconds
+Finished node (8,) with initialization 26/30 in 0 hours, 5 minutes, and 3 seconds
+Finished node (8,) with initialization 27/30 in 0 hours, 4 minutes, and 53 seconds
+Finished node (8,) with initialization 28/30 in 0 hours, 2 minutes, and 22 seconds
+Finished node (8,) with initialization 29/30 in 0 hours, 1 minutes, and 42 seconds
+Finished node (8,) with initialization 30/30 in 0 hours, 4 minutes, and 22 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8,).weights.h5
+Finished node (4, 2, 2) with initialization 1/30 in 0 hours, 3 minutes, and 49 seconds
+Finished node (4, 2, 2) with initialization 2/30 in 0 hours, 8 minutes, and 4 seconds
+Finished node (4, 2, 2) with initialization 3/30 in 0 hours, 6 minutes, and 55 seconds
+Finished node (4, 2, 2) with initialization 4/30 in 0 hours, 8 minutes, and 31 seconds
+Finished node (4, 2, 2) with initialization 5/30 in 0 hours, 3 minutes, and 38 seconds
+Finished node (4, 2, 2) with initialization 6/30 in 0 hours, 10 minutes, and 24 seconds
+Finished node (4, 2, 2) with initialization 7/30 in 0 hours, 11 minutes, and 34 seconds
+Finished node (4, 2, 2) with initialization 8/30 in 0 hours, 4 minutes, and 21 seconds
+Finished node (4, 2, 2) with initialization 9/30 in 0 hours, 5 minutes, and 41 seconds
+Finished node (4, 2, 2) with initialization 10/30 in 0 hours, 2 minutes, and 49 seconds
+Finished node (4, 2, 2) with initialization 11/30 in 0 hours, 2 minutes, and 36 seconds
+Finished node (4, 2, 2) with initialization 12/30 in 0 hours, 4 minutes, and 51 seconds
+Finished node (4, 2, 2) with initialization 13/30 in 0 hours, 9 minutes, and 28 seconds
+Finished node (4, 2, 2) with initialization 14/30 in 0 hours, 4 minutes, and 53 seconds
+Finished node (4, 2, 2) with initialization 15/30 in 0 hours, 2 minutes, and 45 seconds
+Finished node (4, 2, 2) with initialization 16/30 in 0 hours, 3 minutes, and 25 seconds
+Finished node (4, 2, 2) with initialization 17/30 in 0 hours, 2 minutes, and 9 seconds
+Finished node (4, 2, 2) with initialization 18/30 in 0 hours, 3 minutes, and 23 seconds
+Finished node (4, 2, 2) with initialization 19/30 in 0 hours, 2 minutes, and 4 seconds
+Finished node (4, 2, 2) with initialization 20/30 in 0 hours, 5 minutes, and 5 seconds
+Finished node (4, 2, 2) with initialization 21/30 in 0 hours, 4 minutes, and 31 seconds
+Finished node (4, 2, 2) with initialization 22/30 in 0 hours, 3 minutes, and 33 seconds
+Finished node (4, 2, 2) with initialization 23/30 in 0 hours, 6 minutes, and 28 seconds
+Finished node (4, 2, 2) with initialization 24/30 in 0 hours, 6 minutes, and 28 seconds
+Finished node (4, 2, 2) with initialization 25/30 in 0 hours, 4 minutes, and 49 seconds
+Finished node (4, 2, 2) with initialization 26/30 in 0 hours, 3 minutes, and 57 seconds
+Finished node (4, 2, 2) with initialization 27/30 in 0 hours, 3 minutes, and 6 seconds
+Finished node (4, 2, 2) with initialization 28/30 in 0 hours, 4 minutes, and 45 seconds
+Finished node (4, 2, 2) with initialization 29/30 in 0 hours, 5 minutes, and 20 seconds
+Finished node (4, 2, 2) with initialization 30/30 in 0 hours, 3 minutes, and 51 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(4, 2, 2).weights.h5
+Finished node (32,) with initialization 1/30 in 0 hours, 6 minutes, and 57 seconds
+Finished node (32,) with initialization 2/30 in 0 hours, 6 minutes, and 36 seconds
+Finished node (32,) with initialization 3/30 in 0 hours, 7 minutes, and 46 seconds
+Finished node (32,) with initialization 4/30 in 0 hours, 8 minutes, and 3 seconds
+Finished node (32,) with initialization 5/30 in 0 hours, 6 minutes, and 19 seconds
+Finished node (32,) with initialization 6/30 in 0 hours, 8 minutes, and 16 seconds
+Finished node (32,) with initialization 7/30 in 0 hours, 7 minutes, and 21 seconds
+Finished node (32,) with initialization 8/30 in 0 hours, 5 minutes, and 37 seconds
+Finished node (32,) with initialization 9/30 in 0 hours, 6 minutes, and 18 seconds
+Finished node (32,) with initialization 10/30 in 0 hours, 6 minutes, and 3 seconds
+Finished node (32,) with initialization 11/30 in 0 hours, 4 minutes, and 55 seconds
+Finished node (32,) with initialization 12/30 in 0 hours, 6 minutes, and 33 seconds
+Finished node (32,) with initialization 13/30 in 0 hours, 2 minutes, and 18 seconds
+Finished node (32,) with initialization 14/30 in 0 hours, 8 minutes, and 5 seconds
+Finished node (32,) with initialization 15/30 in 0 hours, 2 minutes, and 33 seconds
+Finished node (32,) with initialization 16/30 in 0 hours, 6 minutes, and 41 seconds
+Finished node (32,) with initialization 17/30 in 0 hours, 5 minutes, and 21 seconds
+Finished node (32,) with initialization 18/30 in 0 hours, 6 minutes, and 18 seconds
+Finished node (32,) with initialization 19/30 in 0 hours, 6 minutes, and 19 seconds
+Finished node (32,) with initialization 20/30 in 0 hours, 12 minutes, and 46 seconds
+Finished node (32,) with initialization 21/30 in 0 hours, 8 minutes, and 25 seconds
+Finished node (32,) with initialization 22/30 in 0 hours, 6 minutes, and 46 seconds
+Finished node (32,) with initialization 23/30 in 0 hours, 8 minutes, and 54 seconds
+Finished node (32,) with initialization 24/30 in 0 hours, 4 minutes, and 15 seconds
+Finished node (32,) with initialization 25/30 in 0 hours, 4 minutes, and 16 seconds
+Finished node (32,) with initialization 26/30 in 0 hours, 2 minutes, and 10 seconds
+Finished node (32,) with initialization 27/30 in 0 hours, 12 minutes, and 5 seconds
+Finished node (32,) with initialization 28/30 in 0 hours, 6 minutes, and 47 seconds
+Finished node (32,) with initialization 29/30 in 0 hours, 7 minutes, and 39 seconds
+Finished node (32,) with initialization 30/30 in 0 hours, 5 minutes, and 58 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32,).weights.h5
+Finished node (16, 2, 2) with initialization 1/30 in 0 hours, 6 minutes, and 24 seconds
+Finished node (16, 2, 2) with initialization 2/30 in 0 hours, 15 minutes, and 2 seconds
+Finished node (16, 2, 2) with initialization 3/30 in 0 hours, 4 minutes, and 49 seconds
+Finished node (16, 2, 2) with initialization 4/30 in 0 hours, 9 minutes, and 47 seconds
+Finished node (16, 2, 2) with initialization 5/30 in 0 hours, 12 minutes, and 42 seconds
+Finished node (16, 2, 2) with initialization 6/30 in 0 hours, 2 minutes, and 38 seconds
+Finished node (16, 2, 2) with initialization 7/30 in 0 hours, 6 minutes, and 50 seconds
+Finished node (16, 2, 2) with initialization 8/30 in 0 hours, 3 minutes, and 54 seconds
+Finished node (16, 2, 2) with initialization 9/30 in 0 hours, 9 minutes, and 8 seconds
+Finished node (16, 2, 2) with initialization 10/30 in 0 hours, 18 minutes, and 14 seconds
+Finished node (16, 2, 2) with initialization 11/30 in 0 hours, 3 minutes, and 36 seconds
+Finished node (16, 2, 2) with initialization 12/30 in 0 hours, 10 minutes, and 20 seconds
+Finished node (16, 2, 2) with initialization 13/30 in 0 hours, 7 minutes, and 29 seconds
+Finished node (16, 2, 2) with initialization 14/30 in 0 hours, 3 minutes, and 49 seconds
+Finished node (16, 2, 2) with initialization 15/30 in 0 hours, 4 minutes, and 24 seconds
+Finished node (16, 2, 2) with initialization 16/30 in 0 hours, 10 minutes, and 8 seconds
+Finished node (16, 2, 2) with initialization 17/30 in 0 hours, 7 minutes, and 51 seconds
+Finished node (16, 2, 2) with initialization 18/30 in 0 hours, 7 minutes, and 48 seconds
+Finished node (16, 2, 2) with initialization 19/30 in 0 hours, 5 minutes, and 5 seconds
+Finished node (16, 2, 2) with initialization 20/30 in 0 hours, 7 minutes, and 30 seconds
+Finished node (16, 2, 2) with initialization 21/30 in 0 hours, 5 minutes, and 24 seconds
+Finished node (16, 2, 2) with initialization 22/30 in 0 hours, 3 minutes, and 27 seconds
+Finished node (16, 2, 2) with initialization 23/30 in 0 hours, 3 minutes, and 45 seconds
+Finished node (16, 2, 2) with initialization 24/30 in 0 hours, 10 minutes, and 30 seconds
+Finished node (16, 2, 2) with initialization 25/30 in 0 hours, 4 minutes, and 3 seconds
+Finished node (16, 2, 2) with initialization 26/30 in 0 hours, 4 minutes, and 25 seconds
+Finished node (16, 2, 2) with initialization 27/30 in 0 hours, 3 minutes, and 54 seconds
+Finished node (16, 2, 2) with initialization 28/30 in 0 hours, 2 minutes, and 34 seconds
+Finished node (16, 2, 2) with initialization 29/30 in 0 hours, 7 minutes, and 27 seconds
+Finished node (16, 2, 2) with initialization 30/30 in 0 hours, 5 minutes, and 40 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 2, 2).weights.h5
+Finished node (8, 2) with initialization 1/30 in 0 hours, 4 minutes, and 40 seconds
+Finished node (8, 2) with initialization 2/30 in 0 hours, 6 minutes, and 53 seconds
+Finished node (8, 2) with initialization 3/30 in 0 hours, 4 minutes, and 40 seconds
+Finished node (8, 2) with initialization 4/30 in 0 hours, 10 minutes, and 57 seconds
+Finished node (8, 2) with initialization 5/30 in 0 hours, 9 minutes, and 58 seconds
+Finished node (8, 2) with initialization 6/30 in 0 hours, 7 minutes, and 31 seconds
+Finished node (8, 2) with initialization 7/30 in 0 hours, 6 minutes, and 56 seconds
+Finished node (8, 2) with initialization 8/30 in 0 hours, 6 minutes, and 27 seconds
+Finished node (8, 2) with initialization 9/30 in 0 hours, 8 minutes, and 46 seconds
+Finished node (8, 2) with initialization 10/30 in 0 hours, 8 minutes, and 44 seconds
+Finished node (8, 2) with initialization 11/30 in 0 hours, 5 minutes, and 56 seconds
+Finished node (8, 2) with initialization 12/30 in 0 hours, 8 minutes, and 2 seconds
+Finished node (8, 2) with initialization 13/30 in 0 hours, 3 minutes, and 23 seconds
+Finished node (8, 2) with initialization 14/30 in 0 hours, 10 minutes, and 1 seconds
+Finished node (8, 2) with initialization 15/30 in 0 hours, 3 minutes, and 39 seconds
+Finished node (8, 2) with initialization 16/30 in 0 hours, 6 minutes, and 5 seconds
+Finished node (8, 2) with initialization 17/30 in 0 hours, 7 minutes, and 19 seconds
+Finished node (8, 2) with initialization 18/30 in 0 hours, 8 minutes, and 36 seconds
+Finished node (8, 2) with initialization 19/30 in 0 hours, 9 minutes, and 36 seconds
+Finished node (8, 2) with initialization 20/30 in 0 hours, 7 minutes, and 26 seconds
+Finished node (8, 2) with initialization 21/30 in 0 hours, 10 minutes, and 15 seconds
+Finished node (8, 2) with initialization 22/30 in 0 hours, 8 minutes, and 34 seconds
+Finished node (8, 2) with initialization 23/30 in 0 hours, 7 minutes, and 46 seconds
+Finished node (8, 2) with initialization 24/30 in 0 hours, 4 minutes, and 57 seconds
+Finished node (8, 2) with initialization 25/30 in 0 hours, 8 minutes, and 31 seconds
+Finished node (8, 2) with initialization 26/30 in 0 hours, 5 minutes, and 32 seconds
+Finished node (8, 2) with initialization 27/30 in 0 hours, 9 minutes, and 43 seconds
+Finished node (8, 2) with initialization 28/30 in 0 hours, 6 minutes, and 57 seconds
+Finished node (8, 2) with initialization 29/30 in 0 hours, 4 minutes, and 41 seconds
+Finished node (8, 2) with initialization 30/30 in 0 hours, 10 minutes, and 26 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 2).weights.h5
+Finished node (48,) with initialization 1/30 in 0 hours, 7 minutes, and 24 seconds
+Finished node (48,) with initialization 2/30 in 0 hours, 9 minutes, and 31 seconds
+Finished node (48,) with initialization 3/30 in 0 hours, 5 minutes, and 36 seconds
+Finished node (48,) with initialization 4/30 in 0 hours, 13 minutes, and 52 seconds
+Finished node (48,) with initialization 5/30 in 0 hours, 6 minutes, and 12 seconds
+Finished node (48,) with initialization 6/30 in 0 hours, 7 minutes, and 55 seconds
+Finished node (48,) with initialization 7/30 in 0 hours, 6 minutes, and 38 seconds
+Finished node (48,) with initialization 8/30 in 0 hours, 3 minutes, and 49 seconds
+Finished node (48,) with initialization 9/30 in 0 hours, 7 minutes, and 39 seconds
+Finished node (48,) with initialization 10/30 in 0 hours, 12 minutes, and 38 seconds
+Finished node (48,) with initialization 11/30 in 0 hours, 9 minutes, and 26 seconds
+Finished node (48,) with initialization 12/30 in 0 hours, 5 minutes, and 41 seconds
+Finished node (48,) with initialization 13/30 in 0 hours, 12 minutes, and 16 seconds
+Finished node (48,) with initialization 14/30 in 0 hours, 8 minutes, and 11 seconds
+Finished node (48,) with initialization 15/30 in 0 hours, 5 minutes, and 31 seconds
+Finished node (48,) with initialization 16/30 in 0 hours, 13 minutes, and 6 seconds
+Finished node (48,) with initialization 17/30 in 0 hours, 7 minutes, and 36 seconds
+Finished node (48,) with initialization 18/30 in 0 hours, 7 minutes, and 51 seconds
+Finished node (48,) with initialization 19/30 in 0 hours, 12 minutes, and 8 seconds
+Finished node (48,) with initialization 20/30 in 0 hours, 7 minutes, and 24 seconds
+Finished node (48,) with initialization 21/30 in 0 hours, 5 minutes, and 13 seconds
+Finished node (48,) with initialization 22/30 in 0 hours, 6 minutes, and 3 seconds
+Finished node (48,) with initialization 23/30 in 0 hours, 4 minutes, and 18 seconds
+Finished node (48,) with initialization 24/30 in 0 hours, 7 minutes, and 8 seconds
+Finished node (48,) with initialization 25/30 in 0 hours, 5 minutes, and 0 seconds
+Finished node (48,) with initialization 26/30 in 0 hours, 7 minutes, and 19 seconds
+Finished node (48,) with initialization 27/30 in 0 hours, 6 minutes, and 15 seconds
+Finished node (48,) with initialization 28/30 in 0 hours, 5 minutes, and 29 seconds
+Finished node (48,) with initialization 29/30 in 0 hours, 7 minutes, and 46 seconds
+Finished node (48,) with initialization 30/30 in 0 hours, 5 minutes, and 26 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(48,).weights.h5
+Finished node (4, 4, 2) with initialization 1/30 in 0 hours, 7 minutes, and 36 seconds
+Finished node (4, 4, 2) with initialization 2/30 in 0 hours, 6 minutes, and 52 seconds
+Finished node (4, 4, 2) with initialization 3/30 in 0 hours, 8 minutes, and 7 seconds
+Finished node (4, 4, 2) with initialization 4/30 in 0 hours, 6 minutes, and 45 seconds
+Finished node (4, 4, 2) with initialization 5/30 in 0 hours, 8 minutes, and 7 seconds
+Finished node (4, 4, 2) with initialization 6/30 in 0 hours, 3 minutes, and 15 seconds
+Finished node (4, 4, 2) with initialization 7/30 in 0 hours, 9 minutes, and 19 seconds
+Finished node (4, 4, 2) with initialization 8/30 in 0 hours, 11 minutes, and 55 seconds
+Finished node (4, 4, 2) with initialization 9/30 in 0 hours, 6 minutes, and 24 seconds
+Finished node (4, 4, 2) with initialization 10/30 in 0 hours, 7 minutes, and 18 seconds
+Finished node (4, 4, 2) with initialization 11/30 in 0 hours, 9 minutes, and 29 seconds
+Finished node (4, 4, 2) with initialization 12/30 in 0 hours, 7 minutes, and 48 seconds
+Finished node (4, 4, 2) with initialization 13/30 in 0 hours, 4 minutes, and 50 seconds
+Finished node (4, 4, 2) with initialization 14/30 in 0 hours, 15 minutes, and 30 seconds
+Finished node (4, 4, 2) with initialization 15/30 in 0 hours, 4 minutes, and 53 seconds
+Finished node (4, 4, 2) with initialization 16/30 in 0 hours, 6 minutes, and 27 seconds
+Finished node (4, 4, 2) with initialization 17/30 in 0 hours, 6 minutes, and 19 seconds
+Finished node (4, 4, 2) with initialization 18/30 in 0 hours, 7 minutes, and 0 seconds
+Finished node (4, 4, 2) with initialization 19/30 in 0 hours, 6 minutes, and 24 seconds
+Finished node (4, 4, 2) with initialization 20/30 in 0 hours, 5 minutes, and 55 seconds
+Finished node (4, 4, 2) with initialization 21/30 in 0 hours, 10 minutes, and 52 seconds
+Finished node (4, 4, 2) with initialization 22/30 in 0 hours, 2 minutes, and 38 seconds
+Finished node (4, 4, 2) with initialization 23/30 in 0 hours, 8 minutes, and 35 seconds
+Finished node (4, 4, 2) with initialization 24/30 in 0 hours, 12 minutes, and 22 seconds
+Finished node (4, 4, 2) with initialization 25/30 in 0 hours, 8 minutes, and 25 seconds
+Finished node (4, 4, 2) with initialization 26/30 in 0 hours, 13 minutes, and 0 seconds
+Finished node (4, 4, 2) with initialization 27/30 in 0 hours, 3 minutes, and 40 seconds
+Finished node (4, 4, 2) with initialization 28/30 in 0 hours, 4 minutes, and 54 seconds
+Finished node (4, 4, 2) with initialization 29/30 in 0 hours, 8 minutes, and 17 seconds
+Finished node (4, 4, 2) with initialization 30/30 in 0 hours, 9 minutes, and 5 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(4, 4, 2).weights.h5
+Finished node (16,) with initialization 1/30 in 0 hours, 9 minutes, and 57 seconds
+Finished node (16,) with initialization 2/30 in 0 hours, 10 minutes, and 55 seconds
+Finished node (16,) with initialization 3/30 in 0 hours, 5 minutes, and 12 seconds
+Finished node (16,) with initialization 4/30 in 0 hours, 11 minutes, and 14 seconds
+Finished node (16,) with initialization 5/30 in 0 hours, 12 minutes, and 26 seconds
+Finished node (16,) with initialization 6/30 in 0 hours, 9 minutes, and 59 seconds
+Finished node (16,) with initialization 7/30 in 0 hours, 11 minutes, and 59 seconds
+Finished node (16,) with initialization 8/30 in 0 hours, 4 minutes, and 21 seconds
+Finished node (16,) with initialization 9/30 in 0 hours, 5 minutes, and 1 seconds
+Finished node (16,) with initialization 10/30 in 0 hours, 4 minutes, and 39 seconds
+Finished node (16,) with initialization 11/30 in 0 hours, 9 minutes, and 58 seconds
+Finished node (16,) with initialization 12/30 in 0 hours, 8 minutes, and 24 seconds
+Finished node (16,) with initialization 13/30 in 0 hours, 7 minutes, and 49 seconds
+Finished node (16,) with initialization 14/30 in 0 hours, 7 minutes, and 29 seconds
+Finished node (16,) with initialization 15/30 in 0 hours, 7 minutes, and 2 seconds
+Finished node (16,) with initialization 16/30 in 0 hours, 8 minutes, and 18 seconds
+Finished node (16,) with initialization 17/30 in 0 hours, 5 minutes, and 14 seconds
+Finished node (16,) with initialization 18/30 in 0 hours, 5 minutes, and 10 seconds
+Finished node (16,) with initialization 19/30 in 0 hours, 18 minutes, and 27 seconds
+Finished node (16,) with initialization 20/30 in 0 hours, 9 minutes, and 2 seconds
+Finished node (16,) with initialization 21/30 in 0 hours, 3 minutes, and 35 seconds
+Finished node (16,) with initialization 22/30 in 0 hours, 7 minutes, and 36 seconds
+Finished node (16,) with initialization 23/30 in 0 hours, 6 minutes, and 32 seconds
+Finished node (16,) with initialization 24/30 in 0 hours, 8 minutes, and 38 seconds
+Finished node (16,) with initialization 25/30 in 0 hours, 10 minutes, and 38 seconds
+Finished node (16,) with initialization 26/30 in 0 hours, 4 minutes, and 34 seconds
+Finished node (16,) with initialization 27/30 in 0 hours, 2 minutes, and 8 seconds
+Finished node (16,) with initialization 28/30 in 0 hours, 6 minutes, and 8 seconds
+Finished node (16,) with initialization 29/30 in 0 hours, 5 minutes, and 26 seconds
+Finished node (16,) with initialization 30/30 in 0 hours, 5 minutes, and 33 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16,).weights.h5
+Finished node (8, 2, 2) with initialization 1/30 in 0 hours, 14 minutes, and 58 seconds
+Finished node (8, 2, 2) with initialization 2/30 in 0 hours, 20 minutes, and 56 seconds
+Finished node (8, 2, 2) with initialization 3/30 in 0 hours, 8 minutes, and 53 seconds
+Finished node (8, 2, 2) with initialization 4/30 in 0 hours, 13 minutes, and 40 seconds
+Finished node (8, 2, 2) with initialization 5/30 in 0 hours, 7 minutes, and 22 seconds
+Finished node (8, 2, 2) with initialization 6/30 in 0 hours, 5 minutes, and 23 seconds
+Finished node (8, 2, 2) with initialization 7/30 in 0 hours, 11 minutes, and 31 seconds
+Finished node (8, 2, 2) with initialization 8/30 in 0 hours, 2 minutes, and 9 seconds
+Finished node (8, 2, 2) with initialization 9/30 in 0 hours, 8 minutes, and 37 seconds
+Finished node (8, 2, 2) with initialization 10/30 in 0 hours, 6 minutes, and 0 seconds
+Finished node (8, 2, 2) with initialization 11/30 in 0 hours, 3 minutes, and 43 seconds
+Finished node (8, 2, 2) with initialization 12/30 in 0 hours, 2 minutes, and 56 seconds
+Finished node (8, 2, 2) with initialization 13/30 in 0 hours, 5 minutes, and 37 seconds
+Finished node (8, 2, 2) with initialization 14/30 in 0 hours, 2 minutes, and 3 seconds
+Finished node (8, 2, 2) with initialization 15/30 in 0 hours, 6 minutes, and 58 seconds
+Finished node (8, 2, 2) with initialization 16/30 in 0 hours, 7 minutes, and 12 seconds
+Finished node (8, 2, 2) with initialization 17/30 in 0 hours, 8 minutes, and 44 seconds
+Finished node (8, 2, 2) with initialization 18/30 in 0 hours, 3 minutes, and 52 seconds
+Finished node (8, 2, 2) with initialization 19/30 in 0 hours, 22 minutes, and 5 seconds
+Finished node (8, 2, 2) with initialization 20/30 in 0 hours, 3 minutes, and 26 seconds
+Finished node (8, 2, 2) with initialization 21/30 in 0 hours, 12 minutes, and 21 seconds
+Finished node (8, 2, 2) with initialization 22/30 in 0 hours, 13 minutes, and 22 seconds
+Finished node (8, 2, 2) with initialization 23/30 in 0 hours, 1 minutes, and 56 seconds
+Finished node (8, 2, 2) with initialization 24/30 in 0 hours, 8 minutes, and 37 seconds
+Finished node (8, 2, 2) with initialization 25/30 in 0 hours, 5 minutes, and 17 seconds
+Finished node (8, 2, 2) with initialization 26/30 in 0 hours, 15 minutes, and 55 seconds
+Finished node (8, 2, 2) with initialization 27/30 in 0 hours, 8 minutes, and 40 seconds
+Finished node (8, 2, 2) with initialization 28/30 in 0 hours, 4 minutes, and 3 seconds
+Finished node (8, 2, 2) with initialization 29/30 in 0 hours, 5 minutes, and 35 seconds
+Finished node (8, 2, 2) with initialization 30/30 in 0 hours, 6 minutes, and 34 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 2, 2).weights.h5
+Finished node (8, 4) with initialization 1/30 in 0 hours, 9 minutes, and 7 seconds
+Finished node (8, 4) with initialization 2/30 in 0 hours, 10 minutes, and 8 seconds
+Finished node (8, 4) with initialization 3/30 in 0 hours, 15 minutes, and 8 seconds
+Finished node (8, 4) with initialization 4/30 in 0 hours, 7 minutes, and 35 seconds
+Finished node (8, 4) with initialization 5/30 in 0 hours, 7 minutes, and 47 seconds
+Finished node (8, 4) with initialization 6/30 in 0 hours, 11 minutes, and 33 seconds
+Finished node (8, 4) with initialization 7/30 in 0 hours, 8 minutes, and 49 seconds
+Finished node (8, 4) with initialization 8/30 in 0 hours, 7 minutes, and 6 seconds
+Finished node (8, 4) with initialization 9/30 in 0 hours, 13 minutes, and 50 seconds
+Finished node (8, 4) with initialization 10/30 in 0 hours, 7 minutes, and 26 seconds
+Finished node (8, 4) with initialization 11/30 in 0 hours, 10 minutes, and 47 seconds
+Finished node (8, 4) with initialization 12/30 in 0 hours, 7 minutes, and 49 seconds
+Finished node (8, 4) with initialization 13/30 in 0 hours, 7 minutes, and 30 seconds
+Finished node (8, 4) with initialization 14/30 in 0 hours, 3 minutes, and 59 seconds
+Finished node (8, 4) with initialization 15/30 in 0 hours, 10 minutes, and 30 seconds
+Finished node (8, 4) with initialization 16/30 in 0 hours, 9 minutes, and 21 seconds
+Finished node (8, 4) with initialization 17/30 in 0 hours, 6 minutes, and 19 seconds
+Finished node (8, 4) with initialization 18/30 in 0 hours, 5 minutes, and 17 seconds
+Finished node (8, 4) with initialization 19/30 in 0 hours, 14 minutes, and 18 seconds
+Finished node (8, 4) with initialization 20/30 in 0 hours, 4 minutes, and 30 seconds
+Finished node (8, 4) with initialization 21/30 in 0 hours, 11 minutes, and 53 seconds
+Finished node (8, 4) with initialization 22/30 in 0 hours, 5 minutes, and 43 seconds
+Finished node (8, 4) with initialization 23/30 in 0 hours, 8 minutes, and 20 seconds
+Finished node (8, 4) with initialization 24/30 in 0 hours, 10 minutes, and 33 seconds
+Finished node (8, 4) with initialization 25/30 in 0 hours, 6 minutes, and 14 seconds
+Finished node (8, 4) with initialization 26/30 in 0 hours, 8 minutes, and 29 seconds
+Finished node (8, 4) with initialization 27/30 in 0 hours, 6 minutes, and 29 seconds
+Finished node (8, 4) with initialization 28/30 in 0 hours, 10 minutes, and 43 seconds
+Finished node (8, 4) with initialization 29/30 in 0 hours, 6 minutes, and 45 seconds
+Finished node (8, 4) with initialization 30/30 in 0 hours, 9 minutes, and 28 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 4).weights.h5
+Finished node (32, 32, 32) with initialization 1/30 in 3 hours, 9 minutes, and 23 seconds
+Finished node (32, 32, 32) with initialization 2/30 in 2 hours, 31 minutes, and 44 seconds
+Finished node (32, 32, 32) with initialization 3/30 in 0 hours, 59 minutes, and 30 seconds
+Finished node (32, 32, 32) with initialization 4/30 in 1 hours, 14 minutes, and 20 seconds
+Finished node (32, 32, 32) with initialization 5/30 in 0 hours, 58 minutes, and 32 seconds
+Finished node (32, 32, 32) with initialization 6/30 in 1 hours, 45 minutes, and 49 seconds
+Finished node (32, 32, 32) with initialization 7/30 in 1 hours, 27 minutes, and 44 seconds
+Finished node (32, 32, 32) with initialization 8/30 in 0 hours, 50 minutes, and 49 seconds
+Finished node (32, 32, 32) with initialization 9/30 in 1 hours, 4 minutes, and 0 seconds
+Finished node (32, 32, 32) with initialization 10/30 in 1 hours, 0 minutes, and 23 seconds
+Finished node (32, 32, 32) with initialization 11/30 in 1 hours, 8 minutes, and 58 seconds
+Finished node (32, 32, 32) with initialization 12/30 in 1 hours, 21 minutes, and 48 seconds
+Finished node (32, 32, 32) with initialization 13/30 in 0 hours, 52 minutes, and 30 seconds
+Finished node (32, 32, 32) with initialization 14/30 in 1 hours, 10 minutes, and 0 seconds
+Finished node (32, 32, 32) with initialization 15/30 in 0 hours, 37 minutes, and 59 seconds
+Finished node (32, 32, 32) with initialization 16/30 in 0 hours, 40 minutes, and 10 seconds
+Finished node (32, 32, 32) with initialization 17/30 in 0 hours, 43 minutes, and 41 seconds
+Finished node (32, 32, 32) with initialization 18/30 in 0 hours, 51 minutes, and 37 seconds
+Finished node (32, 32, 32) with initialization 19/30 in 0 hours, 49 minutes, and 44 seconds
+Finished node (32, 32, 32) with initialization 20/30 in 0 hours, 40 minutes, and 49 seconds
+Finished node (32, 32, 32) with initialization 21/30 in 1 hours, 10 minutes, and 55 seconds
+Finished node (32, 32, 32) with initialization 22/30 in 1 hours, 6 minutes, and 39 seconds
+Finished node (32, 32, 32) with initialization 23/30 in 1 hours, 4 minutes, and 13 seconds
+Finished node (32, 32, 32) with initialization 24/30 in 1 hours, 2 minutes, and 52 seconds
+Finished node (32, 32, 32) with initialization 25/30 in 0 hours, 35 minutes, and 53 seconds
+Finished node (32, 32, 32) with initialization 26/30 in 1 hours, 3 minutes, and 15 seconds
+Finished node (32, 32, 32) with initialization 27/30 in 1 hours, 10 minutes, and 7 seconds
+Finished node (32, 32, 32) with initialization 28/30 in 0 hours, 58 minutes, and 44 seconds
+Finished node (32, 32, 32) with initialization 29/30 in 0 hours, 46 minutes, and 20 seconds
+Finished node (32, 32, 32) with initialization 30/30 in 1 hours, 11 minutes, and 24 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 32, 32).weights.h5
+Finished node (32, 32, 16) with initialization 1/30 in 1 hours, 31 minutes, and 1 seconds
+Finished node (32, 32, 16) with initialization 2/30 in 1 hours, 34 minutes, and 21 seconds
+Finished node (32, 32, 16) with initialization 3/30 in 0 hours, 35 minutes, and 26 seconds
+Finished node (32, 32, 16) with initialization 4/30 in 1 hours, 44 minutes, and 9 seconds
+Finished node (32, 32, 16) with initialization 5/30 in 1 hours, 33 minutes, and 15 seconds
+Finished node (32, 32, 16) with initialization 6/30 in 2 hours, 7 minutes, and 2 seconds
+Finished node (32, 32, 16) with initialization 7/30 in 1 hours, 5 minutes, and 52 seconds
+Finished node (32, 32, 16) with initialization 8/30 in 1 hours, 3 minutes, and 7 seconds
+Finished node (32, 32, 16) with initialization 9/30 in 0 hours, 24 minutes, and 54 seconds
+Finished node (32, 32, 16) with initialization 10/30 in 0 hours, 23 minutes, and 10 seconds
+Finished node (32, 32, 16) with initialization 11/30 in 0 hours, 41 minutes, and 6 seconds
+Finished node (32, 32, 16) with initialization 12/30 in 1 hours, 9 minutes, and 31 seconds
+Finished node (32, 32, 16) with initialization 13/30 in 0 hours, 11 minutes, and 59 seconds
+Finished node (32, 32, 16) with initialization 14/30 in 0 hours, 17 minutes, and 21 seconds
+Finished node (32, 32, 16) with initialization 15/30 in 0 hours, 58 minutes, and 55 seconds
+Finished node (32, 32, 16) with initialization 16/30 in 0 hours, 30 minutes, and 27 seconds
+Finished node (32, 32, 16) with initialization 17/30 in 0 hours, 16 minutes, and 31 seconds
+Finished node (32, 32, 16) with initialization 18/30 in 0 hours, 23 minutes, and 16 seconds
+Finished node (32, 32, 16) with initialization 19/30 in 1 hours, 21 minutes, and 54 seconds
+Finished node (32, 32, 16) with initialization 20/30 in 0 hours, 20 minutes, and 49 seconds
+Finished node (32, 32, 16) with initialization 21/30 in 0 hours, 21 minutes, and 54 seconds
+Finished node (32, 32, 16) with initialization 22/30 in 0 hours, 52 minutes, and 3 seconds
+Finished node (32, 32, 16) with initialization 23/30 in 0 hours, 47 minutes, and 25 seconds
+Finished node (32, 32, 16) with initialization 24/30 in 1 hours, 5 minutes, and 20 seconds
+Finished node (32, 32, 16) with initialization 25/30 in 0 hours, 55 minutes, and 2 seconds
+Finished node (32, 32, 16) with initialization 26/30 in 0 hours, 31 minutes, and 5 seconds
+Finished node (32, 32, 16) with initialization 27/30 in 0 hours, 56 minutes, and 3 seconds
+Finished node (32, 32, 16) with initialization 28/30 in 0 hours, 22 minutes, and 16 seconds
+Finished node (32, 32, 16) with initialization 29/30 in 0 hours, 14 minutes, and 52 seconds
+Finished node (32, 32, 16) with initialization 30/30 in 0 hours, 22 minutes, and 2 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 32, 16).weights.h5
+Finished node (32, 16, 16) with initialization 1/30 in 1 hours, 16 minutes, and 14 seconds
+Finished node (32, 16, 16) with initialization 2/30 in 1 hours, 22 minutes, and 0 seconds
+Finished node (32, 16, 16) with initialization 3/30 in 0 hours, 55 minutes, and 15 seconds
+Finished node (32, 16, 16) with initialization 4/30 in 0 hours, 29 minutes, and 16 seconds
+Finished node (32, 16, 16) with initialization 5/30 in 1 hours, 54 minutes, and 6 seconds
+Finished node (32, 16, 16) with initialization 6/30 in 0 hours, 31 minutes, and 50 seconds
+Finished node (32, 16, 16) with initialization 7/30 in 0 hours, 34 minutes, and 56 seconds
+Finished node (32, 16, 16) with initialization 8/30 in 0 hours, 31 minutes, and 58 seconds
+Finished node (32, 16, 16) with initialization 9/30 in 0 hours, 36 minutes, and 26 seconds
+Finished node (32, 16, 16) with initialization 10/30 in 0 hours, 22 minutes, and 1 seconds
+Finished node (32, 16, 16) with initialization 11/30 in 0 hours, 37 minutes, and 12 seconds
+Finished node (32, 16, 16) with initialization 12/30 in 0 hours, 57 minutes, and 19 seconds
+Finished node (32, 16, 16) with initialization 13/30 in 0 hours, 28 minutes, and 19 seconds
+Finished node (32, 16, 16) with initialization 14/30 in 0 hours, 35 minutes, and 19 seconds
+Finished node (32, 16, 16) with initialization 15/30 in 0 hours, 33 minutes, and 49 seconds
+Finished node (32, 16, 16) with initialization 16/30 in 0 hours, 32 minutes, and 23 seconds
+Finished node (32, 16, 16) with initialization 17/30 in 0 hours, 28 minutes, and 10 seconds
+Finished node (32, 16, 16) with initialization 18/30 in 0 hours, 32 minutes, and 13 seconds
+Finished node (32, 16, 16) with initialization 19/30 in 1 hours, 8 minutes, and 20 seconds
+Finished node (32, 16, 16) with initialization 20/30 in 0 hours, 6 minutes, and 22 seconds
+Finished node (32, 16, 16) with initialization 21/30 in 0 hours, 20 minutes, and 29 seconds
+Finished node (32, 16, 16) with initialization 22/30 in 0 hours, 15 minutes, and 22 seconds
+Finished node (32, 16, 16) with initialization 23/30 in 0 hours, 21 minutes, and 55 seconds
+Finished node (32, 16, 16) with initialization 24/30 in 0 hours, 28 minutes, and 18 seconds
+Finished node (32, 16, 16) with initialization 25/30 in 0 hours, 50 minutes, and 31 seconds
+Finished node (32, 16, 16) with initialization 26/30 in 0 hours, 19 minutes, and 5 seconds
+Finished node (32, 16, 16) with initialization 27/30 in 0 hours, 36 minutes, and 52 seconds
+Finished node (32, 16, 16) with initialization 28/30 in 0 hours, 16 minutes, and 24 seconds
+Finished node (32, 16, 16) with initialization 29/30 in 0 hours, 16 minutes, and 20 seconds
+Finished node (32, 16, 16) with initialization 30/30 in 0 hours, 40 minutes, and 53 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 16, 16).weights.h5
+Finished node (16, 4, 4) with initialization 1/30 in 0 hours, 7 minutes, and 41 seconds
+Finished node (16, 4, 4) with initialization 2/30 in 0 hours, 13 minutes, and 22 seconds
+Finished node (16, 4, 4) with initialization 3/30 in 0 hours, 26 minutes, and 19 seconds
+Finished node (16, 4, 4) with initialization 4/30 in 0 hours, 23 minutes, and 24 seconds
+Finished node (16, 4, 4) with initialization 5/30 in 0 hours, 4 minutes, and 37 seconds
+Finished node (16, 4, 4) with initialization 6/30 in 0 hours, 9 minutes, and 58 seconds
+Finished node (16, 4, 4) with initialization 7/30 in 0 hours, 21 minutes, and 31 seconds
+Finished node (16, 4, 4) with initialization 8/30 in 0 hours, 18 minutes, and 44 seconds
+Finished node (16, 4, 4) with initialization 9/30 in 0 hours, 12 minutes, and 20 seconds
+Finished node (16, 4, 4) with initialization 10/30 in 0 hours, 12 minutes, and 27 seconds
+Finished node (16, 4, 4) with initialization 11/30 in 0 hours, 30 minutes, and 48 seconds
+Finished node (16, 4, 4) with initialization 12/30 in 0 hours, 14 minutes, and 32 seconds
+Finished node (16, 4, 4) with initialization 13/30 in 0 hours, 2 minutes, and 13 seconds
+Finished node (16, 4, 4) with initialization 14/30 in 0 hours, 16 minutes, and 41 seconds
+Finished node (16, 4, 4) with initialization 15/30 in 0 hours, 13 minutes, and 24 seconds
+Finished node (16, 4, 4) with initialization 16/30 in 0 hours, 17 minutes, and 6 seconds
+Finished node (16, 4, 4) with initialization 17/30 in 0 hours, 5 minutes, and 40 seconds
+Finished node (16, 4, 4) with initialization 18/30 in 0 hours, 7 minutes, and 54 seconds
+Finished node (16, 4, 4) with initialization 19/30 in 0 hours, 6 minutes, and 54 seconds
+Finished node (16, 4, 4) with initialization 20/30 in 0 hours, 8 minutes, and 36 seconds
+Finished node (16, 4, 4) with initialization 21/30 in 0 hours, 6 minutes, and 33 seconds
+Finished node (16, 4, 4) with initialization 22/30 in 0 hours, 10 minutes, and 26 seconds
+Finished node (16, 4, 4) with initialization 23/30 in 0 hours, 8 minutes, and 19 seconds
+Finished node (16, 4, 4) with initialization 24/30 in 0 hours, 6 minutes, and 32 seconds
+Finished node (16, 4, 4) with initialization 25/30 in 0 hours, 13 minutes, and 15 seconds
+Finished node (16, 4, 4) with initialization 26/30 in 0 hours, 10 minutes, and 2 seconds
+Finished node (16, 4, 4) with initialization 27/30 in 0 hours, 14 minutes, and 8 seconds
+Finished node (16, 4, 4) with initialization 28/30 in 0 hours, 6 minutes, and 24 seconds
+Finished node (16, 4, 4) with initialization 29/30 in 0 hours, 13 minutes, and 34 seconds
+Finished node (16, 4, 4) with initialization 30/30 in 0 hours, 15 minutes, and 26 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 4, 4).weights.h5
+Finished node (32, 16) with initialization 1/30 in 0 hours, 23 minutes, and 32 seconds
+Finished node (32, 16) with initialization 2/30 in 0 hours, 25 minutes, and 37 seconds
+Finished node (32, 16) with initialization 3/30 in 0 hours, 17 minutes, and 7 seconds
+Finished node (32, 16) with initialization 4/30 in 0 hours, 18 minutes, and 26 seconds
+Finished node (32, 16) with initialization 5/30 in 0 hours, 10 minutes, and 38 seconds
+Finished node (32, 16) with initialization 6/30 in 0 hours, 36 minutes, and 41 seconds
+Finished node (32, 16) with initialization 7/30 in 0 hours, 18 minutes, and 16 seconds
+Finished node (32, 16) with initialization 8/30 in 0 hours, 21 minutes, and 5 seconds
+Finished node (32, 16) with initialization 9/30 in 0 hours, 9 minutes, and 36 seconds
+Finished node (32, 16) with initialization 10/30 in 0 hours, 17 minutes, and 41 seconds
+Finished node (32, 16) with initialization 11/30 in 0 hours, 32 minutes, and 24 seconds
+Finished node (32, 16) with initialization 12/30 in 0 hours, 13 minutes, and 43 seconds
+Finished node (32, 16) with initialization 13/30 in 0 hours, 7 minutes, and 48 seconds
+Finished node (32, 16) with initialization 14/30 in 0 hours, 11 minutes, and 22 seconds
+Finished node (32, 16) with initialization 15/30 in 0 hours, 17 minutes, and 26 seconds
+Finished node (32, 16) with initialization 16/30 in 0 hours, 13 minutes, and 46 seconds
+Finished node (32, 16) with initialization 17/30 in 0 hours, 11 minutes, and 50 seconds
+Finished node (32, 16) with initialization 18/30 in 0 hours, 20 minutes, and 12 seconds
+Finished node (32, 16) with initialization 19/30 in 0 hours, 19 minutes, and 11 seconds
+Finished node (32, 16) with initialization 20/30 in 0 hours, 12 minutes, and 10 seconds
+Finished node (32, 16) with initialization 21/30 in 0 hours, 22 minutes, and 45 seconds
+Finished node (32, 16) with initialization 22/30 in 0 hours, 17 minutes, and 5 seconds
+Finished node (32, 16) with initialization 23/30 in 0 hours, 13 minutes, and 6 seconds
+Finished node (32, 16) with initialization 24/30 in 0 hours, 17 minutes, and 17 seconds
+Finished node (32, 16) with initialization 25/30 in 0 hours, 8 minutes, and 39 seconds
+Finished node (32, 16) with initialization 26/30 in 0 hours, 11 minutes, and 4 seconds
+Finished node (32, 16) with initialization 27/30 in 0 hours, 11 minutes, and 24 seconds
+Finished node (32, 16) with initialization 28/30 in 0 hours, 13 minutes, and 29 seconds
+Finished node (32, 16) with initialization 29/30 in 0 hours, 10 minutes, and 0 seconds
+Finished node (32, 16) with initialization 30/30 in 0 hours, 11 minutes, and 2 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 16).weights.h5
+Finished node (32, 8, 2) with initialization 1/30 in 0 hours, 13 minutes, and 11 seconds
+Finished node (32, 8, 2) with initialization 2/30 in 0 hours, 33 minutes, and 24 seconds
+Finished node (32, 8, 2) with initialization 3/30 in 0 hours, 18 minutes, and 45 seconds
+Finished node (32, 8, 2) with initialization 4/30 in 0 hours, 23 minutes, and 20 seconds
+Finished node (32, 8, 2) with initialization 5/30 in 0 hours, 20 minutes, and 20 seconds
+Finished node (32, 8, 2) with initialization 6/30 in 0 hours, 30 minutes, and 23 seconds
+Finished node (32, 8, 2) with initialization 7/30 in 0 hours, 26 minutes, and 13 seconds
+Finished node (32, 8, 2) with initialization 8/30 in 0 hours, 27 minutes, and 3 seconds
+Finished node (32, 8, 2) with initialization 9/30 in 0 hours, 21 minutes, and 27 seconds
+Finished node (32, 8, 2) with initialization 10/30 in 0 hours, 12 minutes, and 25 seconds
+Finished node (32, 8, 2) with initialization 11/30 in 0 hours, 16 minutes, and 3 seconds
+Finished node (32, 8, 2) with initialization 12/30 in 0 hours, 22 minutes, and 14 seconds
+Finished node (32, 8, 2) with initialization 13/30 in 0 hours, 8 minutes, and 0 seconds
+Finished node (32, 8, 2) with initialization 14/30 in 0 hours, 18 minutes, and 26 seconds
+Finished node (32, 8, 2) with initialization 15/30 in 0 hours, 20 minutes, and 47 seconds
+Finished node (32, 8, 2) with initialization 16/30 in 0 hours, 13 minutes, and 25 seconds
+Finished node (32, 8, 2) with initialization 17/30 in 0 hours, 14 minutes, and 24 seconds
+Finished node (32, 8, 2) with initialization 18/30 in 0 hours, 12 minutes, and 23 seconds
+Finished node (32, 8, 2) with initialization 19/30 in 0 hours, 9 minutes, and 37 seconds
+Finished node (32, 8, 2) with initialization 20/30 in 0 hours, 4 minutes, and 7 seconds
+Finished node (32, 8, 2) with initialization 21/30 in 0 hours, 4 minutes, and 48 seconds
+Finished node (32, 8, 2) with initialization 22/30 in 0 hours, 12 minutes, and 15 seconds
+Finished node (32, 8, 2) with initialization 23/30 in 0 hours, 12 minutes, and 25 seconds
+Finished node (32, 8, 2) with initialization 24/30 in 0 hours, 3 minutes, and 47 seconds
+Finished node (32, 8, 2) with initialization 25/30 in 0 hours, 10 minutes, and 23 seconds
+Finished node (32, 8, 2) with initialization 26/30 in 0 hours, 10 minutes, and 59 seconds
+Finished node (32, 8, 2) with initialization 27/30 in 0 hours, 7 minutes, and 26 seconds
+Finished node (32, 8, 2) with initialization 28/30 in 0 hours, 9 minutes, and 23 seconds
+Finished node (32, 8, 2) with initialization 29/30 in 0 hours, 5 minutes, and 47 seconds
+Finished node (32, 8, 2) with initialization 30/30 in 0 hours, 10 minutes, and 16 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 8, 2).weights.h5
+Finished node (16, 16, 4) with initialization 1/30 in 1 hours, 30 minutes, and 56 seconds
+Finished node (16, 16, 4) with initialization 2/30 in 1 hours, 7 minutes, and 51 seconds
+Finished node (16, 16, 4) with initialization 3/30 in 0 hours, 38 minutes, and 8 seconds
+Finished node (16, 16, 4) with initialization 4/30 in 0 hours, 44 minutes, and 21 seconds
+Finished node (16, 16, 4) with initialization 5/30 in 0 hours, 11 minutes, and 8 seconds
+Finished node (16, 16, 4) with initialization 6/30 in 0 hours, 19 minutes, and 59 seconds
+Finished node (16, 16, 4) with initialization 7/30 in 0 hours, 22 minutes, and 47 seconds
+Finished node (16, 16, 4) with initialization 8/30 in 0 hours, 58 minutes, and 27 seconds
+Finished node (16, 16, 4) with initialization 9/30 in 0 hours, 23 minutes, and 36 seconds
+Finished node (16, 16, 4) with initialization 10/30 in 0 hours, 21 minutes, and 57 seconds
+Finished node (16, 16, 4) with initialization 11/30 in 0 hours, 22 minutes, and 2 seconds
+Finished node (16, 16, 4) with initialization 12/30 in 0 hours, 14 minutes, and 47 seconds
+Finished node (16, 16, 4) with initialization 13/30 in 0 hours, 16 minutes, and 45 seconds
+Finished node (16, 16, 4) with initialization 14/30 in 0 hours, 11 minutes, and 17 seconds
+Finished node (16, 16, 4) with initialization 15/30 in 0 hours, 7 minutes, and 5 seconds
+Finished node (16, 16, 4) with initialization 16/30 in 0 hours, 12 minutes, and 42 seconds
+Finished node (16, 16, 4) with initialization 17/30 in 0 hours, 8 minutes, and 7 seconds
+Finished node (16, 16, 4) with initialization 18/30 in 0 hours, 14 minutes, and 10 seconds
+Finished node (16, 16, 4) with initialization 19/30 in 0 hours, 22 minutes, and 12 seconds
+Finished node (16, 16, 4) with initialization 20/30 in 0 hours, 15 minutes, and 45 seconds
+Finished node (16, 16, 4) with initialization 21/30 in 0 hours, 16 minutes, and 22 seconds
+Finished node (16, 16, 4) with initialization 22/30 in 0 hours, 9 minutes, and 41 seconds
+Finished node (16, 16, 4) with initialization 23/30 in 0 hours, 11 minutes, and 16 seconds
+Finished node (16, 16, 4) with initialization 24/30 in 0 hours, 11 minutes, and 2 seconds
+Finished node (16, 16, 4) with initialization 25/30 in 0 hours, 13 minutes, and 43 seconds
+Finished node (16, 16, 4) with initialization 26/30 in 0 hours, 18 minutes, and 48 seconds
+Finished node (16, 16, 4) with initialization 27/30 in 0 hours, 8 minutes, and 26 seconds
+Finished node (16, 16, 4) with initialization 28/30 in 0 hours, 11 minutes, and 44 seconds
+Finished node (16, 16, 4) with initialization 29/30 in 0 hours, 9 minutes, and 52 seconds
+Finished node (16, 16, 4) with initialization 30/30 in 0 hours, 8 minutes, and 4 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 16, 4).weights.h5
+Finished node (16, 16, 16) with initialization 1/30 in 0 hours, 46 minutes, and 7 seconds
+Finished node (16, 16, 16) with initialization 2/30 in 0 hours, 26 minutes, and 41 seconds
+Finished node (16, 16, 16) with initialization 3/30 in 1 hours, 15 minutes, and 50 seconds
+Finished node (16, 16, 16) with initialization 4/30 in 0 hours, 57 minutes, and 31 seconds
+Finished node (16, 16, 16) with initialization 5/30 in 1 hours, 22 minutes, and 39 seconds
+Finished node (16, 16, 16) with initialization 6/30 in 0 hours, 50 minutes, and 45 seconds
+Finished node (16, 16, 16) with initialization 7/30 in 0 hours, 18 minutes, and 57 seconds
+Finished node (16, 16, 16) with initialization 8/30 in 0 hours, 23 minutes, and 40 seconds
+Finished node (16, 16, 16) with initialization 9/30 in 0 hours, 27 minutes, and 5 seconds
+Finished node (16, 16, 16) with initialization 10/30 in 0 hours, 16 minutes, and 39 seconds
+Finished node (16, 16, 16) with initialization 11/30 in 0 hours, 28 minutes, and 11 seconds
+Finished node (16, 16, 16) with initialization 12/30 in 1 hours, 5 minutes, and 4 seconds
+Finished node (16, 16, 16) with initialization 13/30 in 0 hours, 41 minutes, and 38 seconds
+Finished node (16, 16, 16) with initialization 14/30 in 0 hours, 40 minutes, and 58 seconds
+Finished node (16, 16, 16) with initialization 15/30 in 0 hours, 14 minutes, and 34 seconds
+Finished node (16, 16, 16) with initialization 16/30 in 0 hours, 27 minutes, and 1 seconds
+Finished node (16, 16, 16) with initialization 17/30 in 0 hours, 13 minutes, and 43 seconds
+Finished node (16, 16, 16) with initialization 18/30 in 0 hours, 22 minutes, and 55 seconds
+Finished node (16, 16, 16) with initialization 19/30 in 0 hours, 25 minutes, and 31 seconds
+Finished node (16, 16, 16) with initialization 20/30 in 0 hours, 19 minutes, and 8 seconds
+Finished node (16, 16, 16) with initialization 21/30 in 0 hours, 16 minutes, and 41 seconds
+Finished node (16, 16, 16) with initialization 22/30 in 0 hours, 37 minutes, and 44 seconds
+Finished node (16, 16, 16) with initialization 23/30 in 0 hours, 10 minutes, and 31 seconds
+Finished node (16, 16, 16) with initialization 24/30 in 0 hours, 38 minutes, and 56 seconds
+Finished node (16, 16, 16) with initialization 25/30 in 0 hours, 7 minutes, and 42 seconds
+Finished node (16, 16, 16) with initialization 26/30 in 0 hours, 20 minutes, and 55 seconds
+Finished node (16, 16, 16) with initialization 27/30 in 0 hours, 17 minutes, and 43 seconds
+Finished node (16, 16, 16) with initialization 28/30 in 0 hours, 27 minutes, and 0 seconds
+Finished node (16, 16, 16) with initialization 29/30 in 0 hours, 21 minutes, and 46 seconds
+Finished node (16, 16, 16) with initialization 30/30 in 0 hours, 25 minutes, and 10 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 16, 16).weights.h5
+Finished node (32, 16, 2) with initialization 1/30 in 0 hours, 34 minutes, and 33 seconds
+Finished node (32, 16, 2) with initialization 2/30 in 0 hours, 15 minutes, and 59 seconds
+Finished node (32, 16, 2) with initialization 3/30 in 0 hours, 35 minutes, and 33 seconds
+Finished node (32, 16, 2) with initialization 4/30 in 0 hours, 15 minutes, and 47 seconds
+Finished node (32, 16, 2) with initialization 5/30 in 0 hours, 16 minutes, and 43 seconds
+Finished node (32, 16, 2) with initialization 6/30 in 0 hours, 36 minutes, and 3 seconds
+Finished node (32, 16, 2) with initialization 7/30 in 0 hours, 21 minutes, and 19 seconds
+Finished node (32, 16, 2) with initialization 8/30 in 0 hours, 22 minutes, and 30 seconds
+Finished node (32, 16, 2) with initialization 9/30 in 0 hours, 28 minutes, and 47 seconds
+Finished node (32, 16, 2) with initialization 10/30 in 0 hours, 11 minutes, and 53 seconds
+Finished node (32, 16, 2) with initialization 11/30 in 0 hours, 28 minutes, and 49 seconds
+Finished node (32, 16, 2) with initialization 12/30 in 0 hours, 6 minutes, and 51 seconds
+Finished node (32, 16, 2) with initialization 13/30 in 0 hours, 14 minutes, and 9 seconds
+Finished node (32, 16, 2) with initialization 14/30 in 0 hours, 26 minutes, and 29 seconds
+Finished node (32, 16, 2) with initialization 15/30 in 0 hours, 16 minutes, and 8 seconds
+Finished node (32, 16, 2) with initialization 16/30 in 0 hours, 14 minutes, and 57 seconds
+Finished node (32, 16, 2) with initialization 17/30 in 0 hours, 11 minutes, and 28 seconds
+Finished node (32, 16, 2) with initialization 18/30 in 0 hours, 16 minutes, and 32 seconds
+Finished node (32, 16, 2) with initialization 19/30 in 0 hours, 15 minutes, and 2 seconds
+Finished node (32, 16, 2) with initialization 20/30 in 0 hours, 27 minutes, and 15 seconds
+Finished node (32, 16, 2) with initialization 21/30 in 0 hours, 9 minutes, and 17 seconds
+Finished node (32, 16, 2) with initialization 22/30 in 0 hours, 11 minutes, and 2 seconds
+Finished node (32, 16, 2) with initialization 23/30 in 0 hours, 6 minutes, and 48 seconds
+Finished node (32, 16, 2) with initialization 24/30 in 0 hours, 8 minutes, and 16 seconds
+Finished node (32, 16, 2) with initialization 25/30 in 0 hours, 10 minutes, and 43 seconds
+Finished node (32, 16, 2) with initialization 26/30 in 0 hours, 10 minutes, and 59 seconds
+Finished node (32, 16, 2) with initialization 27/30 in 0 hours, 7 minutes, and 27 seconds
+Finished node (32, 16, 2) with initialization 28/30 in 0 hours, 11 minutes, and 51 seconds
+Finished node (32, 16, 2) with initialization 29/30 in 0 hours, 18 minutes, and 10 seconds
+Finished node (32, 16, 2) with initialization 30/30 in 0 hours, 10 minutes, and 0 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 16, 2).weights.h5
+Finished node (8, 8, 4) with initialization 1/30 in 0 hours, 8 minutes, and 33 seconds
+Finished node (8, 8, 4) with initialization 2/30 in 0 hours, 14 minutes, and 21 seconds
+Finished node (8, 8, 4) with initialization 3/30 in 0 hours, 12 minutes, and 7 seconds
+Finished node (8, 8, 4) with initialization 4/30 in 0 hours, 14 minutes, and 47 seconds
+Finished node (8, 8, 4) with initialization 5/30 in 0 hours, 9 minutes, and 43 seconds
+Finished node (8, 8, 4) with initialization 6/30 in 0 hours, 13 minutes, and 2 seconds
+Finished node (8, 8, 4) with initialization 7/30 in 0 hours, 16 minutes, and 2 seconds
+Finished node (8, 8, 4) with initialization 8/30 in 0 hours, 7 minutes, and 58 seconds
+Finished node (8, 8, 4) with initialization 9/30 in 0 hours, 13 minutes, and 23 seconds
+Finished node (8, 8, 4) with initialization 10/30 in 0 hours, 36 minutes, and 42 seconds
+Finished node (8, 8, 4) with initialization 11/30 in 0 hours, 8 minutes, and 38 seconds
+Finished node (8, 8, 4) with initialization 12/30 in 0 hours, 10 minutes, and 29 seconds
+Finished node (8, 8, 4) with initialization 13/30 in 0 hours, 8 minutes, and 6 seconds
+Finished node (8, 8, 4) with initialization 14/30 in 0 hours, 10 minutes, and 20 seconds
+Finished node (8, 8, 4) with initialization 15/30 in 0 hours, 7 minutes, and 23 seconds
+Finished node (8, 8, 4) with initialization 16/30 in 0 hours, 16 minutes, and 50 seconds
+Finished node (8, 8, 4) with initialization 17/30 in 0 hours, 15 minutes, and 20 seconds
+Finished node (8, 8, 4) with initialization 18/30 in 0 hours, 13 minutes, and 41 seconds
+Finished node (8, 8, 4) with initialization 19/30 in 0 hours, 8 minutes, and 46 seconds
+Finished node (8, 8, 4) with initialization 20/30 in 0 hours, 4 minutes, and 37 seconds
+Finished node (8, 8, 4) with initialization 21/30 in 0 hours, 11 minutes, and 56 seconds
+Finished node (8, 8, 4) with initialization 22/30 in 0 hours, 10 minutes, and 23 seconds
+Finished node (8, 8, 4) with initialization 23/30 in 0 hours, 12 minutes, and 4 seconds
+Finished node (8, 8, 4) with initialization 24/30 in 0 hours, 6 minutes, and 47 seconds
+Finished node (8, 8, 4) with initialization 25/30 in 0 hours, 6 minutes, and 57 seconds
+Finished node (8, 8, 4) with initialization 26/30 in 0 hours, 10 minutes, and 14 seconds
+Finished node (8, 8, 4) with initialization 27/30 in 0 hours, 5 minutes, and 56 seconds
+Finished node (8, 8, 4) with initialization 28/30 in 0 hours, 10 minutes, and 43 seconds
+Finished node (8, 8, 4) with initialization 29/30 in 0 hours, 17 minutes, and 19 seconds
+Finished node (8, 8, 4) with initialization 30/30 in 0 hours, 33 minutes, and 47 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 8, 4).weights.h5
+Finished node (16, 8, 2) with initialization 1/30 in 0 hours, 6 minutes, and 1 seconds
+Finished node (16, 8, 2) with initialization 2/30 in 0 hours, 38 minutes, and 7 seconds
+Finished node (16, 8, 2) with initialization 3/30 in 0 hours, 15 minutes, and 14 seconds
+Finished node (16, 8, 2) with initialization 4/30 in 0 hours, 16 minutes, and 25 seconds
+Finished node (16, 8, 2) with initialization 5/30 in 0 hours, 10 minutes, and 22 seconds
+Finished node (16, 8, 2) with initialization 6/30 in 0 hours, 14 minutes, and 56 seconds
+Finished node (16, 8, 2) with initialization 7/30 in 0 hours, 8 minutes, and 59 seconds
+Finished node (16, 8, 2) with initialization 8/30 in 0 hours, 8 minutes, and 38 seconds
+Finished node (16, 8, 2) with initialization 9/30 in 0 hours, 6 minutes, and 52 seconds
+Finished node (16, 8, 2) with initialization 10/30 in 0 hours, 38 minutes, and 27 seconds
+Finished node (16, 8, 2) with initialization 11/30 in 0 hours, 22 minutes, and 51 seconds
+Finished node (16, 8, 2) with initialization 12/30 in 0 hours, 15 minutes, and 36 seconds
+Finished node (16, 8, 2) with initialization 13/30 in 0 hours, 18 minutes, and 39 seconds
+Finished node (16, 8, 2) with initialization 14/30 in 0 hours, 43 minutes, and 39 seconds
+Finished node (16, 8, 2) with initialization 15/30 in 0 hours, 8 minutes, and 8 seconds
+Finished node (16, 8, 2) with initialization 16/30 in 0 hours, 9 minutes, and 14 seconds
+Finished node (16, 8, 2) with initialization 17/30 in 0 hours, 10 minutes, and 11 seconds
+Finished node (16, 8, 2) with initialization 18/30 in 0 hours, 42 minutes, and 43 seconds
+Finished node (16, 8, 2) with initialization 19/30 in 0 hours, 18 minutes, and 54 seconds
+Finished node (16, 8, 2) with initialization 20/30 in 0 hours, 14 minutes, and 52 seconds
+Finished node (16, 8, 2) with initialization 21/30 in 0 hours, 8 minutes, and 8 seconds
+Finished node (16, 8, 2) with initialization 22/30 in 0 hours, 8 minutes, and 10 seconds
+Finished node (16, 8, 2) with initialization 23/30 in 0 hours, 18 minutes, and 54 seconds
+Finished node (16, 8, 2) with initialization 24/30 in 0 hours, 7 minutes, and 50 seconds
+Finished node (16, 8, 2) with initialization 25/30 in 0 hours, 9 minutes, and 19 seconds
+Finished node (16, 8, 2) with initialization 26/30 in 0 hours, 4 minutes, and 46 seconds
+Finished node (16, 8, 2) with initialization 27/30 in 0 hours, 6 minutes, and 30 seconds
+Finished node (16, 8, 2) with initialization 28/30 in 0 hours, 14 minutes, and 22 seconds
+Finished node (16, 8, 2) with initialization 29/30 in 0 hours, 5 minutes, and 4 seconds
+Finished node (16, 8, 2) with initialization 30/30 in 0 hours, 6 minutes, and 47 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 8, 2).weights.h5
+Finished node (16, 4, 2) with initialization 1/30 in 0 hours, 19 minutes, and 16 seconds
+Finished node (16, 4, 2) with initialization 2/30 in 0 hours, 29 minutes, and 38 seconds
+Finished node (16, 4, 2) with initialization 3/30 in 0 hours, 35 minutes, and 43 seconds
+Finished node (16, 4, 2) with initialization 4/30 in 0 hours, 27 minutes, and 12 seconds
+Finished node (16, 4, 2) with initialization 5/30 in 0 hours, 11 minutes, and 45 seconds
+Finished node (16, 4, 2) with initialization 6/30 in 0 hours, 18 minutes, and 51 seconds
+Finished node (16, 4, 2) with initialization 7/30 in 0 hours, 25 minutes, and 13 seconds
+Finished node (16, 4, 2) with initialization 8/30 in 0 hours, 11 minutes, and 46 seconds
+Finished node (16, 4, 2) with initialization 9/30 in 0 hours, 12 minutes, and 59 seconds
+Finished node (16, 4, 2) with initialization 10/30 in 0 hours, 15 minutes, and 5 seconds
+Finished node (16, 4, 2) with initialization 11/30 in 0 hours, 19 minutes, and 57 seconds
+Finished node (16, 4, 2) with initialization 12/30 in 0 hours, 13 minutes, and 8 seconds
+Finished node (16, 4, 2) with initialization 13/30 in 0 hours, 12 minutes, and 41 seconds
+Finished node (16, 4, 2) with initialization 14/30 in 0 hours, 11 minutes, and 12 seconds
+Finished node (16, 4, 2) with initialization 15/30 in 0 hours, 5 minutes, and 55 seconds
+Finished node (16, 4, 2) with initialization 16/30 in 0 hours, 7 minutes, and 12 seconds
+Finished node (16, 4, 2) with initialization 17/30 in 0 hours, 6 minutes, and 39 seconds
+Finished node (16, 4, 2) with initialization 18/30 in 0 hours, 11 minutes, and 54 seconds
+Finished node (16, 4, 2) with initialization 19/30 in 0 hours, 19 minutes, and 44 seconds
+Finished node (16, 4, 2) with initialization 20/30 in 0 hours, 12 minutes, and 27 seconds
+Finished node (16, 4, 2) with initialization 21/30 in 0 hours, 22 minutes, and 10 seconds
+Finished node (16, 4, 2) with initialization 22/30 in 0 hours, 11 minutes, and 8 seconds
+Finished node (16, 4, 2) with initialization 23/30 in 0 hours, 7 minutes, and 17 seconds
+Finished node (16, 4, 2) with initialization 24/30 in 0 hours, 12 minutes, and 19 seconds
+Finished node (16, 4, 2) with initialization 25/30 in 0 hours, 10 minutes, and 51 seconds
+Finished node (16, 4, 2) with initialization 26/30 in 0 hours, 9 minutes, and 28 seconds
+Finished node (16, 4, 2) with initialization 27/30 in 0 hours, 8 minutes, and 7 seconds
+Finished node (16, 4, 2) with initialization 28/30 in 0 hours, 4 minutes, and 43 seconds
+Finished node (16, 4, 2) with initialization 29/30 in 0 hours, 12 minutes, and 25 seconds
+Finished node (16, 4, 2) with initialization 30/30 in 0 hours, 7 minutes, and 59 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 4, 2).weights.h5
+Finished node (32, 8, 8) with initialization 1/30 in 0 hours, 27 minutes, and 12 seconds
+Finished node (32, 8, 8) with initialization 2/30 in 0 hours, 51 minutes, and 43 seconds
+Finished node (32, 8, 8) with initialization 3/30 in 0 hours, 17 minutes, and 59 seconds
+Finished node (32, 8, 8) with initialization 4/30 in 0 hours, 20 minutes, and 49 seconds
+Finished node (32, 8, 8) with initialization 5/30 in 0 hours, 17 minutes, and 0 seconds
+Finished node (32, 8, 8) with initialization 6/30 in 0 hours, 36 minutes, and 29 seconds
+Finished node (32, 8, 8) with initialization 7/30 in 0 hours, 33 minutes, and 32 seconds
+Finished node (32, 8, 8) with initialization 8/30 in 0 hours, 26 minutes, and 53 seconds
+Finished node (32, 8, 8) with initialization 9/30 in 0 hours, 14 minutes, and 58 seconds
+Finished node (32, 8, 8) with initialization 10/30 in 0 hours, 22 minutes, and 8 seconds
+Finished node (32, 8, 8) with initialization 11/30 in 0 hours, 38 minutes, and 47 seconds
+Finished node (32, 8, 8) with initialization 12/30 in 0 hours, 18 minutes, and 7 seconds
+Finished node (32, 8, 8) with initialization 13/30 in 0 hours, 8 minutes, and 6 seconds
+Finished node (32, 8, 8) with initialization 14/30 in 0 hours, 7 minutes, and 57 seconds
+Finished node (32, 8, 8) with initialization 15/30 in 0 hours, 20 minutes, and 27 seconds
+Finished node (32, 8, 8) with initialization 16/30 in 0 hours, 28 minutes, and 27 seconds
+Finished node (32, 8, 8) with initialization 17/30 in 0 hours, 14 minutes, and 49 seconds
+Finished node (32, 8, 8) with initialization 18/30 in 0 hours, 10 minutes, and 55 seconds
+Finished node (32, 8, 8) with initialization 19/30 in 0 hours, 17 minutes, and 25 seconds
+Finished node (32, 8, 8) with initialization 20/30 in 0 hours, 29 minutes, and 24 seconds
+Finished node (32, 8, 8) with initialization 21/30 in 0 hours, 13 minutes, and 58 seconds
+Finished node (32, 8, 8) with initialization 22/30 in 0 hours, 14 minutes, and 15 seconds
+Finished node (32, 8, 8) with initialization 23/30 in 0 hours, 25 minutes, and 34 seconds
+Finished node (32, 8, 8) with initialization 24/30 in 0 hours, 10 minutes, and 10 seconds
+Finished node (32, 8, 8) with initialization 25/30 in 0 hours, 27 minutes, and 41 seconds
+Finished node (32, 8, 8) with initialization 26/30 in 0 hours, 11 minutes, and 38 seconds
+Finished node (32, 8, 8) with initialization 27/30 in 0 hours, 13 minutes, and 39 seconds
+Finished node (32, 8, 8) with initialization 28/30 in 0 hours, 13 minutes, and 24 seconds
+Finished node (32, 8, 8) with initialization 29/30 in 0 hours, 16 minutes, and 28 seconds
+Finished node (32, 8, 8) with initialization 30/30 in 0 hours, 10 minutes, and 4 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 8, 8).weights.h5
+Finished node (16, 8, 8) with initialization 1/30 in 0 hours, 35 minutes, and 33 seconds
+Finished node (16, 8, 8) with initialization 2/30 in 0 hours, 26 minutes, and 12 seconds
+Finished node (16, 8, 8) with initialization 3/30 in 0 hours, 27 minutes, and 42 seconds
+Finished node (16, 8, 8) with initialization 4/30 in 0 hours, 26 minutes, and 27 seconds
+Finished node (16, 8, 8) with initialization 5/30 in 0 hours, 58 minutes, and 51 seconds
+Finished node (16, 8, 8) with initialization 6/30 in 0 hours, 36 minutes, and 43 seconds
+Finished node (16, 8, 8) with initialization 7/30 in 0 hours, 20 minutes, and 40 seconds
+Finished node (16, 8, 8) with initialization 8/30 in 0 hours, 17 minutes, and 38 seconds
+Finished node (16, 8, 8) with initialization 9/30 in 0 hours, 8 minutes, and 46 seconds
+Finished node (16, 8, 8) with initialization 10/30 in 0 hours, 14 minutes, and 52 seconds
+Finished node (16, 8, 8) with initialization 11/30 in 0 hours, 19 minutes, and 12 seconds
+Finished node (16, 8, 8) with initialization 12/30 in 0 hours, 23 minutes, and 10 seconds
+Finished node (16, 8, 8) with initialization 13/30 in 0 hours, 41 minutes, and 58 seconds
+Finished node (16, 8, 8) with initialization 14/30 in 0 hours, 11 minutes, and 47 seconds
+Finished node (16, 8, 8) with initialization 15/30 in 0 hours, 24 minutes, and 53 seconds
+Finished node (16, 8, 8) with initialization 16/30 in 0 hours, 17 minutes, and 53 seconds
+Finished node (16, 8, 8) with initialization 17/30 in 0 hours, 14 minutes, and 40 seconds
+Finished node (16, 8, 8) with initialization 18/30 in 0 hours, 21 minutes, and 33 seconds
+Finished node (16, 8, 8) with initialization 19/30 in 0 hours, 29 minutes, and 0 seconds
+Finished node (16, 8, 8) with initialization 20/30 in 0 hours, 9 minutes, and 34 seconds
+Finished node (16, 8, 8) with initialization 21/30 in 0 hours, 12 minutes, and 50 seconds
+Finished node (16, 8, 8) with initialization 22/30 in 0 hours, 9 minutes, and 33 seconds
+Finished node (16, 8, 8) with initialization 23/30 in 0 hours, 14 minutes, and 1 seconds
+Finished node (16, 8, 8) with initialization 24/30 in 0 hours, 9 minutes, and 45 seconds
+Finished node (16, 8, 8) with initialization 25/30 in 0 hours, 22 minutes, and 51 seconds
+Finished node (16, 8, 8) with initialization 26/30 in 0 hours, 27 minutes, and 4 seconds
+Finished node (16, 8, 8) with initialization 27/30 in 0 hours, 9 minutes, and 3 seconds
+Finished node (16, 8, 8) with initialization 28/30 in 0 hours, 13 minutes, and 59 seconds
+Finished node (16, 8, 8) with initialization 29/30 in 0 hours, 21 minutes, and 28 seconds
+Finished node (16, 8, 8) with initialization 30/30 in 0 hours, 8 minutes, and 35 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 8, 8).weights.h5
+Finished node (32, 32) with initialization 1/30 in 0 hours, 37 minutes, and 31 seconds
+Finished node (32, 32) with initialization 2/30 in 0 hours, 17 minutes, and 42 seconds
+Finished node (32, 32) with initialization 3/30 in 0 hours, 41 minutes, and 31 seconds
+Finished node (32, 32) with initialization 4/30 in 0 hours, 27 minutes, and 51 seconds
+Finished node (32, 32) with initialization 5/30 in 0 hours, 22 minutes, and 23 seconds
+Finished node (32, 32) with initialization 6/30 in 0 hours, 23 minutes, and 42 seconds
+Finished node (32, 32) with initialization 7/30 in 0 hours, 13 minutes, and 30 seconds
+Finished node (32, 32) with initialization 8/30 in 0 hours, 25 minutes, and 11 seconds
+Finished node (32, 32) with initialization 9/30 in 0 hours, 23 minutes, and 43 seconds
+Finished node (32, 32) with initialization 10/30 in 0 hours, 16 minutes, and 31 seconds
+Finished node (32, 32) with initialization 11/30 in 0 hours, 17 minutes, and 44 seconds
+Finished node (32, 32) with initialization 12/30 in 0 hours, 15 minutes, and 57 seconds
+Finished node (32, 32) with initialization 13/30 in 0 hours, 21 minutes, and 58 seconds
+Finished node (32, 32) with initialization 14/30 in 0 hours, 22 minutes, and 5 seconds
+Finished node (32, 32) with initialization 15/30 in 0 hours, 15 minutes, and 35 seconds
+Finished node (32, 32) with initialization 16/30 in 0 hours, 12 minutes, and 18 seconds
+Finished node (32, 32) with initialization 17/30 in 0 hours, 18 minutes, and 0 seconds
+Finished node (32, 32) with initialization 18/30 in 0 hours, 20 minutes, and 29 seconds
+Finished node (32, 32) with initialization 19/30 in 0 hours, 13 minutes, and 35 seconds
+Finished node (32, 32) with initialization 20/30 in 0 hours, 22 minutes, and 22 seconds
+Finished node (32, 32) with initialization 21/30 in 0 hours, 20 minutes, and 15 seconds
+Finished node (32, 32) with initialization 22/30 in 0 hours, 11 minutes, and 13 seconds
+Finished node (32, 32) with initialization 23/30 in 0 hours, 24 minutes, and 46 seconds
+Finished node (32, 32) with initialization 24/30 in 0 hours, 14 minutes, and 59 seconds
+Finished node (32, 32) with initialization 25/30 in 0 hours, 14 minutes, and 46 seconds
+Finished node (32, 32) with initialization 26/30 in 0 hours, 14 minutes, and 36 seconds
+Finished node (32, 32) with initialization 27/30 in 0 hours, 13 minutes, and 56 seconds
+Finished node (32, 32) with initialization 28/30 in 0 hours, 14 minutes, and 0 seconds
+Finished node (32, 32) with initialization 29/30 in 0 hours, 14 minutes, and 41 seconds
+Finished node (32, 32) with initialization 30/30 in 0 hours, 11 minutes, and 20 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 32).weights.h5
+Finished node (32, 32, 8) with initialization 1/30 in 1 hours, 51 minutes, and 3 seconds
+Finished node (32, 32, 8) with initialization 2/30 in 0 hours, 38 minutes, and 59 seconds
+Finished node (32, 32, 8) with initialization 3/30 in 1 hours, 45 minutes, and 45 seconds
+Finished node (32, 32, 8) with initialization 4/30 in 0 hours, 23 minutes, and 42 seconds
+Finished node (32, 32, 8) with initialization 5/30 in 1 hours, 1 minutes, and 57 seconds
+Finished node (32, 32, 8) with initialization 6/30 in 0 hours, 53 minutes, and 46 seconds
+Finished node (32, 32, 8) with initialization 7/30 in 0 hours, 22 minutes, and 13 seconds
+Finished node (32, 32, 8) with initialization 8/30 in 0 hours, 26 minutes, and 20 seconds
+Finished node (32, 32, 8) with initialization 9/30 in 0 hours, 12 minutes, and 6 seconds
+Finished node (32, 32, 8) with initialization 10/30 in 1 hours, 12 minutes, and 28 seconds
+Finished node (32, 32, 8) with initialization 11/30 in 1 hours, 7 minutes, and 46 seconds
+Finished node (32, 32, 8) with initialization 12/30 in 0 hours, 15 minutes, and 8 seconds
+Finished node (32, 32, 8) with initialization 13/30 in 0 hours, 16 minutes, and 45 seconds
+Finished node (32, 32, 8) with initialization 14/30 in 0 hours, 32 minutes, and 15 seconds
+Finished node (32, 32, 8) with initialization 15/30 in 0 hours, 55 minutes, and 3 seconds
+Finished node (32, 32, 8) with initialization 16/30 in 0 hours, 21 minutes, and 47 seconds
+Finished node (32, 32, 8) with initialization 17/30 in 0 hours, 11 minutes, and 11 seconds
+Finished node (32, 32, 8) with initialization 18/30 in 0 hours, 13 minutes, and 8 seconds
+Finished node (32, 32, 8) with initialization 19/30 in 0 hours, 33 minutes, and 2 seconds
+Finished node (32, 32, 8) with initialization 20/30 in 0 hours, 22 minutes, and 41 seconds
+Finished node (32, 32, 8) with initialization 21/30 in 0 hours, 13 minutes, and 1 seconds
+Finished node (32, 32, 8) with initialization 22/30 in 0 hours, 19 minutes, and 40 seconds
+Finished node (32, 32, 8) with initialization 23/30 in 0 hours, 18 minutes, and 12 seconds
+Finished node (32, 32, 8) with initialization 24/30 in 0 hours, 47 minutes, and 33 seconds
+Finished node (32, 32, 8) with initialization 25/30 in 0 hours, 19 minutes, and 55 seconds
+Finished node (32, 32, 8) with initialization 26/30 in 0 hours, 36 minutes, and 1 seconds
+Finished node (32, 32, 8) with initialization 27/30 in 0 hours, 23 minutes, and 36 seconds
+Finished node (32, 32, 8) with initialization 28/30 in 0 hours, 45 minutes, and 17 seconds
+Finished node (32, 32, 8) with initialization 29/30 in 0 hours, 11 minutes, and 21 seconds
+Finished node (32, 32, 8) with initialization 30/30 in 0 hours, 16 minutes, and 35 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 32, 8).weights.h5
+Finished node (8, 8, 2) with initialization 1/30 in 0 hours, 11 minutes, and 18 seconds
+Finished node (8, 8, 2) with initialization 2/30 in 0 hours, 4 minutes, and 28 seconds
+Finished node (8, 8, 2) with initialization 3/30 in 0 hours, 5 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 4/30 in 0 hours, 11 minutes, and 24 seconds
+Finished node (8, 8, 2) with initialization 5/30 in 0 hours, 10 minutes, and 57 seconds
+Finished node (8, 8, 2) with initialization 6/30 in 0 hours, 9 minutes, and 6 seconds
+Finished node (8, 8, 2) with initialization 7/30 in 0 hours, 8 minutes, and 56 seconds
+Finished node (8, 8, 2) with initialization 8/30 in 0 hours, 10 minutes, and 0 seconds
+Finished node (8, 8, 2) with initialization 9/30 in 0 hours, 8 minutes, and 31 seconds
+Finished node (8, 8, 2) with initialization 10/30 in 0 hours, 14 minutes, and 46 seconds
+Finished node (8, 8, 2) with initialization 11/30 in 0 hours, 12 minutes, and 30 seconds
+Finished node (8, 8, 2) with initialization 12/30 in 0 hours, 6 minutes, and 48 seconds
+Finished node (8, 8, 2) with initialization 13/30 in 0 hours, 4 minutes, and 59 seconds
+Finished node (8, 8, 2) with initialization 14/30 in 0 hours, 12 minutes, and 37 seconds
+Finished node (8, 8, 2) with initialization 15/30 in 0 hours, 6 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 16/30 in 0 hours, 12 minutes, and 4 seconds
+Finished node (8, 8, 2) with initialization 17/30 in 0 hours, 14 minutes, and 9 seconds
+Finished node (8, 8, 2) with initialization 18/30 in 0 hours, 10 minutes, and 23 seconds
+Finished node (8, 8, 2) with initialization 19/30 in 0 hours, 12 minutes, and 2 seconds
+Finished node (8, 8, 2) with initialization 20/30 in 0 hours, 4 minutes, and 38 seconds
+Finished node (8, 8, 2) with initialization 21/30 in 0 hours, 8 minutes, and 5 seconds
+Finished node (8, 8, 2) with initialization 22/30 in 0 hours, 7 minutes, and 0 seconds
+Finished node (8, 8, 2) with initialization 23/30 in 0 hours, 7 minutes, and 40 seconds
+Finished node (8, 8, 2) with initialization 24/30 in 0 hours, 2 minutes, and 35 seconds
+Finished node (8, 8, 2) with initialization 25/30 in 0 hours, 3 minutes, and 52 seconds
+Finished node (8, 8, 2) with initialization 26/30 in 0 hours, 11 minutes, and 0 seconds
+Finished node (8, 8, 2) with initialization 27/30 in 0 hours, 4 minutes, and 15 seconds
+Finished node (8, 8, 2) with initialization 28/30 in 0 hours, 23 minutes, and 21 seconds
+Finished node (8, 8, 2) with initialization 29/30 in 0 hours, 10 minutes, and 12 seconds
+Finished node (8, 8, 2) with initialization 30/30 in 0 hours, 3 minutes, and 57 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 8, 2).weights.h5
+Finished node (16, 16, 8) with initialization 1/30 in 0 hours, 23 minutes, and 13 seconds
+Finished node (16, 16, 8) with initialization 2/30 in 0 hours, 49 minutes, and 26 seconds
+Finished node (16, 16, 8) with initialization 3/30 in 1 hours, 21 minutes, and 14 seconds
+Finished node (16, 16, 8) with initialization 4/30 in 0 hours, 55 minutes, and 36 seconds
+Finished node (16, 16, 8) with initialization 5/30 in 1 hours, 12 minutes, and 34 seconds
+Finished node (16, 16, 8) with initialization 6/30 in 0 hours, 15 minutes, and 5 seconds
+Finished node (16, 16, 8) with initialization 7/30 in 0 hours, 59 minutes, and 8 seconds
+Finished node (16, 16, 8) with initialization 8/30 in 0 hours, 22 minutes, and 53 seconds
+Finished node (16, 16, 8) with initialization 9/30 in 0 hours, 38 minutes, and 8 seconds
+Finished node (16, 16, 8) with initialization 10/30 in 0 hours, 43 minutes, and 46 seconds
+Finished node (16, 16, 8) with initialization 11/30 in 0 hours, 25 minutes, and 45 seconds
+Finished node (16, 16, 8) with initialization 12/30 in 0 hours, 25 minutes, and 14 seconds
+Finished node (16, 16, 8) with initialization 13/30 in 0 hours, 44 minutes, and 1 seconds
+Finished node (16, 16, 8) with initialization 14/30 in 0 hours, 15 minutes, and 21 seconds
+Finished node (16, 16, 8) with initialization 15/30 in 0 hours, 20 minutes, and 24 seconds
+Finished node (16, 16, 8) with initialization 16/30 in 0 hours, 16 minutes, and 35 seconds
+Finished node (16, 16, 8) with initialization 17/30 in 0 hours, 24 minutes, and 10 seconds
+Finished node (16, 16, 8) with initialization 18/30 in 0 hours, 24 minutes, and 13 seconds
+Finished node (16, 16, 8) with initialization 19/30 in 0 hours, 16 minutes, and 7 seconds
+Finished node (16, 16, 8) with initialization 20/30 in 0 hours, 29 minutes, and 28 seconds
+Finished node (16, 16, 8) with initialization 21/30 in 0 hours, 9 minutes, and 46 seconds
+Finished node (16, 16, 8) with initialization 22/30 in 0 hours, 10 minutes, and 58 seconds
+Finished node (16, 16, 8) with initialization 23/30 in 0 hours, 12 minutes, and 42 seconds
+Finished node (16, 16, 8) with initialization 24/30 in 0 hours, 44 minutes, and 47 seconds
+Finished node (16, 16, 8) with initialization 25/30 in 0 hours, 11 minutes, and 8 seconds
+Finished node (16, 16, 8) with initialization 26/30 in 0 hours, 18 minutes, and 23 seconds
+Finished node (16, 16, 8) with initialization 27/30 in 0 hours, 12 minutes, and 2 seconds
+Finished node (16, 16, 8) with initialization 28/30 in 0 hours, 18 minutes, and 13 seconds
+Finished node (16, 16, 8) with initialization 29/30 in 0 hours, 8 minutes, and 2 seconds
+Finished node (16, 16, 8) with initialization 30/30 in 0 hours, 10 minutes, and 10 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 16, 8).weights.h5
+Finished node (16, 8, 4) with initialization 1/30 in 0 hours, 40 minutes, and 13 seconds
+Finished node (16, 8, 4) with initialization 2/30 in 0 hours, 16 minutes, and 6 seconds
+Finished node (16, 8, 4) with initialization 3/30 in 0 hours, 21 minutes, and 41 seconds
+Finished node (16, 8, 4) with initialization 4/30 in 0 hours, 17 minutes, and 10 seconds
+Finished node (16, 8, 4) with initialization 5/30 in 0 hours, 18 minutes, and 57 seconds
+Finished node (16, 8, 4) with initialization 6/30 in 0 hours, 18 minutes, and 12 seconds
+Finished node (16, 8, 4) with initialization 7/30 in 0 hours, 10 minutes, and 57 seconds
+Finished node (16, 8, 4) with initialization 8/30 in 0 hours, 20 minutes, and 2 seconds
+Finished node (16, 8, 4) with initialization 9/30 in 0 hours, 30 minutes, and 16 seconds
+Finished node (16, 8, 4) with initialization 10/30 in 0 hours, 22 minutes, and 27 seconds
+Finished node (16, 8, 4) with initialization 11/30 in 0 hours, 18 minutes, and 34 seconds
+Finished node (16, 8, 4) with initialization 12/30 in 0 hours, 21 minutes, and 20 seconds
+Finished node (16, 8, 4) with initialization 13/30 in 0 hours, 11 minutes, and 16 seconds
+Finished node (16, 8, 4) with initialization 14/30 in 0 hours, 10 minutes, and 45 seconds
+Finished node (16, 8, 4) with initialization 15/30 in 0 hours, 21 minutes, and 22 seconds
+Finished node (16, 8, 4) with initialization 16/30 in 0 hours, 11 minutes, and 38 seconds
+Finished node (16, 8, 4) with initialization 17/30 in 0 hours, 14 minutes, and 22 seconds
+Finished node (16, 8, 4) with initialization 18/30 in 0 hours, 12 minutes, and 53 seconds
+Finished node (16, 8, 4) with initialization 19/30 in 0 hours, 22 minutes, and 1 seconds
+Finished node (16, 8, 4) with initialization 20/30 in 0 hours, 16 minutes, and 28 seconds
+Finished node (16, 8, 4) with initialization 21/30 in 0 hours, 18 minutes, and 22 seconds
+Finished node (16, 8, 4) with initialization 22/30 in 0 hours, 14 minutes, and 53 seconds
+Finished node (16, 8, 4) with initialization 23/30 in 0 hours, 30 minutes, and 56 seconds
+Finished node (16, 8, 4) with initialization 24/30 in 0 hours, 10 minutes, and 25 seconds
+Finished node (16, 8, 4) with initialization 25/30 in 0 hours, 14 minutes, and 59 seconds
+Finished node (16, 8, 4) with initialization 26/30 in 0 hours, 15 minutes, and 53 seconds
+Finished node (16, 8, 4) with initialization 27/30 in 0 hours, 9 minutes, and 32 seconds
+Finished node (16, 8, 4) with initialization 28/30 in 0 hours, 10 minutes, and 38 seconds
+Finished node (16, 8, 4) with initialization 29/30 in 0 hours, 7 minutes, and 9 seconds
+Finished node (16, 8, 4) with initialization 30/30 in 0 hours, 9 minutes, and 59 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 8, 4).weights.h5
+Finished node (32, 16, 4) with initialization 1/30 in 0 hours, 9 minutes, and 19 seconds
+Finished node (32, 16, 4) with initialization 2/30 in 0 hours, 18 minutes, and 58 seconds
+Finished node (32, 16, 4) with initialization 3/30 in 0 hours, 42 minutes, and 22 seconds
+Finished node (32, 16, 4) with initialization 4/30 in 0 hours, 17 minutes, and 15 seconds
+Finished node (32, 16, 4) with initialization 5/30 in 0 hours, 53 minutes, and 31 seconds
+Finished node (32, 16, 4) with initialization 6/30 in 0 hours, 21 minutes, and 46 seconds
+Finished node (32, 16, 4) with initialization 7/30 in 0 hours, 38 minutes, and 30 seconds
+Finished node (32, 16, 4) with initialization 8/30 in 0 hours, 42 minutes, and 17 seconds
+Finished node (32, 16, 4) with initialization 9/30 in 0 hours, 24 minutes, and 38 seconds
+Finished node (32, 16, 4) with initialization 10/30 in 0 hours, 10 minutes, and 23 seconds
+Finished node (32, 16, 4) with initialization 11/30 in 1 hours, 4 minutes, and 1 seconds
+Finished node (32, 16, 4) with initialization 12/30 in 0 hours, 28 minutes, and 50 seconds
+Finished node (32, 16, 4) with initialization 13/30 in 0 hours, 27 minutes, and 45 seconds
+Finished node (32, 16, 4) with initialization 14/30 in 0 hours, 19 minutes, and 49 seconds
+Finished node (32, 16, 4) with initialization 15/30 in 0 hours, 13 minutes, and 27 seconds
+Finished node (32, 16, 4) with initialization 16/30 in 0 hours, 22 minutes, and 1 seconds
+Finished node (32, 16, 4) with initialization 17/30 in 0 hours, 7 minutes, and 52 seconds
+Finished node (32, 16, 4) with initialization 18/30 in 0 hours, 20 minutes, and 13 seconds
+Finished node (32, 16, 4) with initialization 19/30 in 0 hours, 16 minutes, and 24 seconds
+Finished node (32, 16, 4) with initialization 20/30 in 0 hours, 14 minutes, and 22 seconds
+Finished node (32, 16, 4) with initialization 21/30 in 0 hours, 21 minutes, and 17 seconds
+Finished node (32, 16, 4) with initialization 22/30 in 0 hours, 12 minutes, and 44 seconds
+Finished node (32, 16, 4) with initialization 23/30 in 0 hours, 21 minutes, and 55 seconds
+Finished node (32, 16, 4) with initialization 24/30 in 0 hours, 7 minutes, and 2 seconds
+Finished node (32, 16, 4) with initialization 25/30 in 0 hours, 25 minutes, and 41 seconds
+Finished node (32, 16, 4) with initialization 26/30 in 0 hours, 8 minutes, and 36 seconds
+Finished node (32, 16, 4) with initialization 27/30 in 0 hours, 8 minutes, and 25 seconds
+Finished node (32, 16, 4) with initialization 28/30 in 0 hours, 10 minutes, and 15 seconds
+Finished node (32, 16, 4) with initialization 29/30 in 0 hours, 9 minutes, and 15 seconds
+Finished node (32, 16, 4) with initialization 30/30 in 0 hours, 16 minutes, and 14 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 16, 4).weights.h5
+Finished node (4, 4, 4) with initialization 1/30 in 0 hours, 7 minutes, and 57 seconds
+Finished node (4, 4, 4) with initialization 2/30 in 0 hours, 7 minutes, and 7 seconds
+Finished node (4, 4, 4) with initialization 3/30 in 0 hours, 3 minutes, and 4 seconds
+Finished node (4, 4, 4) with initialization 4/30 in 0 hours, 11 minutes, and 31 seconds
+Finished node (4, 4, 4) with initialization 5/30 in 0 hours, 14 minutes, and 3 seconds
+Finished node (4, 4, 4) with initialization 6/30 in 0 hours, 4 minutes, and 30 seconds
+Finished node (4, 4, 4) with initialization 7/30 in 0 hours, 16 minutes, and 6 seconds
+Finished node (4, 4, 4) with initialization 8/30 in 0 hours, 8 minutes, and 5 seconds
+Finished node (4, 4, 4) with initialization 9/30 in 0 hours, 15 minutes, and 24 seconds
+Finished node (4, 4, 4) with initialization 10/30 in 0 hours, 8 minutes, and 27 seconds
+Finished node (4, 4, 4) with initialization 11/30 in 0 hours, 17 minutes, and 3 seconds
+Finished node (4, 4, 4) with initialization 12/30 in 0 hours, 11 minutes, and 30 seconds
+Finished node (4, 4, 4) with initialization 13/30 in 0 hours, 10 minutes, and 3 seconds
+Finished node (4, 4, 4) with initialization 14/30 in 0 hours, 4 minutes, and 20 seconds
+Finished node (4, 4, 4) with initialization 15/30 in 0 hours, 11 minutes, and 4 seconds
+Finished node (4, 4, 4) with initialization 16/30 in 0 hours, 3 minutes, and 4 seconds
+Finished node (4, 4, 4) with initialization 17/30 in 0 hours, 6 minutes, and 11 seconds
+Finished node (4, 4, 4) with initialization 18/30 in 0 hours, 8 minutes, and 35 seconds
+Finished node (4, 4, 4) with initialization 19/30 in 0 hours, 12 minutes, and 22 seconds
+Finished node (4, 4, 4) with initialization 20/30 in 0 hours, 8 minutes, and 30 seconds
+Finished node (4, 4, 4) with initialization 21/30 in 0 hours, 4 minutes, and 18 seconds
+Finished node (4, 4, 4) with initialization 22/30 in 0 hours, 18 minutes, and 3 seconds
+Finished node (4, 4, 4) with initialization 23/30 in 0 hours, 12 minutes, and 20 seconds
+Finished node (4, 4, 4) with initialization 24/30 in 0 hours, 9 minutes, and 53 seconds
+Finished node (4, 4, 4) with initialization 25/30 in 0 hours, 10 minutes, and 3 seconds
+Finished node (4, 4, 4) with initialization 26/30 in 0 hours, 7 minutes, and 38 seconds
+Finished node (4, 4, 4) with initialization 27/30 in 0 hours, 7 minutes, and 38 seconds
+Finished node (4, 4, 4) with initialization 28/30 in 0 hours, 4 minutes, and 47 seconds
+Finished node (4, 4, 4) with initialization 29/30 in 0 hours, 11 minutes, and 27 seconds
+Finished node (4, 4, 4) with initialization 30/30 in 0 hours, 2 minutes, and 53 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(4, 4, 4).weights.h5
+Finished node (64,) with initialization 1/30 in 0 hours, 19 minutes, and 4 seconds
+Finished node (64,) with initialization 2/30 in 0 hours, 12 minutes, and 42 seconds
+Finished node (64,) with initialization 3/30 in 0 hours, 9 minutes, and 0 seconds
+Finished node (64,) with initialization 4/30 in 0 hours, 34 minutes, and 9 seconds
+Finished node (64,) with initialization 5/30 in 0 hours, 12 minutes, and 57 seconds
+Finished node (64,) with initialization 6/30 in 0 hours, 10 minutes, and 13 seconds
+Finished node (64,) with initialization 7/30 in 0 hours, 9 minutes, and 14 seconds
+Finished node (64,) with initialization 8/30 in 0 hours, 9 minutes, and 46 seconds
+Finished node (64,) with initialization 9/30 in 0 hours, 25 minutes, and 36 seconds
+Finished node (64,) with initialization 10/30 in 0 hours, 10 minutes, and 22 seconds
+Finished node (64,) with initialization 11/30 in 0 hours, 8 minutes, and 29 seconds
+Finished node (64,) with initialization 12/30 in 0 hours, 10 minutes, and 30 seconds
+Finished node (64,) with initialization 13/30 in 0 hours, 16 minutes, and 46 seconds
+Finished node (64,) with initialization 14/30 in 0 hours, 10 minutes, and 44 seconds
+Finished node (64,) with initialization 15/30 in 0 hours, 4 minutes, and 21 seconds
+Finished node (64,) with initialization 16/30 in 0 hours, 16 minutes, and 11 seconds
+Finished node (64,) with initialization 17/30 in 0 hours, 10 minutes, and 58 seconds
+Finished node (64,) with initialization 18/30 in 0 hours, 10 minutes, and 5 seconds
+Finished node (64,) with initialization 19/30 in 0 hours, 15 minutes, and 36 seconds
+Finished node (64,) with initialization 20/30 in 0 hours, 3 minutes, and 3 seconds
+Finished node (64,) with initialization 21/30 in 0 hours, 7 minutes, and 22 seconds
+Finished node (64,) with initialization 22/30 in 0 hours, 11 minutes, and 50 seconds
+Finished node (64,) with initialization 23/30 in 0 hours, 10 minutes, and 13 seconds
+Finished node (64,) with initialization 24/30 in 0 hours, 2 minutes, and 42 seconds
+Finished node (64,) with initialization 25/30 in 0 hours, 14 minutes, and 26 seconds
+Finished node (64,) with initialization 26/30 in 0 hours, 8 minutes, and 33 seconds
+Finished node (64,) with initialization 27/30 in 0 hours, 7 minutes, and 31 seconds
+Finished node (64,) with initialization 28/30 in 0 hours, 13 minutes, and 33 seconds
+Finished node (64,) with initialization 29/30 in 0 hours, 5 minutes, and 10 seconds
+Finished node (64,) with initialization 30/30 in 0 hours, 4 minutes, and 19 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(64,).weights.h5
+Finished node (32, 4, 2) with initialization 1/30 in 0 hours, 10 minutes, and 57 seconds
+Finished node (32, 4, 2) with initialization 2/30 in 0 hours, 8 minutes, and 53 seconds
+Finished node (32, 4, 2) with initialization 3/30 in 0 hours, 30 minutes, and 12 seconds
+Finished node (32, 4, 2) with initialization 4/30 in 0 hours, 22 minutes, and 35 seconds
+Finished node (32, 4, 2) with initialization 5/30 in 0 hours, 24 minutes, and 22 seconds
+Finished node (32, 4, 2) with initialization 6/30 in 0 hours, 9 minutes, and 48 seconds
+Finished node (32, 4, 2) with initialization 7/30 in 0 hours, 9 minutes, and 11 seconds
+Finished node (32, 4, 2) with initialization 8/30 in 0 hours, 9 minutes, and 57 seconds
+Finished node (32, 4, 2) with initialization 9/30 in 0 hours, 12 minutes, and 47 seconds
+Finished node (32, 4, 2) with initialization 10/30 in 0 hours, 8 minutes, and 7 seconds
+Finished node (32, 4, 2) with initialization 11/30 in 0 hours, 27 minutes, and 32 seconds
+Finished node (32, 4, 2) with initialization 12/30 in 0 hours, 28 minutes, and 15 seconds
+Finished node (32, 4, 2) with initialization 13/30 in 0 hours, 37 minutes, and 10 seconds
+Finished node (32, 4, 2) with initialization 14/30 in 0 hours, 8 minutes, and 4 seconds
+Finished node (32, 4, 2) with initialization 15/30 in 0 hours, 17 minutes, and 22 seconds
+Finished node (32, 4, 2) with initialization 16/30 in 0 hours, 6 minutes, and 9 seconds
+Finished node (32, 4, 2) with initialization 17/30 in 0 hours, 24 minutes, and 40 seconds
+Finished node (32, 4, 2) with initialization 18/30 in 0 hours, 10 minutes, and 49 seconds
+Finished node (32, 4, 2) with initialization 19/30 in 0 hours, 7 minutes, and 16 seconds
+Finished node (32, 4, 2) with initialization 20/30 in 0 hours, 8 minutes, and 30 seconds
+Finished node (32, 4, 2) with initialization 21/30 in 0 hours, 10 minutes, and 31 seconds
+Finished node (32, 4, 2) with initialization 22/30 in 0 hours, 14 minutes, and 48 seconds
+Finished node (32, 4, 2) with initialization 23/30 in 0 hours, 11 minutes, and 4 seconds
+Finished node (32, 4, 2) with initialization 24/30 in 0 hours, 14 minutes, and 42 seconds
+Finished node (32, 4, 2) with initialization 25/30 in 0 hours, 9 minutes, and 14 seconds
+Finished node (32, 4, 2) with initialization 26/30 in 0 hours, 8 minutes, and 27 seconds
+Finished node (32, 4, 2) with initialization 27/30 in 0 hours, 9 minutes, and 23 seconds
+Finished node (32, 4, 2) with initialization 28/30 in 0 hours, 10 minutes, and 44 seconds
+Finished node (32, 4, 2) with initialization 29/30 in 0 hours, 10 minutes, and 0 seconds
+Finished node (32, 4, 2) with initialization 30/30 in 0 hours, 9 minutes, and 59 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 4, 2).weights.h5
+Finished node (16, 16, 2) with initialization 1/30 in 0 hours, 29 minutes, and 34 seconds
+Finished node (16, 16, 2) with initialization 2/30 in 0 hours, 9 minutes, and 52 seconds
+Finished node (16, 16, 2) with initialization 3/30 in 0 hours, 43 minutes, and 4 seconds
+Finished node (16, 16, 2) with initialization 4/30 in 0 hours, 32 minutes, and 26 seconds
+Finished node (16, 16, 2) with initialization 5/30 in 0 hours, 21 minutes, and 30 seconds
+Finished node (16, 16, 2) with initialization 6/30 in 0 hours, 17 minutes, and 54 seconds
+Finished node (16, 16, 2) with initialization 7/30 in 0 hours, 22 minutes, and 19 seconds
+Finished node (16, 16, 2) with initialization 8/30 in 0 hours, 28 minutes, and 26 seconds
+Finished node (16, 16, 2) with initialization 9/30 in 0 hours, 11 minutes, and 47 seconds
+Finished node (16, 16, 2) with initialization 10/30 in 0 hours, 19 minutes, and 3 seconds
+Finished node (16, 16, 2) with initialization 11/30 in 0 hours, 16 minutes, and 30 seconds
+Finished node (16, 16, 2) with initialization 12/30 in 0 hours, 31 minutes, and 49 seconds
+Finished node (16, 16, 2) with initialization 13/30 in 0 hours, 31 minutes, and 42 seconds
+Finished node (16, 16, 2) with initialization 14/30 in 0 hours, 22 minutes, and 42 seconds
+Finished node (16, 16, 2) with initialization 15/30 in 0 hours, 12 minutes, and 51 seconds
+Finished node (16, 16, 2) with initialization 16/30 in 0 hours, 15 minutes, and 26 seconds
+Finished node (16, 16, 2) with initialization 17/30 in 0 hours, 23 minutes, and 33 seconds
+Finished node (16, 16, 2) with initialization 18/30 in 0 hours, 17 minutes, and 41 seconds
+Finished node (16, 16, 2) with initialization 19/30 in 0 hours, 14 minutes, and 29 seconds
+Finished node (16, 16, 2) with initialization 20/30 in 0 hours, 10 minutes, and 12 seconds
+Finished node (16, 16, 2) with initialization 21/30 in 0 hours, 36 minutes, and 16 seconds
+Finished node (16, 16, 2) with initialization 22/30 in 0 hours, 15 minutes, and 21 seconds
+Finished node (16, 16, 2) with initialization 23/30 in 0 hours, 7 minutes, and 7 seconds
+Finished node (16, 16, 2) with initialization 24/30 in 0 hours, 14 minutes, and 48 seconds
+Finished node (16, 16, 2) with initialization 25/30 in 0 hours, 8 minutes, and 15 seconds
+Finished node (16, 16, 2) with initialization 26/30 in 0 hours, 15 minutes, and 57 seconds
+Finished node (16, 16, 2) with initialization 27/30 in 0 hours, 8 minutes, and 8 seconds
+Finished node (16, 16, 2) with initialization 28/30 in 0 hours, 16 minutes, and 7 seconds
+Finished node (16, 16, 2) with initialization 29/30 in 0 hours, 14 minutes, and 56 seconds
+Finished node (16, 16, 2) with initialization 30/30 in 0 hours, 8 minutes, and 48 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 16, 2).weights.h5
+Finished node (8, 8, 8) with initialization 1/30 in 0 hours, 13 minutes, and 16 seconds
+Finished node (8, 8, 8) with initialization 2/30 in 0 hours, 16 minutes, and 57 seconds
+Finished node (8, 8, 8) with initialization 3/30 in 0 hours, 12 minutes, and 15 seconds
+Finished node (8, 8, 8) with initialization 4/30 in 0 hours, 13 minutes, and 54 seconds
+Finished node (8, 8, 8) with initialization 5/30 in 0 hours, 12 minutes, and 58 seconds
+Finished node (8, 8, 8) with initialization 6/30 in 0 hours, 7 minutes, and 46 seconds
+Finished node (8, 8, 8) with initialization 7/30 in 0 hours, 27 minutes, and 40 seconds
+Finished node (8, 8, 8) with initialization 8/30 in 0 hours, 33 minutes, and 16 seconds
+Finished node (8, 8, 8) with initialization 9/30 in 0 hours, 11 minutes, and 53 seconds
+Finished node (8, 8, 8) with initialization 10/30 in 0 hours, 13 minutes, and 4 seconds
+Finished node (8, 8, 8) with initialization 11/30 in 0 hours, 27 minutes, and 59 seconds
+Finished node (8, 8, 8) with initialization 12/30 in 0 hours, 16 minutes, and 36 seconds
+Finished node (8, 8, 8) with initialization 13/30 in 0 hours, 14 minutes, and 12 seconds
+Finished node (8, 8, 8) with initialization 14/30 in 0 hours, 11 minutes, and 40 seconds
+Finished node (8, 8, 8) with initialization 15/30 in 0 hours, 8 minutes, and 29 seconds
+Finished node (8, 8, 8) with initialization 16/30 in 0 hours, 10 minutes, and 32 seconds
+Finished node (8, 8, 8) with initialization 17/30 in 0 hours, 13 minutes, and 0 seconds
+Finished node (8, 8, 8) with initialization 18/30 in 0 hours, 31 minutes, and 47 seconds
+Finished node (8, 8, 8) with initialization 19/30 in 0 hours, 16 minutes, and 2 seconds
+Finished node (8, 8, 8) with initialization 20/30 in 0 hours, 10 minutes, and 35 seconds
+Finished node (8, 8, 8) with initialization 21/30 in 0 hours, 23 minutes, and 44 seconds
+Finished node (8, 8, 8) with initialization 22/30 in 0 hours, 47 minutes, and 58 seconds
+Finished node (8, 8, 8) with initialization 23/30 in 0 hours, 8 minutes, and 18 seconds
+Finished node (8, 8, 8) with initialization 24/30 in 0 hours, 21 minutes, and 40 seconds
+Finished node (8, 8, 8) with initialization 25/30 in 0 hours, 8 minutes, and 16 seconds
+Finished node (8, 8, 8) with initialization 26/30 in 0 hours, 9 minutes, and 49 seconds
+Finished node (8, 8, 8) with initialization 27/30 in 0 hours, 6 minutes, and 35 seconds
+Finished node (8, 8, 8) with initialization 28/30 in 0 hours, 18 minutes, and 58 seconds
+Finished node (8, 8, 8) with initialization 29/30 in 0 hours, 15 minutes, and 15 seconds
+Finished node (8, 8, 8) with initialization 30/30 in 0 hours, 24 minutes, and 41 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 8, 8).weights.h5
+Finished node (32, 32, 4) with initialization 1/30 in 0 hours, 19 minutes, and 18 seconds
+Finished node (32, 32, 4) with initialization 2/30 in 0 hours, 21 minutes, and 4 seconds
+Finished node (32, 32, 4) with initialization 3/30 in 0 hours, 22 minutes, and 53 seconds
+Finished node (32, 32, 4) with initialization 4/30 in 0 hours, 17 minutes, and 46 seconds
+Finished node (32, 32, 4) with initialization 5/30 in 0 hours, 14 minutes, and 7 seconds
+Finished node (32, 32, 4) with initialization 6/30 in 0 hours, 42 minutes, and 35 seconds
+Finished node (32, 32, 4) with initialization 7/30 in 0 hours, 16 minutes, and 1 seconds
+Finished node (32, 32, 4) with initialization 8/30 in 0 hours, 31 minutes, and 30 seconds
+Finished node (32, 32, 4) with initialization 9/30 in 0 hours, 9 minutes, and 47 seconds
+Finished node (32, 32, 4) with initialization 10/30 in 0 hours, 16 minutes, and 10 seconds
+Finished node (32, 32, 4) with initialization 11/30 in 0 hours, 18 minutes, and 23 seconds
+Finished node (32, 32, 4) with initialization 12/30 in 0 hours, 13 minutes, and 35 seconds
+Finished node (32, 32, 4) with initialization 13/30 in 0 hours, 21 minutes, and 43 seconds
+Finished node (32, 32, 4) with initialization 14/30 in 0 hours, 16 minutes, and 26 seconds
+Finished node (32, 32, 4) with initialization 15/30 in 0 hours, 14 minutes, and 27 seconds
+Finished node (32, 32, 4) with initialization 16/30 in 0 hours, 16 minutes, and 15 seconds
+Finished node (32, 32, 4) with initialization 17/30 in 0 hours, 25 minutes, and 9 seconds
+Finished node (32, 32, 4) with initialization 18/30 in 0 hours, 45 minutes, and 3 seconds
+Finished node (32, 32, 4) with initialization 19/30 in 0 hours, 10 minutes, and 56 seconds
+Finished node (32, 32, 4) with initialization 20/30 in 0 hours, 29 minutes, and 55 seconds
+Finished node (32, 32, 4) with initialization 21/30 in 0 hours, 24 minutes, and 11 seconds
+Finished node (32, 32, 4) with initialization 22/30 in 0 hours, 20 minutes, and 14 seconds
+Finished node (32, 32, 4) with initialization 23/30 in 0 hours, 19 minutes, and 30 seconds
+Finished node (32, 32, 4) with initialization 24/30 in 0 hours, 18 minutes, and 24 seconds
+Finished node (32, 32, 4) with initialization 25/30 in 0 hours, 15 minutes, and 34 seconds
+Finished node (32, 32, 4) with initialization 26/30 in 0 hours, 29 minutes, and 19 seconds
+Finished node (32, 32, 4) with initialization 27/30 in 0 hours, 12 minutes, and 47 seconds
+Finished node (32, 32, 4) with initialization 28/30 in 0 hours, 12 minutes, and 49 seconds
+Finished node (32, 32, 4) with initialization 29/30 in 0 hours, 17 minutes, and 56 seconds
+Finished node (32, 32, 4) with initialization 30/30 in 0 hours, 14 minutes, and 48 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 32, 4).weights.h5
+Finished node (32, 4) with initialization 1/30 in 0 hours, 15 minutes, and 17 seconds
+Finished node (32, 4) with initialization 2/30 in 0 hours, 10 minutes, and 5 seconds
+Finished node (32, 4) with initialization 3/30 in 0 hours, 20 minutes, and 36 seconds
+Finished node (32, 4) with initialization 4/30 in 0 hours, 13 minutes, and 41 seconds
+Finished node (32, 4) with initialization 5/30 in 0 hours, 22 minutes, and 0 seconds
+Finished node (32, 4) with initialization 6/30 in 0 hours, 17 minutes, and 50 seconds
+Finished node (32, 4) with initialization 7/30 in 0 hours, 11 minutes, and 14 seconds
+Finished node (32, 4) with initialization 8/30 in 0 hours, 19 minutes, and 45 seconds
+Finished node (32, 4) with initialization 9/30 in 0 hours, 11 minutes, and 6 seconds
+Finished node (32, 4) with initialization 10/30 in 0 hours, 10 minutes, and 4 seconds
+Finished node (32, 4) with initialization 11/30 in 0 hours, 14 minutes, and 10 seconds
+Finished node (32, 4) with initialization 12/30 in 0 hours, 11 minutes, and 18 seconds
+Finished node (32, 4) with initialization 13/30 in 0 hours, 17 minutes, and 8 seconds
+Finished node (32, 4) with initialization 14/30 in 0 hours, 6 minutes, and 53 seconds
+Finished node (32, 4) with initialization 15/30 in 0 hours, 12 minutes, and 26 seconds
+Finished node (32, 4) with initialization 16/30 in 0 hours, 11 minutes, and 44 seconds
+Finished node (32, 4) with initialization 17/30 in 0 hours, 7 minutes, and 18 seconds
+Finished node (32, 4) with initialization 18/30 in 0 hours, 14 minutes, and 26 seconds
+Finished node (32, 4) with initialization 19/30 in 0 hours, 12 minutes, and 42 seconds
+Finished node (32, 4) with initialization 20/30 in 0 hours, 7 minutes, and 56 seconds
+Finished node (32, 4) with initialization 21/30 in 0 hours, 8 minutes, and 43 seconds
+Finished node (32, 4) with initialization 22/30 in 0 hours, 7 minutes, and 38 seconds
+Finished node (32, 4) with initialization 23/30 in 0 hours, 11 minutes, and 39 seconds
+Finished node (32, 4) with initialization 24/30 in 0 hours, 5 minutes, and 59 seconds
+Finished node (32, 4) with initialization 25/30 in 0 hours, 6 minutes, and 12 seconds
+Finished node (32, 4) with initialization 26/30 in 0 hours, 12 minutes, and 23 seconds
+Finished node (32, 4) with initialization 27/30 in 0 hours, 7 minutes, and 13 seconds
+Finished node (32, 4) with initialization 28/30 in 0 hours, 8 minutes, and 51 seconds
+Finished node (32, 4) with initialization 29/30 in 0 hours, 7 minutes, and 5 seconds
+Finished node (32, 4) with initialization 30/30 in 0 hours, 6 minutes, and 33 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 4).weights.h5
+Finished node (16, 2) with initialization 1/30 in 0 hours, 7 minutes, and 10 seconds
+Finished node (16, 2) with initialization 2/30 in 0 hours, 13 minutes, and 35 seconds
+Finished node (16, 2) with initialization 3/30 in 0 hours, 13 minutes, and 5 seconds
+Finished node (16, 2) with initialization 4/30 in 0 hours, 12 minutes, and 49 seconds
+Finished node (16, 2) with initialization 5/30 in 0 hours, 10 minutes, and 7 seconds
+Finished node (16, 2) with initialization 6/30 in 0 hours, 11 minutes, and 4 seconds
+Finished node (16, 2) with initialization 7/30 in 0 hours, 6 minutes, and 57 seconds
+Finished node (16, 2) with initialization 8/30 in 0 hours, 6 minutes, and 10 seconds
+Finished node (16, 2) with initialization 9/30 in 0 hours, 9 minutes, and 16 seconds
+Finished node (16, 2) with initialization 10/30 in 0 hours, 8 minutes, and 25 seconds
+Finished node (16, 2) with initialization 11/30 in 0 hours, 4 minutes, and 32 seconds
+Finished node (16, 2) with initialization 12/30 in 0 hours, 4 minutes, and 52 seconds
+Finished node (16, 2) with initialization 13/30 in 0 hours, 10 minutes, and 15 seconds
+Finished node (16, 2) with initialization 14/30 in 0 hours, 7 minutes, and 56 seconds
+Finished node (16, 2) with initialization 15/30 in 0 hours, 9 minutes, and 34 seconds
+Finished node (16, 2) with initialization 16/30 in 0 hours, 9 minutes, and 35 seconds
+Finished node (16, 2) with initialization 17/30 in 0 hours, 3 minutes, and 59 seconds
+Finished node (16, 2) with initialization 18/30 in 0 hours, 10 minutes, and 3 seconds
+Finished node (16, 2) with initialization 19/30 in 0 hours, 6 minutes, and 42 seconds
+Finished node (16, 2) with initialization 20/30 in 0 hours, 11 minutes, and 32 seconds
+Finished node (16, 2) with initialization 21/30 in 0 hours, 10 minutes, and 12 seconds
+Finished node (16, 2) with initialization 22/30 in 0 hours, 8 minutes, and 38 seconds
+Finished node (16, 2) with initialization 23/30 in 0 hours, 4 minutes, and 39 seconds
+Finished node (16, 2) with initialization 24/30 in 0 hours, 11 minutes, and 10 seconds
+Finished node (16, 2) with initialization 25/30 in 0 hours, 4 minutes, and 41 seconds
+Finished node (16, 2) with initialization 26/30 in 0 hours, 8 minutes, and 57 seconds
+Finished node (16, 2) with initialization 27/30 in 0 hours, 6 minutes, and 4 seconds
+Finished node (16, 2) with initialization 28/30 in 0 hours, 9 minutes, and 41 seconds
+Finished node (16, 2) with initialization 29/30 in 0 hours, 12 minutes, and 42 seconds
+Finished node (16, 2) with initialization 30/30 in 0 hours, 10 minutes, and 29 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 2).weights.h5
+Finished node (8, 4, 4) with initialization 1/30 in 0 hours, 19 minutes, and 31 seconds
+Finished node (8, 4, 4) with initialization 2/30 in 0 hours, 6 minutes, and 58 seconds
+Finished node (8, 4, 4) with initialization 3/30 in 0 hours, 11 minutes, and 5 seconds
+Finished node (8, 4, 4) with initialization 4/30 in 0 hours, 11 minutes, and 55 seconds
+Finished node (8, 4, 4) with initialization 5/30 in 0 hours, 9 minutes, and 2 seconds
+Finished node (8, 4, 4) with initialization 6/30 in 0 hours, 7 minutes, and 22 seconds
+Finished node (8, 4, 4) with initialization 7/30 in 0 hours, 15 minutes, and 29 seconds
+Finished node (8, 4, 4) with initialization 8/30 in 0 hours, 28 minutes, and 20 seconds
+Finished node (8, 4, 4) with initialization 9/30 in 0 hours, 11 minutes, and 19 seconds
+Finished node (8, 4, 4) with initialization 10/30 in 0 hours, 7 minutes, and 46 seconds
+Finished node (8, 4, 4) with initialization 11/30 in 0 hours, 10 minutes, and 20 seconds
+Finished node (8, 4, 4) with initialization 12/30 in 0 hours, 6 minutes, and 41 seconds
+Finished node (8, 4, 4) with initialization 13/30 in 0 hours, 7 minutes, and 2 seconds
+Finished node (8, 4, 4) with initialization 14/30 in 0 hours, 6 minutes, and 50 seconds
+Finished node (8, 4, 4) with initialization 15/30 in 0 hours, 19 minutes, and 38 seconds
+Finished node (8, 4, 4) with initialization 16/30 in 0 hours, 11 minutes, and 35 seconds
+Finished node (8, 4, 4) with initialization 17/30 in 0 hours, 4 minutes, and 32 seconds
+Finished node (8, 4, 4) with initialization 18/30 in 0 hours, 5 minutes, and 26 seconds
+Finished node (8, 4, 4) with initialization 19/30 in 0 hours, 7 minutes, and 54 seconds
+Finished node (8, 4, 4) with initialization 20/30 in 0 hours, 7 minutes, and 15 seconds
+Finished node (8, 4, 4) with initialization 21/30 in 0 hours, 6 minutes, and 45 seconds
+Finished node (8, 4, 4) with initialization 22/30 in 0 hours, 5 minutes, and 17 seconds
+Finished node (8, 4, 4) with initialization 23/30 in 0 hours, 13 minutes, and 58 seconds
+Finished node (8, 4, 4) with initialization 24/30 in 0 hours, 6 minutes, and 4 seconds
+Finished node (8, 4, 4) with initialization 25/30 in 0 hours, 10 minutes, and 43 seconds
+Finished node (8, 4, 4) with initialization 26/30 in 0 hours, 6 minutes, and 29 seconds
+Finished node (8, 4, 4) with initialization 27/30 in 0 hours, 6 minutes, and 3 seconds
+Finished node (8, 4, 4) with initialization 28/30 in 0 hours, 4 minutes, and 39 seconds
+Finished node (8, 4, 4) with initialization 29/30 in 0 hours, 18 minutes, and 26 seconds
+Finished node (8, 4, 4) with initialization 30/30 in 0 hours, 6 minutes, and 14 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 4, 4).weights.h5
+Finished node (32, 32, 2) with initialization 1/30 in 0 hours, 32 minutes, and 10 seconds
+Finished node (32, 32, 2) with initialization 2/30 in 0 hours, 18 minutes, and 48 seconds
+Finished node (32, 32, 2) with initialization 3/30 in 0 hours, 14 minutes, and 41 seconds
+Finished node (32, 32, 2) with initialization 4/30 in 0 hours, 18 minutes, and 21 seconds
+Finished node (32, 32, 2) with initialization 5/30 in 0 hours, 14 minutes, and 15 seconds
+Finished node (32, 32, 2) with initialization 6/30 in 0 hours, 6 minutes, and 2 seconds
+Finished node (32, 32, 2) with initialization 7/30 in 0 hours, 12 minutes, and 45 seconds
+Finished node (32, 32, 2) with initialization 8/30 in 0 hours, 26 minutes, and 4 seconds
+Finished node (32, 32, 2) with initialization 9/30 in 0 hours, 13 minutes, and 12 seconds
+Finished node (32, 32, 2) with initialization 10/30 in 0 hours, 6 minutes, and 58 seconds
+Finished node (32, 32, 2) with initialization 11/30 in 1 hours, 22 minutes, and 46 seconds
+Finished node (32, 32, 2) with initialization 12/30 in 0 hours, 22 minutes, and 56 seconds
+Finished node (32, 32, 2) with initialization 13/30 in 0 hours, 56 minutes, and 52 seconds
+Finished node (32, 32, 2) with initialization 14/30 in 0 hours, 11 minutes, and 41 seconds
+Finished node (32, 32, 2) with initialization 15/30 in 0 hours, 9 minutes, and 35 seconds
+Finished node (32, 32, 2) with initialization 16/30 in 0 hours, 35 minutes, and 57 seconds
+Finished node (32, 32, 2) with initialization 17/30 in 0 hours, 15 minutes, and 43 seconds
+Finished node (32, 32, 2) with initialization 18/30 in 0 hours, 16 minutes, and 42 seconds
+Finished node (32, 32, 2) with initialization 19/30 in 0 hours, 19 minutes, and 39 seconds
+Finished node (32, 32, 2) with initialization 20/30 in 0 hours, 21 minutes, and 53 seconds
+Finished node (32, 32, 2) with initialization 21/30 in 0 hours, 28 minutes, and 8 seconds
+Finished node (32, 32, 2) with initialization 22/30 in 0 hours, 17 minutes, and 31 seconds
+Finished node (32, 32, 2) with initialization 23/30 in 0 hours, 16 minutes, and 2 seconds
+Finished node (32, 32, 2) with initialization 24/30 in 0 hours, 19 minutes, and 22 seconds
+Finished node (32, 32, 2) with initialization 25/30 in 0 hours, 28 minutes, and 44 seconds
+Finished node (32, 32, 2) with initialization 26/30 in 0 hours, 8 minutes, and 16 seconds
+Finished node (32, 32, 2) with initialization 27/30 in 0 hours, 14 minutes, and 54 seconds
+Finished node (32, 32, 2) with initialization 28/30 in 0 hours, 15 minutes, and 34 seconds
+Finished node (32, 32, 2) with initialization 29/30 in 0 hours, 10 minutes, and 9 seconds
+Finished node (32, 32, 2) with initialization 30/30 in 0 hours, 15 minutes, and 40 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 32, 2).weights.h5
+Finished node (16, 16) with initialization 1/30 in 0 hours, 33 minutes, and 6 seconds
+Finished node (16, 16) with initialization 2/30 in 0 hours, 17 minutes, and 4 seconds
+Finished node (16, 16) with initialization 3/30 in 0 hours, 38 minutes, and 25 seconds
+Finished node (16, 16) with initialization 4/30 in 0 hours, 21 minutes, and 59 seconds
+Finished node (16, 16) with initialization 5/30 in 0 hours, 15 minutes, and 2 seconds
+Finished node (16, 16) with initialization 6/30 in 0 hours, 22 minutes, and 23 seconds
+Finished node (16, 16) with initialization 7/30 in 0 hours, 21 minutes, and 39 seconds
+Finished node (16, 16) with initialization 8/30 in 0 hours, 17 minutes, and 13 seconds
+Finished node (16, 16) with initialization 9/30 in 0 hours, 19 minutes, and 56 seconds
+Finished node (16, 16) with initialization 10/30 in 0 hours, 31 minutes, and 4 seconds
+Finished node (16, 16) with initialization 11/30 in 0 hours, 18 minutes, and 55 seconds
+Finished node (16, 16) with initialization 12/30 in 0 hours, 13 minutes, and 6 seconds
+Finished node (16, 16) with initialization 13/30 in 0 hours, 13 minutes, and 27 seconds
+Finished node (16, 16) with initialization 14/30 in 0 hours, 31 minutes, and 48 seconds
+Finished node (16, 16) with initialization 15/30 in 0 hours, 20 minutes, and 59 seconds
+Finished node (16, 16) with initialization 16/30 in 0 hours, 25 minutes, and 55 seconds
+Finished node (16, 16) with initialization 17/30 in 0 hours, 18 minutes, and 10 seconds
+Finished node (16, 16) with initialization 18/30 in 0 hours, 15 minutes, and 43 seconds
+Finished node (16, 16) with initialization 19/30 in 0 hours, 10 minutes, and 57 seconds
+Finished node (16, 16) with initialization 20/30 in 0 hours, 15 minutes, and 10 seconds
+Finished node (16, 16) with initialization 21/30 in 0 hours, 13 minutes, and 10 seconds
+Finished node (16, 16) with initialization 22/30 in 0 hours, 19 minutes, and 17 seconds
+Finished node (16, 16) with initialization 23/30 in 0 hours, 13 minutes, and 1 seconds
+Finished node (16, 16) with initialization 24/30 in 0 hours, 13 minutes, and 23 seconds
+Finished node (16, 16) with initialization 25/30 in 0 hours, 11 minutes, and 52 seconds
+Finished node (16, 16) with initialization 26/30 in 0 hours, 13 minutes, and 30 seconds
+Finished node (16, 16) with initialization 27/30 in 0 hours, 12 minutes, and 18 seconds
+Finished node (16, 16) with initialization 28/30 in 0 hours, 9 minutes, and 59 seconds
+Finished node (16, 16) with initialization 29/30 in 0 hours, 14 minutes, and 17 seconds
+Finished node (16, 16) with initialization 30/30 in 0 hours, 12 minutes, and 2 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 16).weights.h5
+Finished node (32, 8, 4) with initialization 1/30 in 0 hours, 31 minutes, and 8 seconds
+Finished node (32, 8, 4) with initialization 2/30 in 0 hours, 15 minutes, and 59 seconds
+Finished node (32, 8, 4) with initialization 3/30 in 0 hours, 23 minutes, and 36 seconds
+Finished node (32, 8, 4) with initialization 4/30 in 0 hours, 17 minutes, and 26 seconds
+Finished node (32, 8, 4) with initialization 5/30 in 1 hours, 23 minutes, and 47 seconds
+Finished node (32, 8, 4) with initialization 6/30 in 1 hours, 2 minutes, and 58 seconds
+Finished node (32, 8, 4) with initialization 7/30 in 0 hours, 21 minutes, and 18 seconds
+Finished node (32, 8, 4) with initialization 8/30 in 0 hours, 52 minutes, and 8 seconds
+Finished node (32, 8, 4) with initialization 9/30 in 0 hours, 16 minutes, and 26 seconds
+Finished node (32, 8, 4) with initialization 10/30 in 0 hours, 18 minutes, and 57 seconds
+Finished node (32, 8, 4) with initialization 11/30 in 0 hours, 42 minutes, and 12 seconds
+Finished node (32, 8, 4) with initialization 12/30 in 0 hours, 10 minutes, and 52 seconds
+Finished node (32, 8, 4) with initialization 13/30 in 0 hours, 8 minutes, and 4 seconds
+Finished node (32, 8, 4) with initialization 14/30 in 0 hours, 8 minutes, and 14 seconds
+Finished node (32, 8, 4) with initialization 15/30 in 0 hours, 11 minutes, and 57 seconds
+Finished node (32, 8, 4) with initialization 16/30 in 0 hours, 13 minutes, and 4 seconds
+Finished node (32, 8, 4) with initialization 17/30 in 0 hours, 23 minutes, and 26 seconds
+Finished node (32, 8, 4) with initialization 18/30 in 0 hours, 8 minutes, and 20 seconds
+Finished node (32, 8, 4) with initialization 19/30 in 0 hours, 7 minutes, and 22 seconds
+Finished node (32, 8, 4) with initialization 20/30 in 0 hours, 12 minutes, and 49 seconds
+Finished node (32, 8, 4) with initialization 21/30 in 0 hours, 11 minutes, and 34 seconds
+Finished node (32, 8, 4) with initialization 22/30 in 0 hours, 11 minutes, and 1 seconds
+Finished node (32, 8, 4) with initialization 23/30 in 0 hours, 16 minutes, and 27 seconds
+Finished node (32, 8, 4) with initialization 24/30 in 0 hours, 8 minutes, and 11 seconds
+Finished node (32, 8, 4) with initialization 25/30 in 0 hours, 33 minutes, and 32 seconds
+Finished node (32, 8, 4) with initialization 26/30 in 0 hours, 15 minutes, and 48 seconds
+Finished node (32, 8, 4) with initialization 27/30 in 0 hours, 11 minutes, and 41 seconds
+Finished node (32, 8, 4) with initialization 28/30 in 0 hours, 13 minutes, and 21 seconds
+Finished node (32, 8, 4) with initialization 29/30 in 0 hours, 10 minutes, and 2 seconds
+Finished node (32, 8, 4) with initialization 30/30 in 0 hours, 10 minutes, and 56 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 8, 4).weights.h5
+Finished node (16, 8) with initialization 1/30 in 0 hours, 19 minutes, and 38 seconds
+Finished node (16, 8) with initialization 2/30 in 0 hours, 13 minutes, and 18 seconds
+Finished node (16, 8) with initialization 3/30 in 0 hours, 7 minutes, and 39 seconds
+Finished node (16, 8) with initialization 4/30 in 0 hours, 25 minutes, and 32 seconds
+Finished node (16, 8) with initialization 5/30 in 0 hours, 8 minutes, and 2 seconds
+Finished node (16, 8) with initialization 6/30 in 0 hours, 16 minutes, and 33 seconds
+Finished node (16, 8) with initialization 7/30 in 0 hours, 23 minutes, and 29 seconds
+Finished node (16, 8) with initialization 8/30 in 0 hours, 28 minutes, and 47 seconds
+Finished node (16, 8) with initialization 9/30 in 0 hours, 13 minutes, and 6 seconds
+Finished node (16, 8) with initialization 10/30 in 0 hours, 18 minutes, and 35 seconds
+Finished node (16, 8) with initialization 11/30 in 0 hours, 12 minutes, and 29 seconds
+Finished node (16, 8) with initialization 12/30 in 0 hours, 23 minutes, and 8 seconds
+Finished node (16, 8) with initialization 13/30 in 0 hours, 11 minutes, and 10 seconds
+Finished node (16, 8) with initialization 14/30 in 0 hours, 16 minutes, and 7 seconds
+Finished node (16, 8) with initialization 15/30 in 0 hours, 11 minutes, and 27 seconds
+Finished node (16, 8) with initialization 16/30 in 0 hours, 14 minutes, and 18 seconds
+Finished node (16, 8) with initialization 17/30 in 0 hours, 12 minutes, and 54 seconds
+Finished node (16, 8) with initialization 18/30 in 0 hours, 7 minutes, and 25 seconds
+Finished node (16, 8) with initialization 19/30 in 0 hours, 12 minutes, and 51 seconds
+Finished node (16, 8) with initialization 20/30 in 0 hours, 16 minutes, and 44 seconds
+Finished node (16, 8) with initialization 21/30 in 0 hours, 10 minutes, and 4 seconds
+Finished node (16, 8) with initialization 22/30 in 0 hours, 6 minutes, and 56 seconds
+Finished node (16, 8) with initialization 23/30 in 0 hours, 9 minutes, and 40 seconds
+Finished node (16, 8) with initialization 24/30 in 0 hours, 8 minutes, and 25 seconds
+Finished node (16, 8) with initialization 25/30 in 0 hours, 8 minutes, and 48 seconds
+Finished node (16, 8) with initialization 26/30 in 0 hours, 11 minutes, and 4 seconds
+Finished node (16, 8) with initialization 27/30 in 0 hours, 8 minutes, and 48 seconds
+Finished node (16, 8) with initialization 28/30 in 0 hours, 11 minutes, and 23 seconds
+Finished node (16, 8) with initialization 29/30 in 0 hours, 4 minutes, and 58 seconds
+Finished node (16, 8) with initialization 30/30 in 0 hours, 7 minutes, and 29 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(16, 8).weights.h5
+Finished node (8, 8) with initialization 1/30 in 0 hours, 11 minutes, and 17 seconds
+Finished node (8, 8) with initialization 2/30 in 0 hours, 9 minutes, and 16 seconds
+Finished node (8, 8) with initialization 3/30 in 0 hours, 8 minutes, and 58 seconds
+Finished node (8, 8) with initialization 4/30 in 0 hours, 9 minutes, and 32 seconds
+Finished node (8, 8) with initialization 5/30 in 0 hours, 8 minutes, and 49 seconds
+Finished node (8, 8) with initialization 6/30 in 0 hours, 15 minutes, and 6 seconds
+Finished node (8, 8) with initialization 7/30 in 0 hours, 8 minutes, and 45 seconds
+Finished node (8, 8) with initialization 8/30 in 0 hours, 19 minutes, and 35 seconds
+Finished node (8, 8) with initialization 9/30 in 0 hours, 13 minutes, and 57 seconds
+Finished node (8, 8) with initialization 10/30 in 0 hours, 11 minutes, and 26 seconds
+Finished node (8, 8) with initialization 11/30 in 0 hours, 9 minutes, and 10 seconds
+Finished node (8, 8) with initialization 12/30 in 0 hours, 11 minutes, and 12 seconds
+Finished node (8, 8) with initialization 13/30 in 0 hours, 8 minutes, and 48 seconds
+Finished node (8, 8) with initialization 14/30 in 0 hours, 9 minutes, and 36 seconds
+Finished node (8, 8) with initialization 15/30 in 0 hours, 29 minutes, and 6 seconds
+Finished node (8, 8) with initialization 16/30 in 0 hours, 18 minutes, and 23 seconds
+Finished node (8, 8) with initialization 17/30 in 0 hours, 9 minutes, and 34 seconds
+Finished node (8, 8) with initialization 18/30 in 0 hours, 9 minutes, and 52 seconds
+Finished node (8, 8) with initialization 19/30 in 0 hours, 10 minutes, and 51 seconds
+Finished node (8, 8) with initialization 20/30 in 0 hours, 16 minutes, and 22 seconds
+Finished node (8, 8) with initialization 21/30 in 0 hours, 7 minutes, and 53 seconds
+Finished node (8, 8) with initialization 22/30 in 0 hours, 6 minutes, and 46 seconds
+Finished node (8, 8) with initialization 23/30 in 0 hours, 9 minutes, and 57 seconds
+Finished node (8, 8) with initialization 24/30 in 0 hours, 10 minutes, and 12 seconds
+Finished node (8, 8) with initialization 25/30 in 0 hours, 5 minutes, and 28 seconds
+Finished node (8, 8) with initialization 26/30 in 0 hours, 15 minutes, and 13 seconds
+Finished node (8, 8) with initialization 27/30 in 0 hours, 8 minutes, and 24 seconds
+Finished node (8, 8) with initialization 28/30 in 0 hours, 9 minutes, and 23 seconds
+Finished node (8, 8) with initialization 29/30 in 0 hours, 7 minutes, and 17 seconds
+Finished node (8, 8) with initialization 30/30 in 0 hours, 6 minutes, and 5 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(8, 8).weights.h5
+Finished node (32, 2, 2) with initialization 1/30 in 0 hours, 11 minutes, and 6 seconds
+Finished node (32, 2, 2) with initialization 2/30 in 0 hours, 17 minutes, and 20 seconds
+Finished node (32, 2, 2) with initialization 3/30 in 0 hours, 9 minutes, and 59 seconds
+Finished node (32, 2, 2) with initialization 4/30 in 0 hours, 10 minutes, and 41 seconds
+Finished node (32, 2, 2) with initialization 5/30 in 0 hours, 10 minutes, and 15 seconds
+Finished node (32, 2, 2) with initialization 6/30 in 0 hours, 16 minutes, and 15 seconds
+Finished node (32, 2, 2) with initialization 7/30 in 0 hours, 14 minutes, and 51 seconds
+Finished node (32, 2, 2) with initialization 8/30 in 0 hours, 13 minutes, and 5 seconds
+Finished node (32, 2, 2) with initialization 9/30 in 0 hours, 6 minutes, and 8 seconds
+Finished node (32, 2, 2) with initialization 10/30 in 0 hours, 6 minutes, and 37 seconds
+Finished node (32, 2, 2) with initialization 11/30 in 0 hours, 14 minutes, and 57 seconds
+Finished node (32, 2, 2) with initialization 12/30 in 0 hours, 9 minutes, and 6 seconds
+Finished node (32, 2, 2) with initialization 13/30 in 0 hours, 19 minutes, and 10 seconds
+Finished node (32, 2, 2) with initialization 14/30 in 0 hours, 10 minutes, and 29 seconds
+Finished node (32, 2, 2) with initialization 15/30 in 0 hours, 7 minutes, and 56 seconds
+Finished node (32, 2, 2) with initialization 16/30 in 0 hours, 10 minutes, and 45 seconds
+Finished node (32, 2, 2) with initialization 17/30 in 0 hours, 6 minutes, and 15 seconds
+Finished node (32, 2, 2) with initialization 18/30 in 0 hours, 6 minutes, and 25 seconds
+Finished node (32, 2, 2) with initialization 19/30 in 0 hours, 18 minutes, and 57 seconds
+Finished node (32, 2, 2) with initialization 20/30 in 0 hours, 16 minutes, and 7 seconds
+Finished node (32, 2, 2) with initialization 21/30 in 0 hours, 10 minutes, and 7 seconds
+Finished node (32, 2, 2) with initialization 22/30 in 0 hours, 5 minutes, and 35 seconds
+Finished node (32, 2, 2) with initialization 23/30 in 0 hours, 10 minutes, and 37 seconds
+Finished node (32, 2, 2) with initialization 24/30 in 0 hours, 9 minutes, and 52 seconds
+Finished node (32, 2, 2) with initialization 25/30 in 0 hours, 21 minutes, and 35 seconds
+Finished node (32, 2, 2) with initialization 26/30 in 0 hours, 7 minutes, and 0 seconds
+Finished node (32, 2, 2) with initialization 27/30 in 0 hours, 8 minutes, and 34 seconds
+Finished node (32, 2, 2) with initialization 28/30 in 0 hours, 2 minutes, and 35 seconds
+Finished node (32, 2, 2) with initialization 29/30 in 0 hours, 7 minutes, and 8 seconds
+Finished node (32, 2, 2) with initialization 30/30 in 0 hours, 4 minutes, and 3 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 2, 2).weights.h5
+Finished node (32, 4, 4) with initialization 1/30 in 0 hours, 15 minutes, and 2 seconds
+Finished node (32, 4, 4) with initialization 2/30 in 0 hours, 11 minutes, and 31 seconds
+Finished node (32, 4, 4) with initialization 3/30 in 0 hours, 23 minutes, and 21 seconds
+Finished node (32, 4, 4) with initialization 4/30 in 0 hours, 14 minutes, and 51 seconds
+Finished node (32, 4, 4) with initialization 5/30 in 0 hours, 14 minutes, and 47 seconds
+Finished node (32, 4, 4) with initialization 6/30 in 0 hours, 50 minutes, and 15 seconds
+Finished node (32, 4, 4) with initialization 7/30 in 0 hours, 23 minutes, and 56 seconds
+Finished node (32, 4, 4) with initialization 8/30 in 0 hours, 18 minutes, and 24 seconds
+Finished node (32, 4, 4) with initialization 9/30 in 0 hours, 22 minutes, and 17 seconds
+Finished node (32, 4, 4) with initialization 10/30 in 0 hours, 14 minutes, and 39 seconds
+Finished node (32, 4, 4) with initialization 11/30 in 0 hours, 22 minutes, and 15 seconds
+Finished node (32, 4, 4) with initialization 12/30 in 0 hours, 22 minutes, and 42 seconds
+Finished node (32, 4, 4) with initialization 13/30 in 0 hours, 48 minutes, and 10 seconds
+Finished node (32, 4, 4) with initialization 14/30 in 0 hours, 16 minutes, and 9 seconds
+Finished node (32, 4, 4) with initialization 15/30 in 0 hours, 24 minutes, and 54 seconds
+Finished node (32, 4, 4) with initialization 16/30 in 0 hours, 10 minutes, and 17 seconds
+Finished node (32, 4, 4) with initialization 17/30 in 0 hours, 14 minutes, and 45 seconds
+Finished node (32, 4, 4) with initialization 18/30 in 0 hours, 22 minutes, and 40 seconds
+Finished node (32, 4, 4) with initialization 19/30 in 0 hours, 15 minutes, and 22 seconds
+Finished node (32, 4, 4) with initialization 20/30 in 0 hours, 10 minutes, and 51 seconds
+Finished node (32, 4, 4) with initialization 21/30 in 0 hours, 24 minutes, and 7 seconds
+Finished node (32, 4, 4) with initialization 22/30 in 0 hours, 6 minutes, and 48 seconds
+Finished node (32, 4, 4) with initialization 23/30 in 0 hours, 13 minutes, and 27 seconds
+Finished node (32, 4, 4) with initialization 24/30 in 0 hours, 6 minutes, and 24 seconds
+Finished node (32, 4, 4) with initialization 25/30 in 0 hours, 14 minutes, and 25 seconds
+Finished node (32, 4, 4) with initialization 26/30 in 0 hours, 15 minutes, and 29 seconds
+Finished node (32, 4, 4) with initialization 27/30 in 0 hours, 4 minutes, and 14 seconds
+Finished node (32, 4, 4) with initialization 28/30 in 0 hours, 12 minutes, and 45 seconds
+Finished node (32, 4, 4) with initialization 29/30 in 0 hours, 10 minutes, and 0 seconds
+Finished node (32, 4, 4) with initialization 30/30 in 0 hours, 7 minutes, and 57 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 4, 4).weights.h5
+Finished node (32, 8) with initialization 1/30 in 0 hours, 11 minutes, and 48 seconds
+Finished node (32, 8) with initialization 2/30 in 0 hours, 17 minutes, and 15 seconds
+Finished node (32, 8) with initialization 3/30 in 0 hours, 22 minutes, and 4 seconds
+Finished node (32, 8) with initialization 4/30 in 0 hours, 11 minutes, and 52 seconds
+Finished node (32, 8) with initialization 5/30 in 0 hours, 16 minutes, and 13 seconds
+Finished node (32, 8) with initialization 6/30 in 0 hours, 35 minutes, and 24 seconds
+Finished node (32, 8) with initialization 7/30 in 0 hours, 14 minutes, and 35 seconds
+Finished node (32, 8) with initialization 8/30 in 0 hours, 12 minutes, and 47 seconds
+Finished node (32, 8) with initialization 9/30 in 0 hours, 28 minutes, and 59 seconds
+Finished node (32, 8) with initialization 10/30 in 0 hours, 17 minutes, and 7 seconds
+Finished node (32, 8) with initialization 11/30 in 0 hours, 10 minutes, and 48 seconds
+Finished node (32, 8) with initialization 12/30 in 0 hours, 14 minutes, and 38 seconds
+Finished node (32, 8) with initialization 13/30 in 0 hours, 16 minutes, and 16 seconds
+Finished node (32, 8) with initialization 14/30 in 0 hours, 15 minutes, and 37 seconds
+Finished node (32, 8) with initialization 15/30 in 0 hours, 7 minutes, and 39 seconds
+Finished node (32, 8) with initialization 16/30 in 0 hours, 17 minutes, and 8 seconds
+Finished node (32, 8) with initialization 17/30 in 0 hours, 18 minutes, and 48 seconds
+Finished node (32, 8) with initialization 18/30 in 0 hours, 13 minutes, and 19 seconds
+Finished node (32, 8) with initialization 19/30 in 0 hours, 9 minutes, and 57 seconds
+Finished node (32, 8) with initialization 20/30 in 0 hours, 6 minutes, and 18 seconds
+Finished node (32, 8) with initialization 21/30 in 0 hours, 11 minutes, and 7 seconds
+Finished node (32, 8) with initialization 22/30 in 0 hours, 16 minutes, and 51 seconds
+Finished node (32, 8) with initialization 23/30 in 0 hours, 28 minutes, and 37 seconds
+Finished node (32, 8) with initialization 24/30 in 0 hours, 13 minutes, and 49 seconds
+Finished node (32, 8) with initialization 25/30 in 0 hours, 13 minutes, and 12 seconds
+Finished node (32, 8) with initialization 26/30 in 0 hours, 7 minutes, and 58 seconds
+Finished node (32, 8) with initialization 27/30 in 0 hours, 15 minutes, and 44 seconds
+Finished node (32, 8) with initialization 28/30 in 0 hours, 8 minutes, and 6 seconds
+Finished node (32, 8) with initialization 29/30 in 0 hours, 4 minutes, and 33 seconds
+Finished node (32, 8) with initialization 30/30 in 0 hours, 8 minutes, and 1 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 8).weights.h5
+Finished node (32, 2) with initialization 1/30 in 0 hours, 7 minutes, and 43 seconds
+Finished node (32, 2) with initialization 2/30 in 0 hours, 10 minutes, and 21 seconds
+Finished node (32, 2) with initialization 3/30 in 0 hours, 44 minutes, and 34 seconds
+Finished node (32, 2) with initialization 4/30 in 0 hours, 7 minutes, and 50 seconds
+Finished node (32, 2) with initialization 5/30 in 0 hours, 15 minutes, and 15 seconds
+Finished node (32, 2) with initialization 6/30 in 0 hours, 10 minutes, and 35 seconds
+Finished node (32, 2) with initialization 7/30 in 0 hours, 15 minutes, and 29 seconds
+Finished node (32, 2) with initialization 8/30 in 0 hours, 13 minutes, and 52 seconds
+Finished node (32, 2) with initialization 9/30 in 0 hours, 6 minutes, and 25 seconds
+Finished node (32, 2) with initialization 10/30 in 0 hours, 10 minutes, and 37 seconds
+Finished node (32, 2) with initialization 11/30 in 0 hours, 4 minutes, and 41 seconds
+Finished node (32, 2) with initialization 12/30 in 0 hours, 7 minutes, and 40 seconds
+Finished node (32, 2) with initialization 13/30 in 0 hours, 9 minutes, and 36 seconds
+Finished node (32, 2) with initialization 14/30 in 0 hours, 13 minutes, and 11 seconds
+Finished node (32, 2) with initialization 15/30 in 0 hours, 10 minutes, and 19 seconds
+Finished node (32, 2) with initialization 16/30 in 0 hours, 8 minutes, and 35 seconds
+Finished node (32, 2) with initialization 17/30 in 0 hours, 11 minutes, and 53 seconds
+Finished node (32, 2) with initialization 18/30 in 0 hours, 9 minutes, and 58 seconds
+Finished node (32, 2) with initialization 19/30 in 0 hours, 14 minutes, and 14 seconds
+Finished node (32, 2) with initialization 20/30 in 0 hours, 6 minutes, and 48 seconds
+Finished node (32, 2) with initialization 21/30 in 0 hours, 7 minutes, and 31 seconds
+Finished node (32, 2) with initialization 22/30 in 0 hours, 8 minutes, and 28 seconds
+Finished node (32, 2) with initialization 23/30 in 0 hours, 13 minutes, and 47 seconds
+Finished node (32, 2) with initialization 24/30 in 0 hours, 6 minutes, and 16 seconds
+Finished node (32, 2) with initialization 25/30 in 0 hours, 9 minutes, and 27 seconds
+Finished node (32, 2) with initialization 26/30 in 0 hours, 11 minutes, and 4 seconds
+Finished node (32, 2) with initialization 27/30 in 0 hours, 6 minutes, and 28 seconds
+Finished node (32, 2) with initialization 28/30 in 0 hours, 4 minutes, and 10 seconds
+Finished node (32, 2) with initialization 29/30 in 0 hours, 8 minutes, and 55 seconds
+Finished node (32, 2) with initialization 30/30 in 0 hours, 7 minutes, and 54 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 2).weights.h5
+Finished node (32, 16, 8) with initialization 1/30 in 0 hours, 19 minutes, and 23 seconds
+Finished node (32, 16, 8) with initialization 2/30 in 0 hours, 37 minutes, and 49 seconds
+Finished node (32, 16, 8) with initialization 3/30 in 0 hours, 34 minutes, and 52 seconds
+Finished node (32, 16, 8) with initialization 4/30 in 0 hours, 21 minutes, and 0 seconds
+Finished node (32, 16, 8) with initialization 5/30 in 1 hours, 18 minutes, and 10 seconds
+Finished node (32, 16, 8) with initialization 6/30 in 0 hours, 55 minutes, and 20 seconds
+Finished node (32, 16, 8) with initialization 7/30 in 0 hours, 20 minutes, and 40 seconds
+Finished node (32, 16, 8) with initialization 8/30 in 0 hours, 30 minutes, and 8 seconds
+Finished node (32, 16, 8) with initialization 9/30 in 1 hours, 21 minutes, and 43 seconds
+Finished node (32, 16, 8) with initialization 10/30 in 0 hours, 24 minutes, and 52 seconds
+Finished node (32, 16, 8) with initialization 11/30 in 0 hours, 16 minutes, and 31 seconds
+Finished node (32, 16, 8) with initialization 12/30 in 0 hours, 32 minutes, and 5 seconds
+Finished node (32, 16, 8) with initialization 13/30 in 0 hours, 19 minutes, and 46 seconds
+Finished node (32, 16, 8) with initialization 14/30 in 0 hours, 27 minutes, and 38 seconds
+Finished node (32, 16, 8) with initialization 15/30 in 0 hours, 27 minutes, and 12 seconds
+Finished node (32, 16, 8) with initialization 16/30 in 0 hours, 43 minutes, and 35 seconds
+Finished node (32, 16, 8) with initialization 17/30 in 0 hours, 23 minutes, and 16 seconds
+Finished node (32, 16, 8) with initialization 18/30 in 0 hours, 29 minutes, and 45 seconds
+Finished node (32, 16, 8) with initialization 19/30 in 0 hours, 35 minutes, and 21 seconds
+Finished node (32, 16, 8) with initialization 20/30 in 0 hours, 14 minutes, and 48 seconds
+Finished node (32, 16, 8) with initialization 21/30 in 0 hours, 9 minutes, and 49 seconds
+Finished node (32, 16, 8) with initialization 22/30 in 0 hours, 6 minutes, and 47 seconds
+Finished node (32, 16, 8) with initialization 23/30 in 0 hours, 32 minutes, and 8 seconds
+Finished node (32, 16, 8) with initialization 24/30 in 0 hours, 11 minutes, and 28 seconds
+Finished node (32, 16, 8) with initialization 25/30 in 0 hours, 9 minutes, and 35 seconds
+Finished node (32, 16, 8) with initialization 26/30 in 0 hours, 16 minutes, and 23 seconds
+Finished node (32, 16, 8) with initialization 27/30 in 0 hours, 16 minutes, and 14 seconds
+Finished node (32, 16, 8) with initialization 28/30 in 0 hours, 36 minutes, and 36 seconds
+Finished node (32, 16, 8) with initialization 29/30 in 0 hours, 10 minutes, and 15 seconds
+Finished node (32, 16, 8) with initialization 30/30 in 0 hours, 16 minutes, and 23 seconds
+saving model parameters to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/parameters/(32, 16, 8).weights.h5
+Saving results to: /home/mjust/Clim_Growth/runs/estimation/2026-06-13_22-11-06_global_IC_country_trends/results.npy
+Job finished in: 34 hours, 10 minutes, and 48 seconds
+===== JOB END =====
+Mon Jun 15 08:22:13 CEST 2026
+Python exit status: 0

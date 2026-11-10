@@ -25,3 +25,6 @@ results/*
 
 !results/paper/
 !results/paper/**
+
+# reproduction/ holds everything the paper depends on: nothing in it is ever ignored
+!reproduction/**

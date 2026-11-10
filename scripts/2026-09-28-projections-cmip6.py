@@ -80,8 +80,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from hdf5_min import read_weights                                   # noqa: E402
 
 CMIP = ROOT / "data/projections/cmip6"
-BOOT = ROOT / "runs/bootstrap/2026-08-29_20-56-38global_IC"
-PEST = ROOT / ("runs/estimation/2026-08-27_11-01-35_global_IC_country_trends"
+BOOT = ROOT / "reproduction/weights/2026-08-29_20-56-38_global_IC_bootstrap"
+PEST = ROOT / ("reproduction/weights/2026-08-27_11-01-35_global_IC_country_trends"
                "/parameters/(2,).weights.h5")
 OUT = ROOT / "paper/Figures/Projections"
 

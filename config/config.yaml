@@ -57,7 +57,7 @@ instance:
     n_process: null               # null reuses server.n_process
     # The locked global run, i.e. the one the paper's Figure 4 comes from. A band
     # around a different point estimate than the figure is not that figure's band.
-    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends
+    run_dir: reproduction/weights/2026-06-13_22-11-06_global_IC_country_trends
     node: (2,)                    # keep set: with node and nodes null, top_k ranks by AIC, not BIC
     nodes: null                   # optional explicit list, overrides node
     top_k: 1                      # only consulted when node and nodes are null
@@ -67,7 +67,7 @@ instance:
     surface_t_max: 30             # (T, P) grid cap in C; 30 matches Burke, see D10
 
   nic:                            # Network Information Criterion (Murata et al. 1994)
-    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends
+    run_dir: reproduction/weights/2026-06-13_22-11-06_global_IC_country_trends
     node: null
     nodes: null
     top_k: 10

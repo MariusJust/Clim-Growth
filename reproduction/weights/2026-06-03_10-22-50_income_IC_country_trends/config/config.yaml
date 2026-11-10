@@ -1,0 +1,85 @@
+instance:
+  no_inits: 25
+  seed_value: 0
+  lr: 0.001
+  min_delta: 1e-7
+  patience: 500
+  verbose: 0
+  dropout: 0
+  n_process: 55
+  model_selection: 'IC' #  'Holdout', 'IC'
+  formulation : 'income'          # Model formulation, "global", "regional" or "income"
+  timeout_per_node: 100000
+  reduce_lr_on_plateau: true   # attach a Keras ReduceLROnPlateau callback to training
+  lr_reduce_factor: 0.3         # multiply lr by this when monitored loss plateaus
+  lr_reduce_patience: 100        # epochs with no improvement before each reduction
+  lr_min: 1.0e-7                # floor for the learning rate
+  use_diagnostics: true
+  target_mode: 'growth'   # 'growth' (model GrowthWDI) or 'levels' (model log GDP per capita)
+  input_vars:
+    - temp
+    - precip
+  activation: 'swish' #
+  country_trends: True
+  quadratic_trends: True   # only used when country_trends is True; set False for linear-only trends
+  group_trends_by_country: False   # 'ee' data only: estimate one trend per country instead of per admin-1 unit (fid)
+  dynamic_model: False
+  data_source: 'wb'   # "ee" or "wb"
+  ram: 500
+  data_end: 2024
+  nodes_list:
+    - (2,)
+    - (4,)
+    - (8,)
+    - (16,)
+    - (32,)
+    - (48,)
+    - (64,)
+    - (2,2,)
+    - (4,2,)
+    - (4,4,)
+    - (8,2,)
+    - (8,4,)
+    - (8,8,)
+    - (16,2,)
+    - (16,8,)
+    - (16,16,)
+    - (32,2,)
+    - (32,4,)
+    - (32,8,)
+    - (32,16,)
+    - (32,32,)
+    - (2,2,2,)
+    - (4,2,2,)
+    - (4,4,2,)
+    - (4,4,4,)
+    - (8,2,2,)
+    - (8,4,4,)
+    - (8,8,2,)
+    - (8,8,4,)
+    - (8,8,8,)
+    - (16,2,2,)
+    - (16,4,2,)
+    - (16,4,4,)
+    - (16,8,2,)
+    - (16,8,4,)
+    - (16,8,8,)
+    - (16,16,2,)
+    - (16,16,4,)
+    - (16,16,8,)
+    - (16,16,16,)
+    - (32,2,2,)
+    - (32,4,2,)
+    - (32,4,4,)
+    - (32,8,2,)
+    - (32,8,4,)
+    - (32,8,8,)
+    - (32,16,2,)
+    - (32,16,4,)
+    - (32,16,8,)
+    - (32,16,16,)
+    - (32,32,2,)
+    - (32,32,4,)
+    - (32,32,8,)
+    - (32,32,16,)
+    - (32,32,32,)
