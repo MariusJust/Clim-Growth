@@ -42,7 +42,7 @@ import matplotlib.pyplot as plt
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from hdf5_min import read_weights
+from scripts.archive.hdf5_min import read_weights
 
 RUN = REPO / "runs/estimation/2026-08-27_11-01-35_global_IC_country_trends"
 OUT = REPO / "paper/Figures/Hidden"

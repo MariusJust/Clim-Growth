@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from hdf5_min import read_weights                                   # noqa: E402
+from scripts.archive.hdf5_min import read_weights                                   # noqa: E402
 
 YRS = list(range(2010, 2100))
 TCAP = 30.0

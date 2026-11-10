@@ -454,7 +454,7 @@ def Surface(temp, precip, specification, dynamic, time_periods):
                     -0.00013*temp**2*precip**2
                     )
 
-        elif specification == 'Trig':
+        elif specification == 'nonlinear':
             # periodic structure in precip and mild modulation by temp
             # If precip is in meters across 0..5, use period ~5 to get one cycle across range:
             # sin(2*pi*precip/5). If precip was standardized, change the frequency accordingly.

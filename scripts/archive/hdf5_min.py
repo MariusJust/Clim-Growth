@@ -30,5 +30,5 @@ def read_weights(path):
     try:
         return _read_h5py(path)
     except ImportError:
-        from _hdf5_pure import read_weights as _pure   # no h5py available
+        from scripts.archive._hdf5_pure import read_weights as _pure   # no h5py available
         return _pure(str(path))

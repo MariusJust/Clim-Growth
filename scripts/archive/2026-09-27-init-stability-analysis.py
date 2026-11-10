@@ -35,7 +35,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from hdf5_min import read_weights  # noqa: E402
+from scripts.archive.hdf5_min import read_weights  # noqa: E402
 
 STATIC = "runs/estimation/2026-09-26_18-22-33_global_IC_country_trends"
 DYNAMIC = "runs/estimation/2026-09-26_18-23-41_global_dynamic"

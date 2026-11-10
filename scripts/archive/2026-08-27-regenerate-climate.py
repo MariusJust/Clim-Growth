@@ -33,7 +33,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from netcdf3_min import NC3  # noqa: E402
+from scripts.archive.netcdf3_min import NC3  # noqa: E402
 
 RAW = ROOT / "data/RawData"
 Y0, Y1 = 1961, 2023

@@ -35,7 +35,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-from hdf5_min import read_weights  # noqa: E402
+from scripts.archive.hdf5_min import read_weights  # noqa: E402
 
 YRS = np.arange(2010, 2100)
 TCAP = 30.0
