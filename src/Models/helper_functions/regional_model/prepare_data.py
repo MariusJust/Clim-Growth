@@ -8,7 +8,7 @@ def Prepare(data, formulation, data_source="wb", target_mode='growth', income_ti
     if str(target_mode).lower() == 'levels':
         raise NotImplementedError(
             "target_mode='levels' is not implemented for the regional/income "
-            "formulation (the income-group merge is positional). Use "
+            "formulation (the income path is two-group High/Low and untested for levels). Use "
             "formulation='global' for the levels (log GDP per capita) target."
         )
     if formulation != 'regional' and str(data_source).lower() != 'wb':
@@ -44,49 +44,40 @@ def Prepare(data, formulation, data_source="wb", target_mode='growth', income_ti
         if formulation=='regional':
             regions = {'Asia': [142, "CHN"], 'Europe': [150, 'DEU'], 'Africa': [2, 'ZAF'], 'Americas': [19, 'USA'], 'Oceania': [9, 'AUS']}
         else:
-          # Income-quintile groups. Q1 = poorest, Q5 = richest.
-          n_income_groups = 5
-          labels = [f"Q{i}" for i in range(1, n_income_groups + 1)]
-          if income_time_varying:
-              # Time-varying membership: each country-year is assigned to a quintile
-              # by its RELATIVE GDP-per-capita rank WITHIN that year, so a country
-              # moves between quintiles as its income position changes over time.
-              tmp = data[['CountryCode', 'Year', 'GDPCap']].dropna(subset=['GDPCap']).copy()
-              cnt = tmp.groupby('Year')['GDPCap'].transform('count')
-              tmp = tmp[cnt >= n_income_groups]
-              tmp['IncomeGroup'] = tmp.groupby('Year')['GDPCap'].transform(
-                  lambda s: pd.qcut(s.rank(method='first'), n_income_groups, labels=labels)
-              )
-              key = tmp.set_index(['CountryCode', 'Year'])['IncomeGroup']
-              # Reference country per group = the most frequent member across years.
-              ref = {qn: tmp.loc[tmp['IncomeGroup'] == qn, 'CountryCode'].value_counts().idxmax()
-                     for qn in labels}
+          # Two income groups, Low and High, split at the median of GDP per
+          # capita pooled over all country-years. Membership is therefore time
+          # varying by construction: a country crosses the median as it grows.
+          #
+          # This is the grouping behind the paper's Figure 7
+          # (Figures/Income/Low_CT.pdf and High_CT.pdf) from run
+          # 2026-06-03_10-22-50_income_IC_country_trends.
+          #
+          # Rolled back from five quintiles on 2026-11-08. The quintile version
+          # is kept at archive/2026-11-08-prepare_data-quintiles.py; restoring it
+          # means regenerating Figure 7 and re-running the income estimation,
+          # since Q1-Q5 weights and High/Low weights are not interchangeable.
+          #
+          # income_time_varying is accepted for call compatibility and ignored:
+          # the median split is already time varying.
+          gdp_capita = data[['CountryCode', 'Year', 'GDPCap']].dropna(subset=['GDPCap']).copy()
+          gdp_capita['IncomeGroup'] = pd.qcut(gdp_capita['GDPCap'], q=2, labels=['Low', 'High'])
+          key = gdp_capita.set_index(['CountryCode', 'Year'])['IncomeGroup']
 
-              def _attach_income(df):
-                  df = df.copy()
-                  valcol = df.columns[-1]
-                  df['IncomeGroup'] = key.reindex(list(zip(df['CountryCode'], df['Year']))).values
-                  return df[['CountryCode', 'RegionCode', 'Year', 'IncomeGroup', valcol]].dropna(subset=['IncomeGroup'])
-          else:
-              # Fixed membership: each country in ONE quintile by long-run mean income,
-              # so its country fixed effect and trend stay within a single group.
-              country_mean = data.groupby('CountryCode')['GDPCap'].mean()
-              qgroups = pd.qcut(country_mean, n_income_groups, labels=labels)
-              grp = qgroups.to_dict()
-              ref = {qn: (country_mean[qgroups == qn] - country_mean[qgroups == qn].median()).abs().idxmin()
-                     for qn in labels}
-
-              def _attach_income(df):
-                  df = df.copy()
-                  valcol = df.columns[-1]
-                  df['IncomeGroup'] = df['CountryCode'].map(grp)
-                  return df[['CountryCode', 'RegionCode', 'Year', 'IncomeGroup', valcol]].dropna(subset=['IncomeGroup'])
+          def _attach_income(df):
+              # Keyed on (CountryCode, Year). The original used
+              # .iloc[:, [0, 1, 2, 4, 3]], a positional reindex, which is the bug
+              # class behind the Projections.py country misalignment, so the
+              # keyed merge is kept from the quintile version.
+              df = df.copy()
+              valcol = df.columns[-1]
+              df['IncomeGroup'] = key.reindex(list(zip(df['CountryCode'], df['Year']))).values
+              return df[['CountryCode', 'RegionCode', 'Year', 'IncomeGroup', valcol]].dropna(subset=['IncomeGroup'])
 
           growth = _attach_income(growth)
           precip = _attach_income(precip)
           temp = _attach_income(temp)
 
-          regions = {qn: [qn, ref[qn]] for qn in labels}
+          regions = {'Low': ['Low', 'IND'], 'High': ['High', 'USA']}
     else:
         regions = {'Asia': [142, 408], 'Europe': [150, 2364], 'Africa': [2, 2854], 'Americas': [19, 2709], 'Oceania': [9, 196]}
 
