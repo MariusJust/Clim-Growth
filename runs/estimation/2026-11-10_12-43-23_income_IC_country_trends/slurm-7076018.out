@@ -1,0 +1,544 @@
+Starting parallel processing with 55 processes...
+Processing nodes:   2%|▏         | 1/54 [22:13<19:37:43, 1333.28s/node]Processing nodes:   4%|▎         | 2/54 [25:20<9:31:04, 658.93s/node]  Processing nodes:  13%|█▎        | 7/54 [25:48<1:42:49, 131.27s/node]Processing nodes:  28%|██▊       | 15/54 [26:19<31:35, 48.59s/node]  Processing nodes:  31%|███▏      | 17/54 [26:53<26:18, 42.66s/node]Processing nodes:  33%|███▎      | 18/54 [28:13<28:16, 47.12s/node]Processing nodes:  54%|█████▎    | 29/54 [29:35<08:52, 21.31s/node]Processing nodes:  56%|█████▌    | 30/54 [30:05<08:47, 21.97s/node]Processing nodes:  67%|██████▋   | 36/54 [31:35<05:45, 19.18s/node]Processing nodes:  69%|██████▊   | 37/54 [31:38<05:02, 17.80s/node]Processing nodes: 100%|██████████| 54/54 [31:38<00:00, 35.16s/node]
+Initialization 1/10 for node (32, 32, 4) done
+Initialization 2/10 for node (32, 32, 4) done
+Initialization 3/10 for node (32, 32, 4) done
+Initialization 4/10 for node (32, 32, 4) done
+Initialization 5/10 for node (32, 32, 4) done
+Initialization 6/10 for node (32, 32, 4) done
+Initialization 7/10 for node (32, 32, 4) done
+Initialization 8/10 for node (32, 32, 4) done
+Initialization 9/10 for node (32, 32, 4) done
+Initialization 10/10 for node (32, 32, 4) done
+Initialization 1/10 for node (4, 4) done
+Initialization 2/10 for node (4, 4) done
+Initialization 3/10 for node (4, 4) done
+Initialization 4/10 for node (4, 4) done
+Initialization 5/10 for node (4, 4) done
+Initialization 6/10 for node (4, 4) done
+Initialization 7/10 for node (4, 4) done
+Initialization 8/10 for node (4, 4) done
+Initialization 9/10 for node (4, 4) done
+Initialization 10/10 for node (4, 4) done
+Initialization 1/10 for node (4, 4, 4) done
+Initialization 2/10 for node (4, 4, 4) done
+Initialization 3/10 for node (4, 4, 4) done
+Initialization 4/10 for node (4, 4, 4) done
+Initialization 5/10 for node (4, 4, 4) done
+Initialization 6/10 for node (4, 4, 4) done
+Initialization 7/10 for node (4, 4, 4) done
+Initialization 8/10 for node (4, 4, 4) done
+Initialization 9/10 for node (4, 4, 4) done
+Initialization 10/10 for node (4, 4, 4) done
+Initialization 1/10 for node (16, 16, 8) done
+Initialization 2/10 for node (16, 16, 8) done
+Initialization 3/10 for node (16, 16, 8) done
+Initialization 4/10 for node (16, 16, 8) done
+Initialization 5/10 for node (16, 16, 8) done
+Initialization 6/10 for node (16, 16, 8) done
+Initialization 7/10 for node (16, 16, 8) done
+Initialization 8/10 for node (16, 16, 8) done
+Initialization 9/10 for node (16, 16, 8) done
+Initialization 10/10 for node (16, 16, 8) done
+Initialization 1/10 for node (2,) done
+Initialization 2/10 for node (2,) done
+Initialization 3/10 for node (2,) done
+Initialization 4/10 for node (2,) done
+Initialization 5/10 for node (2,) done
+Initialization 6/10 for node (2,) done
+Initialization 7/10 for node (2,) done
+Initialization 8/10 for node (2,) done
+Initialization 9/10 for node (2,) done
+Initialization 10/10 for node (2,) done
+Initialization 1/10 for node (16, 2) done
+Initialization 2/10 for node (16, 2) done
+Initialization 3/10 for node (16, 2) done
+Initialization 4/10 for node (16, 2) done
+Initialization 5/10 for node (16, 2) done
+Initialization 6/10 for node (16, 2) done
+Initialization 7/10 for node (16, 2) done
+Initialization 8/10 for node (16, 2) done
+Initialization 9/10 for node (16, 2) done
+Initialization 10/10 for node (16, 2) done
+Initialization 1/10 for node (16, 16, 16) done
+Initialization 2/10 for node (16, 16, 16) done
+Initialization 3/10 for node (16, 16, 16) done
+Initialization 4/10 for node (16, 16, 16) done
+Initialization 5/10 for node (16, 16, 16) done
+Initialization 6/10 for node (16, 16, 16) done
+Initialization 7/10 for node (16, 16, 16) done
+Initialization 8/10 for node (16, 16, 16) done
+Initialization 9/10 for node (16, 16, 16) done
+Initialization 10/10 for node (16, 16, 16) done
+Initialization 1/10 for node (2, 2, 2) done
+Initialization 2/10 for node (2, 2, 2) done
+Initialization 3/10 for node (2, 2, 2) done
+Initialization 4/10 for node (2, 2, 2) done
+Initialization 5/10 for node (2, 2, 2) done
+Initialization 6/10 for node (2, 2, 2) done
+Initialization 7/10 for node (2, 2, 2) done
+Initialization 8/10 for node (2, 2, 2) done
+Initialization 9/10 for node (2, 2, 2) done
+Initialization 10/10 for node (2, 2, 2) done
+Initialization 1/10 for node (8, 8) done
+Initialization 2/10 for node (8, 8) done
+Initialization 3/10 for node (8, 8) done
+Initialization 4/10 for node (8, 8) done
+Initialization 5/10 for node (8, 8) done
+Initialization 6/10 for node (8, 8) done
+Initialization 7/10 for node (8, 8) done
+Initialization 8/10 for node (8, 8) done
+Initialization 9/10 for node (8, 8) done
+Initialization 10/10 for node (8, 8) done
+Initialization 1/10 for node (32, 16) done
+Initialization 2/10 for node (32, 16) done
+Initialization 3/10 for node (32, 16) done
+Initialization 4/10 for node (32, 16) done
+Initialization 5/10 for node (32, 16) done
+Initialization 6/10 for node (32, 16) done
+Initialization 7/10 for node (32, 16) done
+Initialization 8/10 for node (32, 16) done
+Initialization 9/10 for node (32, 16) done
+Initialization 10/10 for node (32, 16) done
+Initialization 1/10 for node (16, 4, 2) done
+Initialization 2/10 for node (16, 4, 2) done
+Initialization 3/10 for node (16, 4, 2) done
+Initialization 4/10 for node (16, 4, 2) done
+Initialization 5/10 for node (16, 4, 2) done
+Initialization 6/10 for node (16, 4, 2) done
+Initialization 7/10 for node (16, 4, 2) done
+Initialization 8/10 for node (16, 4, 2) done
+Initialization 9/10 for node (16, 4, 2) done
+Initialization 10/10 for node (16, 4, 2) done
+Initialization 1/10 for node (4, 2, 2) done
+Initialization 2/10 for node (4, 2, 2) done
+Initialization 3/10 for node (4, 2, 2) done
+Initialization 4/10 for node (4, 2, 2) done
+Initialization 5/10 for node (4, 2, 2) done
+Initialization 6/10 for node (4, 2, 2) done
+Initialization 7/10 for node (4, 2, 2) done
+Initialization 8/10 for node (4, 2, 2) done
+Initialization 9/10 for node (4, 2, 2) done
+Initialization 10/10 for node (4, 2, 2) done
+Initialization 1/10 for node (32, 4, 4) done
+Initialization 2/10 for node (32, 4, 4) done
+Initialization 3/10 for node (32, 4, 4) done
+Initialization 4/10 for node (32, 4, 4) done
+Initialization 5/10 for node (32, 4, 4) done
+Initialization 6/10 for node (32, 4, 4) done
+Initialization 7/10 for node (32, 4, 4) done
+Initialization 8/10 for node (32, 4, 4) done
+Initialization 9/10 for node (32, 4, 4) done
+Initialization 10/10 for node (32, 4, 4) done
+Initialization 1/10 for node (8, 4, 4) done
+Initialization 2/10 for node (8, 4, 4) done
+Initialization 3/10 for node (8, 4, 4) done
+Initialization 4/10 for node (8, 4, 4) done
+Initialization 5/10 for node (8, 4, 4) done
+Initialization 6/10 for node (8, 4, 4) done
+Initialization 7/10 for node (8, 4, 4) done
+Initialization 8/10 for node (8, 4, 4) done
+Initialization 9/10 for node (8, 4, 4) done
+Initialization 10/10 for node (8, 4, 4) done
+Initialization 1/10 for node (48,) done
+Initialization 2/10 for node (48,) done
+Initialization 3/10 for node (48,) done
+Initialization 4/10 for node (48,) done
+Initialization 5/10 for node (48,) done
+Initialization 6/10 for node (48,) done
+Initialization 7/10 for node (48,) done
+Initialization 8/10 for node (48,) done
+Initialization 9/10 for node (48,) done
+Initialization 10/10 for node (48,) done
+Initialization 1/10 for node (32, 32, 16) done
+Initialization 2/10 for node (32, 32, 16) done
+Initialization 3/10 for node (32, 32, 16) done
+Initialization 4/10 for node (32, 32, 16) done
+Initialization 5/10 for node (32, 32, 16) done
+Initialization 6/10 for node (32, 32, 16) done
+Initialization 7/10 for node (32, 32, 16) done
+Initialization 8/10 for node (32, 32, 16) done
+Initialization 9/10 for node (32, 32, 16) done
+Initialization 10/10 for node (32, 32, 16) done
+Initialization 1/10 for node (8,) done
+Initialization 2/10 for node (8,) done
+Initialization 3/10 for node (8,) done
+Initialization 4/10 for node (8,) done
+Initialization 5/10 for node (8,) done
+Initialization 6/10 for node (8,) done
+Initialization 7/10 for node (8,) done
+Initialization 8/10 for node (8,) done
+Initialization 9/10 for node (8,) done
+Initialization 10/10 for node (8,) done
+Initialization 1/10 for node (32, 8) done
+Initialization 2/10 for node (32, 8) done
+Initialization 3/10 for node (32, 8) done
+Initialization 4/10 for node (32, 8) done
+Initialization 5/10 for node (32, 8) done
+Initialization 6/10 for node (32, 8) done
+Initialization 7/10 for node (32, 8) done
+Initialization 8/10 for node (32, 8) done
+Initialization 9/10 for node (32, 8) done
+Initialization 10/10 for node (32, 8) done
+Initialization 1/10 for node (16, 8, 2) done
+Initialization 2/10 for node (16, 8, 2) done
+Initialization 3/10 for node (16, 8, 2) done
+Initialization 4/10 for node (16, 8, 2) done
+Initialization 5/10 for node (16, 8, 2) done
+Initialization 6/10 for node (16, 8, 2) done
+Initialization 7/10 for node (16, 8, 2) done
+Initialization 8/10 for node (16, 8, 2) done
+Initialization 9/10 for node (16, 8, 2) done
+Initialization 10/10 for node (16, 8, 2) done
+Initialization 1/10 for node (32, 4, 2) done
+Initialization 2/10 for node (32, 4, 2) done
+Initialization 3/10 for node (32, 4, 2) done
+Initialization 4/10 for node (32, 4, 2) done
+Initialization 5/10 for node (32, 4, 2) done
+Initialization 6/10 for node (32, 4, 2) done
+Initialization 7/10 for node (32, 4, 2) done
+Initialization 8/10 for node (32, 4, 2) done
+Initialization 9/10 for node (32, 4, 2) done
+Initialization 10/10 for node (32, 4, 2) done
+Initialization 1/10 for node (8, 4) done
+Initialization 2/10 for node (8, 4) done
+Initialization 3/10 for node (8, 4) done
+Initialization 4/10 for node (8, 4) done
+Initialization 5/10 for node (8, 4) done
+Initialization 6/10 for node (8, 4) done
+Initialization 7/10 for node (8, 4) done
+Initialization 8/10 for node (8, 4) done
+Initialization 9/10 for node (8, 4) done
+Initialization 10/10 for node (8, 4) done
+Initialization 1/10 for node (8, 2) done
+Initialization 2/10 for node (8, 2) done
+Initialization 3/10 for node (8, 2) done
+Initialization 4/10 for node (8, 2) done
+Initialization 5/10 for node (8, 2) done
+Initialization 6/10 for node (8, 2) done
+Initialization 7/10 for node (8, 2) done
+Initialization 8/10 for node (8, 2) done
+Initialization 9/10 for node (8, 2) done
+Initialization 10/10 for node (8, 2) done
+Initialization 1/10 for node (32,) done
+Initialization 2/10 for node (32,) done
+Initialization 3/10 for node (32,) done
+Initialization 4/10 for node (32,) done
+Initialization 5/10 for node (32,) done
+Initialization 6/10 for node (32,) done
+Initialization 7/10 for node (32,) done
+Initialization 8/10 for node (32,) done
+Initialization 9/10 for node (32,) done
+Initialization 10/10 for node (32,) done
+Initialization 1/10 for node (16,) done
+Initialization 2/10 for node (16,) done
+Initialization 3/10 for node (16,) done
+Initialization 4/10 for node (16,) done
+Initialization 5/10 for node (16,) done
+Initialization 6/10 for node (16,) done
+Initialization 7/10 for node (16,) done
+Initialization 8/10 for node (16,) done
+Initialization 9/10 for node (16,) done
+Initialization 10/10 for node (16,) done
+Initialization 1/10 for node (4, 2) done
+Initialization 2/10 for node (4, 2) done
+Initialization 3/10 for node (4, 2) done
+Initialization 4/10 for node (4, 2) done
+Initialization 5/10 for node (4, 2) done
+Initialization 6/10 for node (4, 2) done
+Initialization 7/10 for node (4, 2) done
+Initialization 8/10 for node (4, 2) done
+Initialization 9/10 for node (4, 2) done
+Initialization 10/10 for node (4, 2) done
+Initialization 1/10 for node (32, 2, 2) done
+Initialization 2/10 for node (32, 2, 2) done
+Initialization 3/10 for node (32, 2, 2) done
+Initialization 4/10 for node (32, 2, 2) done
+Initialization 5/10 for node (32, 2, 2) done
+Initialization 6/10 for node (32, 2, 2) done
+Initialization 7/10 for node (32, 2, 2) done
+Initialization 8/10 for node (32, 2, 2) done
+Initialization 9/10 for node (32, 2, 2) done
+Initialization 10/10 for node (32, 2, 2) done
+Initialization 1/10 for node (4,) done
+Initialization 2/10 for node (4,) done
+Initialization 3/10 for node (4,) done
+Initialization 4/10 for node (4,) done
+Initialization 5/10 for node (4,) done
+Initialization 6/10 for node (4,) done
+Initialization 7/10 for node (4,) done
+Initialization 8/10 for node (4,) done
+Initialization 9/10 for node (4,) done
+Initialization 10/10 for node (4,) done
+Initialization 1/10 for node (8, 8, 2) done
+Initialization 2/10 for node (8, 8, 2) done
+Initialization 3/10 for node (8, 8, 2) done
+Initialization 4/10 for node (8, 8, 2) done
+Initialization 5/10 for node (8, 8, 2) done
+Initialization 6/10 for node (8, 8, 2) done
+Initialization 7/10 for node (8, 8, 2) done
+Initialization 8/10 for node (8, 8, 2) done
+Initialization 9/10 for node (8, 8, 2) done
+Initialization 10/10 for node (8, 8, 2) done
+Initialization 1/10 for node (16, 16) done
+Initialization 2/10 for node (16, 16) done
+Initialization 3/10 for node (16, 16) done
+Initialization 4/10 for node (16, 16) done
+Initialization 5/10 for node (16, 16) done
+Initialization 6/10 for node (16, 16) done
+Initialization 7/10 for node (16, 16) done
+Initialization 8/10 for node (16, 16) done
+Initialization 9/10 for node (16, 16) done
+Initialization 10/10 for node (16, 16) done
+Initialization 1/10 for node (2, 2) done
+Initialization 2/10 for node (2, 2) done
+Initialization 3/10 for node (2, 2) done
+Initialization 4/10 for node (2, 2) done
+Initialization 5/10 for node (2, 2) done
+Initialization 6/10 for node (2, 2) done
+Initialization 7/10 for node (2, 2) done
+Initialization 8/10 for node (2, 2) done
+Initialization 9/10 for node (2, 2) done
+Initialization 10/10 for node (2, 2) done
+Initialization 1/10 for node (64,) done
+Initialization 2/10 for node (64,) done
+Initialization 3/10 for node (64,) done
+Initialization 4/10 for node (64,) done
+Initialization 5/10 for node (64,) done
+Initialization 6/10 for node (64,) done
+Initialization 7/10 for node (64,) done
+Initialization 8/10 for node (64,) done
+Initialization 9/10 for node (64,) done
+Initialization 10/10 for node (64,) done
+Initialization 1/10 for node (16, 8) done
+Initialization 2/10 for node (16, 8) done
+Initialization 3/10 for node (16, 8) done
+Initialization 4/10 for node (16, 8) done
+Initialization 5/10 for node (16, 8) done
+Initialization 6/10 for node (16, 8) done
+Initialization 7/10 for node (16, 8) done
+Initialization 8/10 for node (16, 8) done
+Initialization 9/10 for node (16, 8) done
+Initialization 10/10 for node (16, 8) done
+Initialization 1/10 for node (32, 8, 2) done
+Initialization 2/10 for node (32, 8, 2) done
+Initialization 3/10 for node (32, 8, 2) done
+Initialization 4/10 for node (32, 8, 2) done
+Initialization 5/10 for node (32, 8, 2) done
+Initialization 6/10 for node (32, 8, 2) done
+Initialization 7/10 for node (32, 8, 2) done
+Initialization 8/10 for node (32, 8, 2) done
+Initialization 9/10 for node (32, 8, 2) done
+Initialization 10/10 for node (32, 8, 2) done
+Initialization 1/10 for node (32, 2) done
+Initialization 2/10 for node (32, 2) done
+Initialization 3/10 for node (32, 2) done
+Initialization 4/10 for node (32, 2) done
+Initialization 5/10 for node (32, 2) done
+Initialization 6/10 for node (32, 2) done
+Initialization 7/10 for node (32, 2) done
+Initialization 8/10 for node (32, 2) done
+Initialization 9/10 for node (32, 2) done
+Initialization 10/10 for node (32, 2) done
+Initialization 1/10 for node (4, 4, 2) done
+Initialization 2/10 for node (4, 4, 2) done
+Initialization 3/10 for node (4, 4, 2) done
+Initialization 4/10 for node (4, 4, 2) done
+Initialization 5/10 for node (4, 4, 2) done
+Initialization 6/10 for node (4, 4, 2) done
+Initialization 7/10 for node (4, 4, 2) done
+Initialization 8/10 for node (4, 4, 2) done
+Initialization 9/10 for node (4, 4, 2) done
+Initialization 10/10 for node (4, 4, 2) done
+Initialization 1/10 for node (32, 32, 8) done
+Initialization 2/10 for node (32, 32, 8) done
+Initialization 3/10 for node (32, 32, 8) done
+Initialization 4/10 for node (32, 32, 8) done
+Initialization 5/10 for node (32, 32, 8) done
+Initialization 6/10 for node (32, 32, 8) done
+Initialization 7/10 for node (32, 32, 8) done
+Initialization 8/10 for node (32, 32, 8) done
+Initialization 9/10 for node (32, 32, 8) done
+Initialization 10/10 for node (32, 32, 8) done
+Initialization 1/10 for node (8, 2, 2) done
+Initialization 2/10 for node (8, 2, 2) done
+Initialization 3/10 for node (8, 2, 2) done
+Initialization 4/10 for node (8, 2, 2) done
+Initialization 5/10 for node (8, 2, 2) done
+Initialization 6/10 for node (8, 2, 2) done
+Initialization 7/10 for node (8, 2, 2) done
+Initialization 8/10 for node (8, 2, 2) done
+Initialization 9/10 for node (8, 2, 2) done
+Initialization 10/10 for node (8, 2, 2) done
+Initialization 1/10 for node (16, 2, 2) done
+Initialization 2/10 for node (16, 2, 2) done
+Initialization 3/10 for node (16, 2, 2) done
+Initialization 4/10 for node (16, 2, 2) done
+Initialization 5/10 for node (16, 2, 2) done
+Initialization 6/10 for node (16, 2, 2) done
+Initialization 7/10 for node (16, 2, 2) done
+Initialization 8/10 for node (16, 2, 2) done
+Initialization 9/10 for node (16, 2, 2) done
+Initialization 10/10 for node (16, 2, 2) done
+Initialization 1/10 for node (32, 16, 16) done
+Initialization 2/10 for node (32, 16, 16) done
+Initialization 3/10 for node (32, 16, 16) done
+Initialization 4/10 for node (32, 16, 16) done
+Initialization 5/10 for node (32, 16, 16) done
+Initialization 6/10 for node (32, 16, 16) done
+Initialization 7/10 for node (32, 16, 16) done
+Initialization 8/10 for node (32, 16, 16) done
+Initialization 9/10 for node (32, 16, 16) done
+Initialization 10/10 for node (32, 16, 16) done
+Initialization 1/10 for node (32, 16, 2) done
+Initialization 2/10 for node (32, 16, 2) done
+Initialization 3/10 for node (32, 16, 2) done
+Initialization 4/10 for node (32, 16, 2) done
+Initialization 5/10 for node (32, 16, 2) done
+Initialization 6/10 for node (32, 16, 2) done
+Initialization 7/10 for node (32, 16, 2) done
+Initialization 8/10 for node (32, 16, 2) done
+Initialization 9/10 for node (32, 16, 2) done
+Initialization 10/10 for node (32, 16, 2) done
+Initialization 1/10 for node (32, 32) done
+Initialization 2/10 for node (32, 32) done
+Initialization 3/10 for node (32, 32) done
+Initialization 4/10 for node (32, 32) done
+Initialization 5/10 for node (32, 32) done
+Initialization 6/10 for node (32, 32) done
+Initialization 7/10 for node (32, 32) done
+Initialization 8/10 for node (32, 32) done
+Initialization 9/10 for node (32, 32) done
+Initialization 10/10 for node (32, 32) done
+Initialization 1/10 for node (16, 4, 4) done
+Initialization 2/10 for node (16, 4, 4) done
+Initialization 3/10 for node (16, 4, 4) done
+Initialization 4/10 for node (16, 4, 4) done
+Initialization 5/10 for node (16, 4, 4) done
+Initialization 6/10 for node (16, 4, 4) done
+Initialization 7/10 for node (16, 4, 4) done
+Initialization 8/10 for node (16, 4, 4) done
+Initialization 9/10 for node (16, 4, 4) done
+Initialization 10/10 for node (16, 4, 4) done
+Initialization 1/10 for node (32, 8, 4) done
+Initialization 2/10 for node (32, 8, 4) done
+Initialization 3/10 for node (32, 8, 4) done
+Initialization 4/10 for node (32, 8, 4) done
+Initialization 5/10 for node (32, 8, 4) done
+Initialization 6/10 for node (32, 8, 4) done
+Initialization 7/10 for node (32, 8, 4) done
+Initialization 8/10 for node (32, 8, 4) done
+Initialization 9/10 for node (32, 8, 4) done
+Initialization 10/10 for node (32, 8, 4) done
+Initialization 1/10 for node (32, 32, 2) done
+Initialization 2/10 for node (32, 32, 2) done
+Initialization 3/10 for node (32, 32, 2) done
+Initialization 4/10 for node (32, 32, 2) done
+Initialization 5/10 for node (32, 32, 2) done
+Initialization 6/10 for node (32, 32, 2) done
+Initialization 7/10 for node (32, 32, 2) done
+Initialization 8/10 for node (32, 32, 2) done
+Initialization 9/10 for node (32, 32, 2) done
+Initialization 10/10 for node (32, 32, 2) done
+Initialization 1/10 for node (16, 8, 4) done
+Initialization 2/10 for node (16, 8, 4) done
+Initialization 3/10 for node (16, 8, 4) done
+Initialization 4/10 for node (16, 8, 4) done
+Initialization 5/10 for node (16, 8, 4) done
+Initialization 6/10 for node (16, 8, 4) done
+Initialization 7/10 for node (16, 8, 4) done
+Initialization 8/10 for node (16, 8, 4) done
+Initialization 9/10 for node (16, 8, 4) done
+Initialization 10/10 for node (16, 8, 4) done
+Initialization 1/10 for node (32, 4) done
+Initialization 2/10 for node (32, 4) done
+Initialization 3/10 for node (32, 4) done
+Initialization 4/10 for node (32, 4) done
+Initialization 5/10 for node (32, 4) done
+Initialization 6/10 for node (32, 4) done
+Initialization 7/10 for node (32, 4) done
+Initialization 8/10 for node (32, 4) done
+Initialization 9/10 for node (32, 4) done
+Initialization 10/10 for node (32, 4) done
+Initialization 1/10 for node (32, 8, 8) done
+Initialization 2/10 for node (32, 8, 8) done
+Initialization 3/10 for node (32, 8, 8) done
+Initialization 4/10 for node (32, 8, 8) done
+Initialization 5/10 for node (32, 8, 8) done
+Initialization 6/10 for node (32, 8, 8) done
+Initialization 7/10 for node (32, 8, 8) done
+Initialization 8/10 for node (32, 8, 8) done
+Initialization 9/10 for node (32, 8, 8) done
+Initialization 10/10 for node (32, 8, 8) done
+Initialization 1/10 for node (32, 32, 32) done
+Initialization 2/10 for node (32, 32, 32) done
+Initialization 3/10 for node (32, 32, 32) done
+Initialization 4/10 for node (32, 32, 32) done
+Initialization 5/10 for node (32, 32, 32) done
+Initialization 6/10 for node (32, 32, 32) done
+Initialization 7/10 for node (32, 32, 32) done
+Initialization 8/10 for node (32, 32, 32) done
+Initialization 9/10 for node (32, 32, 32) done
+Initialization 10/10 for node (32, 32, 32) done
+Initialization 1/10 for node (8, 8, 8) done
+Initialization 2/10 for node (8, 8, 8) done
+Initialization 3/10 for node (8, 8, 8) done
+Initialization 4/10 for node (8, 8, 8) done
+Initialization 5/10 for node (8, 8, 8) done
+Initialization 6/10 for node (8, 8, 8) done
+Initialization 7/10 for node (8, 8, 8) done
+Initialization 8/10 for node (8, 8, 8) done
+Initialization 9/10 for node (8, 8, 8) done
+Initialization 10/10 for node (8, 8, 8) done
+Initialization 1/10 for node (8, 8, 4) done
+Initialization 2/10 for node (8, 8, 4) done
+Initialization 3/10 for node (8, 8, 4) done
+Initialization 4/10 for node (8, 8, 4) done
+Initialization 5/10 for node (8, 8, 4) done
+Initialization 6/10 for node (8, 8, 4) done
+Initialization 7/10 for node (8, 8, 4) done
+Initialization 8/10 for node (8, 8, 4) done
+Initialization 9/10 for node (8, 8, 4) done
+Initialization 10/10 for node (8, 8, 4) done
+Initialization 1/10 for node (32, 16, 8) done
+Initialization 2/10 for node (32, 16, 8) done
+Initialization 3/10 for node (32, 16, 8) done
+Initialization 4/10 for node (32, 16, 8) done
+Initialization 5/10 for node (32, 16, 8) done
+Initialization 6/10 for node (32, 16, 8) done
+Initialization 7/10 for node (32, 16, 8) done
+Initialization 8/10 for node (32, 16, 8) done
+Initialization 9/10 for node (32, 16, 8) done
+Initialization 10/10 for node (32, 16, 8) done
+Initialization 1/10 for node (32, 16, 4) done
+Initialization 2/10 for node (32, 16, 4) done
+Initialization 3/10 for node (32, 16, 4) done
+Initialization 4/10 for node (32, 16, 4) done
+Initialization 5/10 for node (32, 16, 4) done
+Initialization 6/10 for node (32, 16, 4) done
+Initialization 7/10 for node (32, 16, 4) done
+Initialization 8/10 for node (32, 16, 4) done
+Initialization 9/10 for node (32, 16, 4) done
+Initialization 10/10 for node (32, 16, 4) done
+Initialization 1/10 for node (16, 8, 8) done
+Initialization 2/10 for node (16, 8, 8) done
+Initialization 3/10 for node (16, 8, 8) done
+Initialization 4/10 for node (16, 8, 8) done
+Initialization 5/10 for node (16, 8, 8) done
+Initialization 6/10 for node (16, 8, 8) done
+Initialization 7/10 for node (16, 8, 8) done
+Initialization 8/10 for node (16, 8, 8) done
+Initialization 9/10 for node (16, 8, 8) done
+Initialization 10/10 for node (16, 8, 8) done
+Initialization 1/10 for node (16, 16, 4) done
+Initialization 2/10 for node (16, 16, 4) done
+Initialization 3/10 for node (16, 16, 4) done
+Initialization 4/10 for node (16, 16, 4) done
+Initialization 5/10 for node (16, 16, 4) done
+Initialization 6/10 for node (16, 16, 4) done
+Initialization 7/10 for node (16, 16, 4) done
+Initialization 8/10 for node (16, 16, 4) done
+Initialization 9/10 for node (16, 16, 4) done
+Initialization 10/10 for node (16, 16, 4) done
+Saving results to: /home/mjust/Clim_Growth/runs/estimation/2026-11-10_12-43-23_income_IC_country_trends/results.npy
+Job finished in: 0 hours, 31 minutes, and 39 seconds

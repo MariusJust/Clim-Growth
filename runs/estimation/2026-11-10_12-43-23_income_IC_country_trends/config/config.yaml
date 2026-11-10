@@ -1,0 +1,65 @@
+instance:
+
+  optim:
+    no_inits: 10                  # initialisations per architecture, best BIC kept
+    seed_value: 0                 # initialisation j uses seed_value + j
+    lr: 0.001
+    min_delta: 1.0e-07            # early-stopping threshold on the training loss
+    patience: 200                 # epochs without improvement before stopping; must exceed 8 x lr_reduce_patience so lr can reach lr_min
+    optimizer: 'adam'             # adam, nadam, adamax, adamw, rmsprop, adagrad, adadelta, sgd, sgd_momentum, nesterov
+    verbose: 0
+    dropout: 0
+    timeout_per_node: 100000      # seconds before a stuck worker is abandoned
+    reduce_lr_on_plateau: true
+    lr_reduce_factor: 0.3
+    lr_reduce_patience: 10        # 8 cuts of 0.3 reach lr_min in 400 stagnant epochs, inside patience
+    lr_min: 1.0e-7
+    use_diagnostics: true         # write per-initialisation weights to <run>/diagnostics/<node>/
+    parallel_over_inits: true     # one task per (node, init) instead of per node; needs use_diagnostics
+
+  model:
+    model_selection: 'IC'
+    formulation: 'income'
+    target_mode: 'growth'
+    data_source: 'wb'
+    data_end: 2024
+    input_vars: [temp, precip]
+    activation: 'swish'
+    within_projection: true
+    country_trends: True
+    quadratic_trends: True
+    output_initializer: zeros     # the run predates the key; default was zeros
+    dynamic_model: false          # the run is static
+    dynamic_include_time: false   # inert when not dynamic
+    time_scaling: standardize     # inert when not dynamic
+    income_time_varying: true     # inert for global
+    nodes_list: ["(2,)", "(4,)", "(8,)", "(16,)", "(32,)", "(48,)", "(64,)",
+                 "(2,2,)", "(4,2,)", "(4,4,)", "(8,2,)", "(8,4,)", "(8,8,)",
+                 "(16,2,)", "(16,8,)", "(16,16,)",
+                 "(32,2,)", "(32,4,)", "(32,8,)", "(32,16,)", "(32,32,)",
+                 "(2,2,2,)", "(4,2,2,)", "(4,4,2,)", "(4,4,4,)",
+                 "(8,2,2,)", "(8,4,4,)", "(8,8,2,)", "(8,8,4,)", "(8,8,8,)",
+                 "(16,2,2,)", "(16,4,2,)", "(16,4,4,)", "(16,8,2,)", "(16,8,4,)",
+                 "(16,8,8,)", "(16,16,4,)", "(16,16,8,)", "(16,16,16,)",
+                 "(32,2,2,)", "(32,4,2,)", "(32,4,4,)", "(32,8,2,)", "(32,8,4,)",
+                 "(32,8,8,)", "(32,16,2,)", "(32,16,4,)", "(32,16,8,)", "(32,16,16,)",
+                 "(32,32,2,)", "(32,32,4,)", "(32,32,8,)", "(32,32,16,)", "(32,32,32,)"]
+
+  server:
+    n_process: 55
+    ram: 500                      # GB
+
+  bootstrap:
+    n_boot: 1000                  # Burke (2015) uses 1000 country-cluster draws
+    n_inits: 3                    # the published bands used 3; the config said 2
+    n_process: null               # null reuses server.n_process
+    run_dir: runs/estimation/2026-06-13_22-11-06_global_IC_country_trends
+    node: (2,)                    # keep set: with node and nodes null, top_k ranks by AIC, not BIC
+    nodes: null                   # optional explicit list, overrides node
+    top_k: 1                      # only consulted when node and nodes are null
+    report_every: 25
+    scheme: cluster               # cluster | residual_block
+    block_len: 4                  # residual_block only
+    surface_t_max: 30             # (T, P) grid cap in C; 30 matches Burke, see D10
+
+

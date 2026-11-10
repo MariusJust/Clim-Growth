@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --job-name=income_IC
+#SBATCH --partition=q64
+#SBATCH --mem=500G
+#SBATCH --nodes=1
+#SBATCH --time=200:00:00
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=55
+#SBATCH --output=/home/mjust/Clim_Growth/runs/estimation/2026-11-10_12-43-23_income_IC_country_trends/slurm-%j.out
+#SBATCH --error=/home/mjust/Clim_Growth/runs/estimation/2026-11-10_12-43-23_income_IC_country_trends/slurm-%j.err
+cd "/home/mjust/Clim_Growth"
+export TF_ENABLE_ONEDNN_OPTS=0
+export TF_CPP_MIN_LOG_LEVEL=3
+export CUDA_VISIBLE_DEVICES=""
+python -u src/Main.py --config-path "/home/mjust/Clim_Growth/runs/estimation/2026-11-10_12-43-23_income_IC_country_trends/config" --config-name config hydra.run.dir="/home/mjust/Clim_Growth/runs/estimation/2026-11-10_12-43-23_income_IC_country_trends" 2>&1 | grep -Ev "All log messages before absl::InitializeLog|Unable to register cuDNN factory|Unable to register cuBLAS factory"

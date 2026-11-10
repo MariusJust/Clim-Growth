@@ -1,0 +1,30 @@
+# Preflight for the (node, init) parallelisation. Not a research run.
+#
+# Inherits config.yaml and overrides it (note the defaults order: `config` first,
+# then `_self_`, so the keys below win. config_mc.yaml uses the opposite order
+# because it only ADDS keys rather than overriding any).
+#
+# Used twice, differing only in instance.optim.parallel_over_inits, to test
+# whether initialisation j gives the same fit in a fresh process as it does after
+# initialisations 0..j-1 in a shared one. See
+# notes/2026-09-24/2026-09-24-convergence-diagnosis.md section 5.
+
+defaults:
+  - config
+  - _self_
+
+instance:
+  optim:
+    no_inits: 3                   # enough to detect history dependence, cheap enough to run locally
+    use_diagnostics: true         # REQUIRED: the parallel path reloads winners from snapshots
+    patience: 600
+    lr_reduce_patience: 50
+  model:
+    dynamic_model: true           # matches 2026-09-08_12-44-40_global_dynamic
+    country_trends: false
+    quadratic_trends: false
+    output_initializer: he_normal
+    target_mode: growth
+    nodes_list: ["(2,)"]          # cheapest architecture; the question is seeding, not fit
+  server:
+    n_process: 3                  # one per initialisation on the parallel path
